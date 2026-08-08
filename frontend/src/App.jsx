@@ -3,23 +3,26 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-// ============================================
-// ✅ IMPORT NAVBAR & FOOTER
-// ============================================
+// Components
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 
-// ============================================
-// ✅ IMPORT ONLY THE PAGES WE NEED
-// ============================================
+// Pages
 import Home from "./pages/Home/Home";
 import Events from "./pages/Events/Events";
 import Destinations from "./pages/Destinations/Destinations";
 import Hotels from "./pages/Hotels/Hotels";
+import About from "./pages/About/About";
+import Contact from "./pages/Contact/Contact";
+import Login from "./pages/Login/Login";
+import Register from "./pages/Register/Register";
+import Profile from "./pages/Profile/Profile";
+import Bookings from "./pages/Bookings/Bookings";
 
-// ============================================
-// ✅ IMPORT STYLES
-// ============================================
+// Admin Pages
+import AdminDashboard from "./pages/Admin/Dashboard/Dashboard";
+
+// Styles
 import "./App.css";
 import "./index.css";
 
@@ -27,53 +30,31 @@ function App() {
   return (
     <Router>
       <div className="app">
-        {/* 
-          ============================================
-          NAVBAR - Shows on ALL pages
-          ============================================
-        */}
         <Navbar />
 
-        {/* 
-          ============================================
-          MAIN CONTENT - Only Home & Hotels Routes
-          ============================================
-        */}
         <main className="main-content">
           <Routes>
-            {/* ===== HOME PAGE ===== */}
+            {/* Public Routes */}
             <Route path="/" element={<Home />} />
             <Route path="/events" element={<Events />} />
             <Route path="/destinations" element={<Destinations />} />
-
-            {/* ===== HOTELS PAGE ===== */}
             <Route path="/hotels" element={<Hotels />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
 
-            {/* 
-              ===== OTHER ROUTES (Coming Soon) =====
-              Uncomment when pages are ready:
-              
-              <Route path="/destinations" element={<Destinations />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-            */}
+            {/* Protected Routes (Requires Login) */}
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/bookings" element={<Bookings />} />
+
+            {/* Admin Routes */}
+            <Route path="/admin/dashboard" element={<AdminDashboard />} />
           </Routes>
         </main>
 
-        {/* 
-          ============================================
-          FOOTER - Shows on ALL pages
-          ============================================
-        */}
         <Footer />
 
-        {/* 
-          ============================================
-          TOAST NOTIFICATIONS
-          ============================================
-        */}
         <ToastContainer
           position="top-right"
           autoClose={3000}

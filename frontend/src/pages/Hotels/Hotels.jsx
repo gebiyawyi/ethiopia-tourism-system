@@ -1,6 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Hotels.css";
+import lalibelalodge from "../../assets/images/LalibelaLodge.png";
+import semienresort from "../../assets/images/SimienResort.png";
+import danikilhotel from "../../assets/images/danikilhotel.png";
+import ommoresort from "../../assets/images/OmoResort.png";
+import axumhotel from "../../assets/images/axumhotel.png";
+import hararguest from "../../assets/images/HararGuest.png";
+import balelodge from "../../assets/images/baleLodge.png";
+import BahirDarResort from "../../assets/images/BahirDarResort.png";
+
+// ============================================
+// 📸 FALLBACK IMAGES
+// ============================================
+const FALLBACK_IMAGE =
+  "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&h=400&fit=crop";
 
 const Hotels = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -12,28 +26,8 @@ const Hotels = () => {
   const [loading, setLoading] = useState(true);
 
   // ============================================
-  // 📸 ADD YOUR HOTEL IMAGES HERE
+  // 📸 HOTEL DATA - FIXED
   // ============================================
-  //
-  // TO ADD YOUR IMAGES:
-  // 1. Place images in: frontend/src/assets/images/hotels/
-  // 2. Import them like:
-  //    import hotel1 from '../../assets/images/hotels/hotel1.jpg';
-  //    import hotel2 from '../../assets/images/hotels/hotel2.jpg';
-  //    import hotel3 from '../../assets/images/hotels/hotel3.jpg';
-  //    import hotel4 from '../../assets/images/hotels/hotel4.jpg';
-  //    import hotel5 from '../../assets/images/hotels/hotel5.jpg';
-  //    import hotel6 from '../../assets/images/hotels/hotel6.jpg';
-  //    import hotel7 from '../../assets/images/hotels/hotel7.jpg';
-  //    import hotel8 from '../../assets/images/hotels/hotel8.jpg';
-  // 3. Replace the image URLs below with your imported images
-  // ============================================
-
-  // ============================================
-  // 📸 HOTEL DATA - REPLACE IMAGE URLS
-  // ============================================
-  // 📸 REPLACE: Each 'image' URL with your own images
-  // 📸 EDIT: Change names, descriptions, prices, amenities
   const hotelsData = [
     {
       id: 1,
@@ -42,9 +36,7 @@ const Hotels = () => {
       region: "Amhara",
       rating: 4.8,
       price: 150,
-      // 📸 REPLACE with your image:
-      image:
-        "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&h=400&fit=crop",
+      image: lalibelalodge || FALLBACK_IMAGE,
       amenities: [
         "Free WiFi",
         "Restaurant",
@@ -63,9 +55,7 @@ const Hotels = () => {
       region: "Amhara",
       rating: 4.7,
       price: 120,
-      // 📸 REPLACE with your image:
-      image:
-        "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&h=400&fit=crop",
+      image: semienresort || FALLBACK_IMAGE,
       amenities: [
         "Free WiFi",
         "Restaurant",
@@ -84,9 +74,7 @@ const Hotels = () => {
       region: "Afar",
       rating: 4.5,
       price: 80,
-      // 📸 REPLACE with your image:
-      image:
-        "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&h=400&fit=crop",
+      image: danikilhotel || FALLBACK_IMAGE,
       amenities: [
         "Camping",
         "Meals",
@@ -105,9 +93,7 @@ const Hotels = () => {
       region: "Southern",
       rating: 4.6,
       price: 100,
-      // 📸 REPLACE with your image:
-      image:
-        "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&h=400&fit=crop",
+      image: ommoresort || FALLBACK_IMAGE,
       amenities: ["Free WiFi", "Restaurant", "Pool", "Parking", "Spa"],
       description:
         "Modern resort in the heart of Omo Valley with cultural experiences",
@@ -120,9 +106,7 @@ const Hotels = () => {
       region: "Tigray",
       rating: 4.4,
       price: 90,
-      // 📸 REPLACE with your image:
-      image:
-        "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&h=400&fit=crop",
+      image: axumhotel || FALLBACK_IMAGE,
       amenities: ["Free WiFi", "Restaurant", "Parking", "Heritage Tours"],
       description:
         "Heritage hotel in the ancient city of Axum near the obelisks",
@@ -135,9 +119,7 @@ const Hotels = () => {
       region: "Harari",
       rating: 4.3,
       price: 70,
-      // 📸 REPLACE with your image:
-      image:
-        "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&h=400&fit=crop",
+      image: hararguest || FALLBACK_IMAGE,
       amenities: ["Free WiFi", "Breakfast", "Cultural Tours", "Terrace"],
       description: "Charming guesthouse in the historic walled city of Harar",
       availability: "Available",
@@ -149,9 +131,7 @@ const Hotels = () => {
       region: "Oromia",
       rating: 4.7,
       price: 130,
-      // 📸 REPLACE with your image:
-      image:
-        "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&h=400&fit=crop",
+      image: balelodge || FALLBACK_IMAGE,
       amenities: [
         "Free WiFi",
         "Restaurant",
@@ -170,9 +150,7 @@ const Hotels = () => {
       region: "Amhara",
       rating: 4.5,
       price: 110,
-      // 📸 REPLACE with your image:
-      image:
-        "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&h=400&fit=crop",
+      image: BahirDarResort || FALLBACK_IMAGE,
       amenities: [
         "Free WiFi",
         "Restaurant",
@@ -191,14 +169,14 @@ const Hotels = () => {
   // ============================================
   const destinations = [
     { value: "all", label: "All Destinations" },
-    { value: "Lalibela", label: "🏛️ Lalibela" },
-    { value: "Gondar", label: "🏔️ Gondar" },
-    { value: "Danakil", label: "🌋 Danakil" },
-    { value: "Jinka", label: "🎭 Jinka" },
-    { value: "Axum", label: "🏛️ Axum" },
-    { value: "Harar", label: "🕌 Harar" },
-    { value: "Bale", label: "🌿 Bale" },
-    { value: "Bahir Dar", label: "🌊 Bahir Dar" },
+    { value: "Lalibela", label: " Lalibela" },
+    { value: "Gondar", label: " Gondar" },
+    { value: "Danakil", label: " Danakil" },
+    { value: "Jinka", label: " Jinka" },
+    { value: "Axum", label: " Axum" },
+    { value: "Harar", label: " Harar" },
+    { value: "Bale", label: " Bale" },
+    { value: "Bahir Dar", label: " Bahir Dar" },
   ];
 
   const priceRanges = [
@@ -223,10 +201,6 @@ const Hotels = () => {
     { value: "Parking", label: "🅿️ Parking" },
     { value: "Spa", label: "💆 Spa" },
   ];
-
-  // ============================================
-  // FILTER LOGIC
-  // ============================================
   useEffect(() => {
     setLoading(true);
 
@@ -295,14 +269,14 @@ const Hotels = () => {
 
   const getDestinationIcon = (destination) => {
     const icons = {
-      Lalibela: "🏛️",
-      Gondar: "🏔️",
-      Danakil: "🌋",
-      Jinka: "🎭",
-      Axum: "🏛️",
-      Harar: "🕌",
-      Bale: "🌿",
-      "Bahir Dar": "🌊",
+      Lalibela: "",
+      Gondar: "",
+      Danakil: "",
+      Jinka: "",
+      Axum: "",
+      Harar: "",
+      Bale: "",
+      "Bahir Dar": "",
     };
     return icons[destination] || "📍";
   };
@@ -312,7 +286,7 @@ const Hotels = () => {
       {/* ===== HERO SECTION ===== */}
       <section className="hotels-hero">
         <div className="hotels-hero-content">
-          <h1>🏨 Hotels & Accommodations</h1>
+          <h1> Hotels & Accommodations</h1>
           <p>Find the perfect place to stay in Ethiopia</p>
         </div>
       </section>
@@ -400,7 +374,6 @@ const Hotels = () => {
             </button>
           </div>
 
-          {/* Active Filters */}
           <div className="active-filters">
             {selectedDestination !== "all" && (
               <span className="active-filter">
@@ -474,8 +447,13 @@ const Hotels = () => {
               {filteredHotels.map((hotel) => (
                 <div key={hotel.id} className="hotel-card">
                   <div className="hotel-image">
-                    {/* 📸 Image from hotelsData */}
-                    <img src={hotel.image} alt={hotel.name} />
+                    <img
+                      src={hotel.image}
+                      alt={hotel.name}
+                      onError={(e) => {
+                        e.target.src = FALLBACK_IMAGE;
+                      }}
+                    />
                     <div className="hotel-badges">
                       <span className="hotel-rating">⭐ {hotel.rating}</span>
                       <span

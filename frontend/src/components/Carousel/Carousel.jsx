@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "./Carousel.css";
 
-const Carousel = ({ items, autoPlay = true, interval = 5000 }) => {
+const Carousel = ({ items = [], autoPlay = true, interval = 5000 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
-    if (!autoPlay || isHovered) return;
+    if (!autoPlay || isHovered || items.length <= 1) return;
 
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % items.length);
@@ -14,10 +14,6 @@ const Carousel = ({ items, autoPlay = true, interval = 5000 }) => {
 
     return () => clearInterval(timer);
   }, [autoPlay, interval, items.length, isHovered]);
-
-  const goToSlide = (index) => {
-    setCurrentIndex(index);
-  };
 
   const goToPrev = () => {
     setCurrentIndex((prev) => (prev - 1 + items.length) % items.length);
@@ -27,6 +23,14 @@ const Carousel = ({ items, autoPlay = true, interval = 5000 }) => {
     setCurrentIndex((prev) => (prev + 1) % items.length);
   };
 
+  const goToSlide = (index) => {
+    setCurrentIndex(index);
+  };
+
+  if (!items.length) {
+    return <h3>No carousel items found.</h3>;
+  }
+
   return (
     <div
       className="carousel-container"
@@ -35,33 +39,42 @@ const Carousel = ({ items, autoPlay = true, interval = 5000 }) => {
     >
       <div
         className="carousel-track"
-        style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+        style={{
+          transform: `translateX(-${currentIndex * 100}%)`,
+        }}
       >
         {items.map((item, index) => (
-          <div key={index} className="carousel-slide">
+          <div className="carousel-slide" key={index}>
             <div className="carousel-slide-content">
-              <img src={item.image} alt={item.title} />
+              <img
+                src={item.image}
+                alt={item.title}
+                onError={(e) => {
+                  e.target.src =
+                    "https://via.placeholder.com/1200x600/1e3a5f/ffffff?text=" +
+                    item.title;
+                }}
+              />
               <div className="carousel-overlay">
                 <h3>{item.title}</h3>
                 <p>{item.description}</p>
-                {item.date && (
-                  <span className="carousel-date">📅 {item.date}</span>
-                )}
               </div>
             </div>
           </div>
         ))}
       </div>
 
-      {/* Navigation Buttons */}
-      <button className="carousel-btn prev" onClick={goToPrev}>
-        ❮
-      </button>
-      <button className="carousel-btn next" onClick={goToNext}>
-        ❯
-      </button>
+      {items.length > 1 && (
+        <>
+          <button className="carousel-btn prev" onClick={goToPrev}>
+            ❮
+          </button>
+          <button className="carousel-btn next" onClick={goToNext}>
+            ❯
+          </button>
+        </>
+      )}
 
-      {/* Dots */}
       <div className="carousel-dots">
         {items.map((_, index) => (
           <button

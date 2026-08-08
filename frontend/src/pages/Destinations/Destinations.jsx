@@ -2,6 +2,38 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Destinations.css";
 
+// ============================================
+// 📸 IMPORT YOUR IMAGES HERE
+// ============================================
+import lalibela from "../../assets/images/lalibela.png";
+import semien1 from "../../assets/images/semien1.png";
+import gondar from "../../assets/images/gondar.png";
+import tana2 from "../../assets/images/tana2.png";
+import BlueNilefalls from "../../assets/images/BlueNilefalls.png";
+import axum from "../../assets/images/axum.png";
+import rock from "../../assets/images/rock.png";
+import debredamo from "../../assets/images/debredamo.png";
+import denkele1 from "../../assets/images/denkele1.png";
+import ertalie from "../../assets/images/ertalie.png";
+import DallolSprings from "../../assets/images/DallolSprings.png";
+import ommo1 from "../../assets/images/ommo1.png";
+import Mago from "../../assets/images/Mago.png";
+import turmimarket from "../../assets/images/turmimarket.png";
+import harar from "../../assets/images/harar.png"; 
+import hararcityfes from "../../assets/images/hararcityfes.png";
+import bale from "../../assets/images/bale.png";
+import SofOmar from "../../assets/images/SofOmar.png";
+import LakeLangano from "../../assets/images/LakeLangano.png";
+import NationalMuseum from "../../assets/images/NationalMuseum.png";
+import MountEntoto from "../../assets/images/MountEntoto.png";
+import Merkato from "../../assets/images/Merkato.png";
+
+// ============================================
+// 📸 FALLBACK IMAGES (if imports fail)
+// ============================================
+const FALLBACK_IMAGE =
+  "https://images.unsplash.com/photo-1589802829985-817e51171b92?w=600&h=400&fit=crop";
+
 const Destinations = () => {
   const [destinations, setDestinations] = useState([]);
   const [filteredDestinations, setFilteredDestinations] = useState([]);
@@ -10,35 +42,8 @@ const Destinations = () => {
   const [loading, setLoading] = useState(true);
 
   // ============================================
-  // 📸 ADD YOUR DESTINATION IMAGES HERE
+  // 📸 COMPLETE DESTINATION DATA
   // ============================================
-  //
-  // TO ADD YOUR IMAGES:
-  // 1. Place images in: frontend/src/assets/images/destinations/
-  // 2. Import them like:
-  //    import lalibelaImg from '../../assets/images/destinations/lalibela.jpg';
-  //    import simienImg from '../../assets/images/destinations/simien.jpg';
-  //    import danakilImg from '../../assets/images/destinations/danakil.jpg';
-  //    import omoImg from '../../assets/images/destinations/omo.jpg';
-  //    import axumImg from '../../assets/images/destinations/axum.jpg';
-  //    import gondarImg from '../../assets/images/destinations/gondar.jpg';
-  //    import lakeTanaImg from '../../assets/images/destinations/lake-tana.jpg';
-  //    import blueNileImg from '../../assets/images/destinations/blue-nile.jpg';
-  //    import hararImg from '../../assets/images/destinations/harar.jpg';
-  //    import baleImg from '../../assets/images/destinations/bale.jpg';
-  //    import sofOmarImg from '../../assets/images/destinations/sof-omar.jpg';
-  //    import langanoImg from '../../assets/images/destinations/langano.jpg';
-  //    import nationalMuseumImg from '../../assets/images/destinations/national-museum.jpg';
-  //    import entotoImg from '../../assets/images/destinations/entoto.jpg';
-  //    import merkatoImg from '../../assets/images/destinations/merkato.jpg';
-  // 3. Replace the image URLs below with your imported images
-  // ============================================
-
-  // ============================================
-  // 📸 COMPLETE DESTINATION DATA - REPLACE IMAGE URLS
-  // ============================================
-  // 📸 REPLACE: Each 'image' URL with your own images
-  // 📸 EDIT: Change names, descriptions, prices, attractions
   const destinationData = [
     // ===== AMHARA REGION =====
     {
@@ -48,9 +53,7 @@ const Destinations = () => {
       subRegion: "North Wollo",
       description:
         "11 monolithic churches carved from rock in the 12th century, a UNESCO World Heritage Site",
-      // 📸 REPLACE with your image:
-      image:
-        "https://images.unsplash.com/photo-1589802829985-817e51171b92?w=600&h=400&fit=crop",
+      image: lalibela || FALLBACK_IMAGE,
       price: 1200,
       rating: 4.8,
       reviews: 1234,
@@ -69,9 +72,7 @@ const Destinations = () => {
       subRegion: "North Gondar",
       description:
         "Breathtaking landscapes with dramatic escarpments and unique wildlife including Gelada baboons",
-      // 📸 REPLACE with your image:
-      image:
-        "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=600&h=400&fit=crop",
+      image: semien1 || FALLBACK_IMAGE,
       price: 1500,
       rating: 4.9,
       reviews: 987,
@@ -85,9 +86,7 @@ const Destinations = () => {
       subRegion: "Gondar",
       description:
         'The "Camelot of Africa" featuring medieval castles and royal palaces from the 17th century',
-      // 📸 REPLACE with your image:
-      image:
-        "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=600&h=400&fit=crop",
+      image: gondar || FALLBACK_IMAGE,
       price: 800,
       rating: 4.6,
       reviews: 654,
@@ -101,9 +100,7 @@ const Destinations = () => {
       subRegion: "Bahir Dar",
       description:
         "Sacred lake with ancient island monasteries and churches dating back to the 14th century",
-      // 📸 REPLACE with your image:
-      image:
-        "https://images.unsplash.com/photo-1547592180-85f173990554?w=600&h=400&fit=crop",
+      image: tana2 || FALLBACK_IMAGE,
       price: 600,
       rating: 4.5,
       reviews: 543,
@@ -122,9 +119,7 @@ const Destinations = () => {
       subRegion: "Bahir Dar",
       description:
         'Spectacular waterfall known as "Tis Issat" - the Smoking Water',
-      // 📸 REPLACE with your image:
-      image:
-        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=600&h=400&fit=crop",
+      image: BlueNilefalls || FALLBACK_IMAGE,
       price: 400,
       rating: 4.4,
       reviews: 432,
@@ -140,9 +135,7 @@ const Destinations = () => {
       subRegion: "Axum",
       description:
         "Ancient city with towering obelisks, royal tombs, and the legendary Ark of the Covenant",
-      // 📸 REPLACE with your image:
-      image:
-        "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=600&h=400&fit=crop",
+      image: axum || FALLBACK_IMAGE,
       price: 900,
       rating: 4.6,
       reviews: 765,
@@ -161,9 +154,7 @@ const Destinations = () => {
       subRegion: "Gheralta",
       description:
         "Over 100 ancient rock-hewn churches scattered across the dramatic Tigray landscape",
-      // 📸 REPLACE with your image:
-      image:
-        "https://images.unsplash.com/photo-1590050752117-23802e9b3ee2?w=600&h=400&fit=crop",
+      image: rock || FALLBACK_IMAGE,
       price: 700,
       rating: 4.7,
       reviews: 543,
@@ -177,9 +168,7 @@ const Destinations = () => {
       subRegion: "Adwa",
       description:
         "Ancient monastery perched on a mountain plateau, accessible only by climbing a rope",
-      // 📸 REPLACE with your image:
-      image:
-        "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=600&h=400&fit=crop",
+      image: debredamo || FALLBACK_IMAGE,
       price: 500,
       rating: 4.3,
       reviews: 321,
@@ -200,9 +189,7 @@ const Destinations = () => {
       subRegion: "Afar Triangle",
       description:
         "One of the hottest places on Earth with colorful sulfur springs, salt flats, and active volcanoes",
-      // 📸 REPLACE with your image:
-      image:
-        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=600&h=400&fit=crop",
+      image: denkele1 || FALLBACK_IMAGE,
       price: 1800,
       rating: 5.0,
       reviews: 876,
@@ -221,9 +208,7 @@ const Destinations = () => {
       subRegion: "Danakil",
       description:
         "Active shield volcano with one of the world's longest-standing lava lakes",
-      // 📸 REPLACE with your image:
-      image:
-        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=600&h=400&fit=crop",
+      image: ertalie || FALLBACK_IMAGE,
       price: 2000,
       rating: 4.9,
       reviews: 654,
@@ -237,9 +222,7 @@ const Destinations = () => {
       subRegion: "Danakil",
       description:
         "Colorful hydrothermal field with yellow, green, and orange mineral deposits",
-      // 📸 REPLACE with your image:
-      image:
-        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=600&h=400&fit=crop",
+      image: DallolSprings || FALLBACK_IMAGE,
       price: 1600,
       rating: 4.8,
       reviews: 543,
@@ -251,8 +234,6 @@ const Destinations = () => {
       ],
       bestTime: "November to March",
     },
-
-    // ===== SOUTHERN REGION =====
     {
       id: 12,
       name: "Omo Valley Tribes",
@@ -260,9 +241,7 @@ const Destinations = () => {
       subRegion: "Omo Valley",
       description:
         "Rich cultural heritage with indigenous tribes like the Hamer, Mursi, and Karo",
-      // 📸 REPLACE with your image:
-      image:
-        "https://images.unsplash.com/photo-1523805009344-8f45bb7a72e6?w=600&h=400&fit=crop",
+      image: ommo1 || FALLBACK_IMAGE,
       price: 1100,
       rating: 4.7,
       reviews: 765,
@@ -281,9 +260,7 @@ const Destinations = () => {
       subRegion: "Omo Valley",
       description:
         "National park home to the Mursi people and diverse wildlife including elephants and buffalos",
-      // 📸 REPLACE with your image:
-      image:
-        "https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=600&h=400&fit=crop",
+      image: Mago || FALLBACK_IMAGE,
       price: 800,
       rating: 4.4,
       reviews: 432,
@@ -302,9 +279,7 @@ const Destinations = () => {
       subRegion: "Omo Valley",
       description:
         "Vibrant Saturday market where different tribes gather to trade and socialize",
-      // 📸 REPLACE with your image:
-      image:
-        "https://images.unsplash.com/photo-1533105079780-92b9be482077?w=600&h=400&fit=crop",
+      image: turmimarket || FALLBACK_IMAGE,
       price: 500,
       rating: 4.3,
       reviews: 321,
@@ -316,8 +291,6 @@ const Destinations = () => {
       ],
       bestTime: "November to March",
     },
-
-    // ===== HARARI REGION =====
     {
       id: 15,
       name: "Harar Jugol",
@@ -325,9 +298,7 @@ const Destinations = () => {
       subRegion: "Harar",
       description:
         "Fortified historic town with unique culture, architecture, and the famous hyena feeding",
-      // 📸 REPLACE with your image:
-      image:
-        "https://images.unsplash.com/photo-1590050752117-23802e9b3ee2?w=600&h=400&fit=crop",
+      image: harar || FALLBACK_IMAGE, 
       price: 800,
       rating: 4.5,
       reviews: 654,
@@ -346,17 +317,13 @@ const Destinations = () => {
       subRegion: "Harar",
       description:
         "Ancient walled city with 82 mosques and traditional Harari houses",
-      // 📸 REPLACE with your image:
-      image:
-        "https://images.unsplash.com/photo-1590050752117-23802e9b3ee2?w=600&h=400&fit=crop",
+      image: hararcityfes || FALLBACK_IMAGE,
       price: 600,
       rating: 4.4,
       reviews: 432,
       attractions: ["Old City", "Mosques", "Traditional Houses", "Culture"],
       bestTime: "October to April",
     },
-
-    // ===== OROMIA REGION =====
     {
       id: 17,
       name: "Bale Mountains National Park",
@@ -364,9 +331,7 @@ const Destinations = () => {
       subRegion: "Bale",
       description:
         "Home to the Ethiopian wolf and unique Afro-alpine ecosystem with stunning landscapes",
-      // 📸 REPLACE with your image:
-      image:
-        "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=600&h=400&fit=crop",
+      image: bale || FALLBACK_IMAGE,
       price: 1000,
       rating: 4.7,
       reviews: 543,
@@ -380,9 +345,7 @@ const Destinations = () => {
       subRegion: "Bale",
       description:
         "One of the longest cave systems in Africa with underground rivers and limestone formations",
-      // 📸 REPLACE with your image:
-      image:
-        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=600&h=400&fit=crop",
+      image: SofOmar || FALLBACK_IMAGE,
       price: 700,
       rating: 4.3,
       reviews: 321,
@@ -401,9 +364,7 @@ const Destinations = () => {
       subRegion: "Rift Valley",
       description:
         "Beautiful lake in the Ethiopian Rift Valley perfect for swimming and bird watching",
-      // 📸 REPLACE with your image:
-      image:
-        "https://images.unsplash.com/photo-1547592180-85f173990554?w=600&h=400&fit=crop",
+      image: LakeLangano || FALLBACK_IMAGE,
       price: 500,
       rating: 4.2,
       reviews: 432,
@@ -419,9 +380,7 @@ const Destinations = () => {
       subRegion: "Addis Ababa",
       description:
         'Home to the famous fossil "Lucy" and extensive collection of Ethiopian artifacts',
-      // 📸 REPLACE with your image:
-      image:
-        "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=600&h=400&fit=crop",
+      image: NationalMuseum || FALLBACK_IMAGE,
       price: 300,
       rating: 4.6,
       reviews: 876,
@@ -435,9 +394,7 @@ const Destinations = () => {
       subRegion: "Addis Ababa",
       description:
         "Highest peak near Addis Ababa with panoramic views and historic churches",
-      // 📸 REPLACE with your image:
-      image:
-        "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=600&h=400&fit=crop",
+      image: MountEntoto || FALLBACK_IMAGE,
       price: 400,
       rating: 4.4,
       reviews: 654,
@@ -451,9 +408,7 @@ const Destinations = () => {
       subRegion: "Addis Ababa",
       description:
         "One of the largest open-air markets in Africa with everything from spices to crafts",
-      // 📸 REPLACE with your image:
-      image:
-        "https://images.unsplash.com/photo-1533105079780-92b9be482077?w=600&h=400&fit=crop",
+      image: Merkato || FALLBACK_IMAGE,
       price: 200,
       rating: 4.3,
       reviews: 543,
@@ -463,43 +418,43 @@ const Destinations = () => {
   ];
 
   // ============================================
-  // REGIONS WITH THEIR DESTINATION COUNT
+  // REGIONS
   // ============================================
   const regions = [
     { value: "all", label: "All Regions", count: destinationData.length },
     {
       value: "Amhara",
-      label: "Amhara",
+      label: " Amhara",
       count: destinationData.filter((d) => d.region === "Amhara").length,
     },
     {
       value: "Tigray",
-      label: "Tigray",
+      label: " Tigray",
       count: destinationData.filter((d) => d.region === "Tigray").length,
     },
     {
       value: "Afar",
-      label: "Afar",
+      label: " Afar",
       count: destinationData.filter((d) => d.region === "Afar").length,
     },
     {
       value: "Southern",
-      label: "Southern",
+      label: " Southern",
       count: destinationData.filter((d) => d.region === "Southern").length,
     },
     {
       value: "Harari",
-      label: "Harari",
+      label: " Harari",
       count: destinationData.filter((d) => d.region === "Harari").length,
     },
     {
       value: "Oromia",
-      label: "Oromia",
+      label: " Oromia",
       count: destinationData.filter((d) => d.region === "Oromia").length,
     },
     {
       value: "Addis Ababa",
-      label: "Addis Ababa",
+      label: "🏙️ Addis Ababa",
       count: destinationData.filter((d) => d.region === "Addis Ababa").length,
     },
   ];
@@ -509,20 +464,16 @@ const Destinations = () => {
   // ============================================
   const getRegionIcon = (region) => {
     const icons = {
-      Amhara: "⛰️",
-      Tigray: "🏛️",
-      Afar: "🌋",
-      Southern: "🎭",
-      Harari: "🕌",
-      Oromia: "🌿",
-      "Addis Ababa": "🏙️",
+      Amhara: "",
+      Tigray: "",
+      Afar: "",
+      Southern: "",
+      Harari: "",
+      Oromia: "",
+      "Addis Ababa": "",
     };
-    return icons[region] || "📍";
+    return icons[region] || "";
   };
-
-  // ============================================
-  // FILTER LOGIC
-  // ============================================
   useEffect(() => {
     setTimeout(() => {
       setDestinations(destinationData);
@@ -555,7 +506,7 @@ const Destinations = () => {
       {/* ===== HERO SECTION ===== */}
       <section className="destinations-hero">
         <div className="destinations-hero-content">
-          <h1>📍 Explore Destinations</h1>
+          <h1>   Explore Destinations</h1>
           <p>
             Discover {destinationData.length} amazing places across Ethiopia
           </p>
@@ -601,7 +552,6 @@ const Destinations = () => {
             </div>
           </div>
 
-          {/* Active Filters */}
           {selectedRegion !== "all" && (
             <div className="active-filters">
               <span className="active-filter">
@@ -660,8 +610,13 @@ const Destinations = () => {
               {filteredDestinations.map((dest) => (
                 <div key={dest.id} className="destination-card">
                   <div className="destination-image">
-                    {/* 📸 Image from destinationData */}
-                    <img src={dest.image} alt={dest.name} />
+                    <img
+                      src={dest.image}
+                      alt={dest.name}
+                      onError={(e) => {
+                        e.target.src = FALLBACK_IMAGE;
+                      }}
+                    />
                     <div className="destination-badges">
                       <span className="destination-rating">
                         ⭐ {dest.rating}

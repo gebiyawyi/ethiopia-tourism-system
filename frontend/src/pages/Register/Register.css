@@ -1,0 +1,393 @@
+.register-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--secondary-color), var(--primary-dark));
+  padding: 2rem;
+}
+
+.register-container {
+  width: 100%;
+  max-width: 520px;
+}
+
+.register-card {
+  background: var(--white);
+  border-radius: var(--border-radius);
+  padding: 2.5rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+}
+
+.register-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.register-header h1 {
+  font-size: 1.8rem;
+  color: var(--secondary-color);
+  margin-bottom: 0.3rem;
+}
+
+.register-header p {
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+/* ============================================
+   ✅ ERROR MESSAGES
+   ============================================ */
+.register-error {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fef2f2;
+  color: #dc2626;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+  border-left: 4px solid #dc2626;
+}
+
+.error-close {
+  background: none;
+  border: none;
+  color: #dc2626;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0 0.3rem;
+}
+
+/* ============================================
+   ✅ SUCCESS MESSAGE - VISIBLE!
+   ============================================ */
+.register-success {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  background: #d1fae5;
+  color: #065f46;
+  padding: 1rem 1.2rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+  border-left: 4px solid #065f46;
+  animation: fadeIn 0.5s ease;
+}
+
+.success-icon {
+  font-size: 1.5rem;
+}
+
+.success-text {
+  flex: 1;
+}
+
+/* ============================================
+   ✅ ANIMATIONS
+   ============================================ */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================
+   FIELD ERRORS
+   ============================================ */
+.field-error {
+  display: block;
+  color: #dc2626;
+  font-size: 0.8rem;
+  margin-top: 0.3rem;
+}
+
+.input-error {
+  border-color: #dc2626 !important;
+}
+
+.input-error:focus {
+  border-color: #dc2626 !important;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1) !important;
+}
+
+/* ============================================
+   PHOTO UPLOAD
+   ============================================ */
+.photo-upload-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  padding: 1rem;
+  background: var(--light-bg);
+  border-radius: 12px;
+  border: 2px dashed #e5e7eb;
+}
+
+.photo-preview-wrapper {
+  flex-shrink: 0;
+}
+
+.photo-preview {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid var(--primary-color);
+}
+
+.photo-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.remove-photo-btn {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #dc2626;
+  color: var(--white);
+  border: none;
+  font-size: 0.8rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.remove-photo-btn:hover {
+  background: #b91c1c;
+}
+
+.photo-placeholder {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--white);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #d1d5db;
+}
+
+.photo-icon {
+  font-size: 2rem;
+}
+
+.photo-placeholder p {
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  margin-top: 0.2rem;
+}
+
+.photo-upload-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.upload-btn {
+  display: inline-block;
+  padding: 0.5rem 1.2rem;
+  background: var(--primary-color);
+  color: var(--white);
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-align: center;
+  transition: var(--transition);
+  width: fit-content;
+}
+
+.upload-btn:hover {
+  background: var(--primary-dark);
+}
+
+.remove-btn {
+  padding: 0.4rem 1rem;
+  background: #dc2626;
+  color: var(--white);
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: var(--transition);
+  width: fit-content;
+}
+
+.remove-btn:hover {
+  background: #b91c1c;
+}
+
+.upload-hint {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+/* ============================================
+   FORM STYLES
+   ============================================ */
+.register-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.register-form .form-group {
+  margin-bottom: 0;
+}
+
+.register-form .form-group.full-width {
+  grid-column: span 2;
+}
+
+.register-form label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  font-size: 0.9rem;
+  color: var(--text-color);
+}
+
+.required {
+  color: #dc2626;
+}
+
+.optional {
+  color: var(--text-muted);
+  font-weight: 400;
+  font-size: 0.8rem;
+}
+
+.register-form input {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: var(--transition);
+}
+
+.register-form input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.1);
+}
+
+.register-btn {
+  grid-column: span 2;
+  padding: 0.8rem;
+  background: var(--primary-color);
+  color: var(--white);
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  margin-top: 0.5rem;
+}
+
+.register-btn:hover:not(:disabled) {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+}
+
+.register-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.register-footer {
+  text-align: center;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.register-footer p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.register-footer a {
+  color: var(--primary-color);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.register-footer a:hover {
+  color: var(--primary-dark);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 768px) {
+  .register-form {
+    grid-template-columns: 1fr;
+  }
+
+  .register-form .form-group.full-width {
+    grid-column: span 1;
+  }
+
+  .register-btn {
+    grid-column: span 1;
+  }
+
+  .photo-upload-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .photo-upload-actions {
+    align-items: center;
+  }
+
+  .upload-btn,
+  .remove-btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .register-card {
+    padding: 1.5rem;
+  }
+
+  .register-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .photo-preview {
+    width: 60px;
+    height: 60px;
+  }
+
+  .photo-placeholder {
+    width: 60px;
+    height: 60px;
+  }
+
+  .photo-icon {
+    font-size: 1.5rem;
+  }
+
+  .register-success {
+    font-size: 0.9rem;
+    padding: 0.8rem 1rem;
+  }
+}

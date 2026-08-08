@@ -1,6 +1,36 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Events.css";
+import timiket from "../../assets/images/timiket.png";
+import hidar from "../../assets/images/hidartsion.png";
+import ashenda from "../../assets/images/ashenda2.png";
+import chrismass from "../../assets/images/chrismass.png";
+import meskel from "../../assets/images/meskel.png";
+import agew from "../../assets/images/agew.png";
+import tanamonastery from "../../assets/images/tanamonastery.png";
+import afar from "../../assets/images/afar.png";
+import afarsalt from "../../assets/images/afarsalt.png";
+import irrecha from "../../assets/images/irrecha.png";
+import gadda from "../../assets/images/gadda.png";
+import balliemountain from "../../assets/images/balliemountain.png";
+import ommotribe from "../../assets/images/ommotribe.png";
+import murssi from "../../assets/images/murssi.png";
+import turmimarket from "../../assets/images/turmimarket.png";
+import fiche from "../../assets/images/fiche.png";
+import hararihyna from "../../assets/images/hararihyna.png";
+import hararcityfes from "../../assets/images/hararcityfes.png";
+import eid from "../../assets/images/eid.png";
+import mewlid from "../../assets/images/mewlid.png";
+import remedan from "../../assets/images/remedan.png";
+import enkutatash from "../../assets/images/enkutatash.png";
+import buhie1 from "../../assets/images/buhie1.png";
+import lidet from "../../assets/images/lidet.png";
+import adwa from "../../assets/images/adwa.png";
+import flag from "../../assets/images/flag.png";
+import benishangul from "../../assets/images/benishangul.png";
+import gambella from "../../assets/images/gambella.png";
+import diredawa from "../../assets/images/diredawa.png";
+import eida from "../../assets/images/eida.png";
 
 const Events = () => {
   const [events, setEvents] = useState([]);
@@ -9,44 +39,11 @@ const Events = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedRegion, setSelectedRegion] = useState("all");
   const [loading, setLoading] = useState(true);
+  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
-  // ============================================
-  // 📸 ADD YOUR EVENT IMAGES HERE
-  // ============================================
-  //
-  // TO ADD YOUR IMAGES:
-  // 1. Place images in: frontend/src/assets/images/events/
-  // 2. Import them like:
-  //    import timkatImg from '../../assets/images/events/timkat.jpg';
-  //    import buheImg from '../../assets/images/events/buhe.jpg';
-  //    import ashendaImg from '../../assets/images/events/ashenda.jpg';
-  //    import enkutatashImg from '../../assets/images/events/enkutatash.jpg';
-  //    import meskelImg from '../../assets/images/events/meskel.jpg';
-  //    import ficheeImg from '../../assets/images/events/fichee.jpg';
-  //    import irreechaImg from '../../assets/images/events/irreecha.jpg';
-  //    import kulleImg from '../../assets/images/events/kulle.jpg';
-  //    import gadaImg from '../../assets/images/events/gada.jpg';
-  //    import hidarTsionImg from '../../assets/images/events/hidar-tsion.jpg';
-  //    import gennaImg from '../../assets/images/events/genna.jpg';
-  //    import ledetImg from '../../assets/images/events/ledet.jpg';
-  //    import agewHorseImg from '../../assets/images/events/agew-horse.jpg';
-  //    import guragieImg from '../../assets/images/events/guragie.jpg';
-  //    import eidImg from '../../assets/images/events/eid.jpg';
-  //    import ramadanImg from '../../assets/images/events/ramadan.jpg';
-  //    import mawlidImg from '../../assets/images/events/mawlid.jpg';
-  //    import assosaImg from '../../assets/images/events/assosa.jpg';
-  //    import gambelaImg from '../../assets/images/events/gambela.jpg';
-  //    import southOmoImg from '../../assets/images/events/south-omo.jpg';
-  // 3. Replace the image URLs below with your imported images
-  // ============================================
-
-  // ============================================
-  // 📸 COMPLETE EVENTS DATA - ALL REGIONS
-  // ============================================
   const eventsData = [
-    // ============================================
-    // 🏛️ TIGRAY REGION
-    // ============================================
+    // ===== TIGRAY REGION =====
     {
       id: 1,
       title: "Timkat - Ethiopian Epiphany",
@@ -58,8 +55,7 @@ const Events = () => {
       location: "Axum, Tigray & Nationwide",
       region: "Tigray",
       category: "Religious",
-      image:
-        "https://images.unsplash.com/photo-1533105079780-92b9be482077?w=600&h=400&fit=crop",
+      image: timiket,
       highlights: [
         "Colorful Processions",
         "Church Ceremonies",
@@ -79,8 +75,7 @@ const Events = () => {
       location: "Axum, Tigray Region",
       region: "Tigray",
       category: "Religious",
-      image:
-        "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=600&h=400&fit=crop",
+      image: hidar,
       highlights: [
         "Church Ceremonies",
         "Pilgrimage",
@@ -99,8 +94,7 @@ const Events = () => {
       location: "Tigray Region",
       region: "Tigray",
       category: "Cultural",
-      image:
-        "https://images.unsplash.com/photo-1523805009344-8f45bb7a72e6?w=600&h=400&fit=crop",
+      image: ashenda,
       highlights: [
         "Traditional Dance",
         "Music",
@@ -110,9 +104,7 @@ const Events = () => {
       ],
     },
 
-    // ============================================
-    // ⛰️ AMHARA REGION
-    // ============================================
+    // ===== AMHARA REGION =====
     {
       id: 4,
       title: "Lalibela Christmas - Genna",
@@ -124,8 +116,7 @@ const Events = () => {
       location: "Lalibela, Amhara Region",
       region: "Amhara",
       category: "Religious",
-      image:
-        "https://images.unsplash.com/photo-1547592180-85f173990554?w=600&h=400&fit=crop",
+      image: chrismass,
       highlights: [
         "Church Services",
         "Traditional Games",
@@ -145,8 +136,7 @@ const Events = () => {
       location: "Gondar, Amhara & Nationwide",
       region: "Amhara",
       category: "Religious",
-      image:
-        "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=600&h=400&fit=crop",
+      image: meskel,
       highlights: [
         "Massive Bonfires",
         "Colorful Processions",
@@ -166,8 +156,7 @@ const Events = () => {
       location: "Awi Zone, Amhara Region",
       region: "Amhara",
       category: "Cultural",
-      image:
-        "https://images.unsplash.com/photo-1551632811-561732d8a11e?w=600&h=400&fit=crop",
+      image: agew,
       highlights: [
         "Horse Racing",
         "Equestrian Skills",
@@ -187,8 +176,7 @@ const Events = () => {
       location: "Lake Tana, Bahir Dar",
       region: "Amhara",
       category: "Religious",
-      image:
-        "https://images.unsplash.com/photo-1547592180-85f173990554?w=600&h=400&fit=crop",
+      image: tanamonastery,
       highlights: [
         "Boat Processions",
         "Monastery Ceremonies",
@@ -217,9 +205,7 @@ const Events = () => {
       ],
     },
 
-    // ============================================
-    // 🌋 AFAR REGION
-    // ============================================
+    // ===== AFAR REGION =====
     {
       id: 9,
       title: "Kulle - Afar Cultural Festival",
@@ -231,8 +217,7 @@ const Events = () => {
       location: "Afar Region",
       region: "Afar",
       category: "Cultural",
-      image:
-        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=600&h=400&fit=crop",
+      image: afar,
       highlights: [
         "Camel Racing",
         "Traditional Dances",
@@ -252,8 +237,7 @@ const Events = () => {
       location: "Danakil Depression, Afar Region",
       region: "Afar",
       category: "Cultural",
-      image:
-        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=600&h=400&fit=crop",
+      image: afarsalt,
       highlights: [
         "Camel Caravans",
         "Salt Mining",
@@ -262,9 +246,7 @@ const Events = () => {
       ],
     },
 
-    // ============================================
-    // 🌿 OROMIA REGION
-    // ============================================
+    // ===== OROMIA REGION =====
     {
       id: 11,
       title: "Irreecha - Oromo Thanksgiving",
@@ -276,8 +258,7 @@ const Events = () => {
       location: "Bishoftu, Oromia Region",
       region: "Oromia",
       category: "Cultural",
-      image:
-        "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=600&h=400&fit=crop",
+      image: irrecha,
       highlights: [
         "Massive Gatherings",
         "Traditional Music",
@@ -297,8 +278,7 @@ const Events = () => {
       location: "Oromia Region",
       region: "Oromia",
       category: "Cultural",
-      image:
-        "https://images.unsplash.com/photo-1523805009344-8f45bb7a72e6?w=600&h=400&fit=crop",
+      image: gadda,
       highlights: [
         "Traditional Governance",
         "Cultural Performances",
@@ -317,8 +297,7 @@ const Events = () => {
       location: "Bale Mountains, Oromia",
       region: "Oromia",
       category: "Nature",
-      image:
-        "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=600&h=400&fit=crop",
+      image: balliemountain,
       highlights: [
         "Trekking",
         "Wildlife Viewing",
@@ -327,9 +306,7 @@ const Events = () => {
       ],
     },
 
-    // ============================================
-    // 🎭 SOUTHERN REGION (SNNPR)
-    // ============================================
+    // ===== SOUTHERN REGION =====
     {
       id: 14,
       title: "Omo Valley Tribes Festival",
@@ -341,8 +318,7 @@ const Events = () => {
       location: "Omo Valley, Southern Ethiopia",
       region: "Southern",
       category: "Cultural",
-      image:
-        "https://images.unsplash.com/photo-1523805009344-8f45bb7a72e6?w=600&h=400&fit=crop",
+      image: ommotribe,
       highlights: [
         "Body Painting",
         "Traditional Dances",
@@ -361,8 +337,7 @@ const Events = () => {
       location: "Omo Valley, Southern Ethiopia",
       region: "Southern",
       category: "Cultural",
-      image:
-        "https://images.unsplash.com/photo-1533105079780-92b9be482077?w=600&h=400&fit=crop",
+      image: murssi,
       highlights: [
         "Body Painting",
         "Lip Plates",
@@ -381,8 +356,7 @@ const Events = () => {
       location: "Turmi, Omo Valley",
       region: "Southern",
       category: "Cultural",
-      image:
-        "https://images.unsplash.com/photo-1533105079780-92b9be482077?w=600&h=400&fit=crop",
+      image: turmimarket,
       highlights: [
         "Local Market",
         "Culture",
@@ -391,9 +365,7 @@ const Events = () => {
       ],
     },
 
-    // ============================================
-    // 🌺 SIDAMA REGION
-    // ============================================
+    // ===== SIDAMA REGION =====
     {
       id: 17,
       title: "Fichee-Chambalaalla - Sidama New Year",
@@ -405,8 +377,7 @@ const Events = () => {
       location: "Sidama Region",
       region: "Sidama",
       category: "Cultural",
-      image:
-        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=600&h=400&fit=crop",
+      image: fiche,
       highlights: [
         "Cultural Performances",
         "Traditional Foods",
@@ -415,9 +386,7 @@ const Events = () => {
       ],
     },
 
-    // ============================================
-    // 🕌 HARARI REGION
-    // ============================================
+    // ===== HARARI REGION =====
     {
       id: 18,
       title: "Harar Hyena Feeding Festival",
@@ -429,8 +398,7 @@ const Events = () => {
       location: "Harar Jugol, Harari Region",
       region: "Harari",
       category: "Cultural",
-      image:
-        "https://images.unsplash.com/photo-1590050752117-23802e9b3ee2?w=600&h=400&fit=crop",
+      image: hararihyna,
       highlights: [
         "Hyena Feeding",
         "Cultural Traditions",
@@ -449,8 +417,7 @@ const Events = () => {
       location: "Harar, Harari Region",
       region: "Harari",
       category: "Cultural",
-      image:
-        "https://images.unsplash.com/photo-1590050752117-23802e9b3ee2?w=600&h=400&fit=crop",
+      image: hararcityfes,
       highlights: [
         "Historical Tours",
         "Traditional Music",
@@ -459,9 +426,7 @@ const Events = () => {
       ],
     },
 
-    // ============================================
-    // 🕌 MUSLIM FESTIVALS
-    // ============================================
+    // ===== MUSLIM FESTIVALS =====
     {
       id: 20,
       title: "Eid al-Fitr - End of Ramadan",
@@ -473,8 +438,7 @@ const Events = () => {
       location: "Nationwide (Especially Harar, Addis Ababa, Dire Dawa)",
       region: "Nationwide",
       category: "Muslim",
-      image:
-        "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=600&h=400&fit=crop",
+      image: eid,
       highlights: [
         "Special Prayers",
         "Festive Meals",
@@ -493,8 +457,7 @@ const Events = () => {
       location: "Nationwide (Especially Harar, Addis Ababa, Dire Dawa)",
       region: "Nationwide",
       category: "Muslim",
-      image:
-        "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=600&h=400&fit=crop",
+      image: eida,
       highlights: [
         "Prayers",
         "Animal Sacrifice",
@@ -513,8 +476,7 @@ const Events = () => {
       location: "Nationwide (Especially Harar, Addis Ababa)",
       region: "Nationwide",
       category: "Muslim",
-      image:
-        "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=600&h=400&fit=crop",
+      image: mewlid,
       highlights: [
         "Religious Sermons",
         "Poetry Recitations",
@@ -533,8 +495,7 @@ const Events = () => {
       location: "Nationwide",
       region: "Nationwide",
       category: "Muslim",
-      image:
-        "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=600&h=400&fit=crop",
+      image: remedan,
       highlights: [
         "Fasting",
         "Prayers",
@@ -543,9 +504,7 @@ const Events = () => {
       ],
     },
 
-    // ============================================
-    // 🎉 NATIONAL & OTHER FESTIVALS
-    // ============================================
+    // ===== NATIONAL & OTHER FESTIVALS =====
     {
       id: 24,
       title: "Enkutatash - Ethiopian New Year",
@@ -557,8 +516,7 @@ const Events = () => {
       location: "Nationwide",
       region: "Nationwide",
       category: "Festival",
-      image:
-        "https://images.unsplash.com/photo-1547592180-85f173990554?w=600&h=400&fit=crop",
+      image: enkutatash,
       highlights: [
         "New Year Celebrations",
         "Coffee Ceremony",
@@ -577,8 +535,7 @@ const Events = () => {
       location: "Nationwide",
       region: "Nationwide",
       category: "Religious",
-      image:
-        "https://images.unsplash.com/photo-1551632811-561732d8a11e?w=600&h=400&fit=crop",
+      image: buhie1,
       highlights: [
         "Bonfires",
         "Traditional Songs",
@@ -597,8 +554,7 @@ const Events = () => {
       location: "Nationwide",
       region: "Nationwide",
       category: "Religious",
-      image:
-        "https://images.unsplash.com/photo-1533105079780-92b9be482077?w=600&h=400&fit=crop",
+      image: lidet,
       highlights: [
         "Overnight Services",
         "Festive Meals",
@@ -617,8 +573,7 @@ const Events = () => {
       location: "Nationwide",
       region: "Nationwide",
       category: "National",
-      image:
-        "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=600&h=400&fit=crop",
+      image: adwa,
       highlights: [
         "Parades",
         "Patriotic Songs",
@@ -637,8 +592,7 @@ const Events = () => {
       location: "Nationwide",
       region: "Nationwide",
       category: "National",
-      image:
-        "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=600&h=400&fit=crop",
+      image: flag,
       highlights: [
         "Flag Ceremonies",
         "Cultural Events",
@@ -647,9 +601,7 @@ const Events = () => {
       ],
     },
 
-    // ============================================
-    // 🌍 BENISHANGUL-GUMUZ REGION
-    // ============================================
+    // ===== OTHER REGIONS =====
     {
       id: 29,
       title: "Assosa Cultural Festival",
@@ -661,8 +613,7 @@ const Events = () => {
       location: "Assosa, Benishangul-Gumuz",
       region: "Benishangul-Gumuz",
       category: "Cultural",
-      image:
-        "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=600&h=400&fit=crop",
+      image: benishangul,
       highlights: [
         "Traditional Dances",
         "Music",
@@ -670,10 +621,6 @@ const Events = () => {
         "Community Gatherings",
       ],
     },
-
-    // ============================================
-    // 🌴 GAMBELA REGION
-    // ============================================
     {
       id: 30,
       title: "Gambela Cultural Festival",
@@ -685,8 +632,7 @@ const Events = () => {
       location: "Gambela Region",
       region: "Gambela",
       category: "Cultural",
-      image:
-        "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=600&h=400&fit=crop",
+      image: gambella,
       highlights: [
         "Traditional Dances",
         "Music",
@@ -694,10 +640,6 @@ const Events = () => {
         "Nuer Heritage",
       ],
     },
-
-    // ============================================
-    // 🌊 DIRE DAWA & SOMALI REGION
-    // ============================================
     {
       id: 31,
       title: "Dire Dawa Cultural Festival",
@@ -709,8 +651,7 @@ const Events = () => {
       location: "Dire Dawa & Somali Region",
       region: "Dire Dawa",
       category: "Cultural",
-      image:
-        "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=600&h=400&fit=crop",
+      image: diredawa,
       highlights: [
         "Traditional Dances",
         "Music",
@@ -784,6 +725,21 @@ const Events = () => {
       "Dire Dawa": "🌊",
     };
     return icons[region] || "📍";
+  };
+
+  // ============================================
+  // OPEN/CLOSE MODAL
+  // ============================================
+  const openEventModal = (event) => {
+    setSelectedEvent(event);
+    setShowModal(true);
+    document.body.style.overflow = "hidden";
+  };
+
+  const closeEventModal = () => {
+    setShowModal(false);
+    setSelectedEvent(null);
+    document.body.style.overflow = "unset";
   };
 
   // ============================================
@@ -1012,7 +968,13 @@ const Events = () => {
                       )}
                     </div>
 
-                    <button className="event-btn">Learn More →</button>
+                    {/* ✅ FIXED: Learn More button opens modal */}
+                    <button
+                      className="event-btn"
+                      onClick={() => openEventModal(event)}
+                    >
+                      Learn More →
+                    </button>
                   </div>
                 </div>
               ))}
@@ -1020,6 +982,97 @@ const Events = () => {
           )}
         </div>
       </section>
+
+      {/* ============================================ */}
+      {/* EVENT DETAIL MODAL */}
+      {/* ============================================ */}
+      {showModal && selectedEvent && (
+        <div className="event-modal-overlay" onClick={closeEventModal}>
+          <div className="event-modal" onClick={(e) => e.stopPropagation()}>
+            <button className="modal-close" onClick={closeEventModal}>
+              ✕
+            </button>
+
+            <div className="modal-image">
+              <img src={selectedEvent.image} alt={selectedEvent.title} />
+              <div className="modal-badges">
+                <span
+                  className="modal-category"
+                  style={{
+                    background: getCategoryColor(selectedEvent.category),
+                  }}
+                >
+                  {selectedEvent.category}
+                </span>
+                <span className="modal-region">
+                  {getRegionIcon(selectedEvent.region)} {selectedEvent.region}
+                </span>
+              </div>
+            </div>
+
+            <div className="modal-content">
+              <div className="modal-header">
+                <h2>{selectedEvent.title}</h2>
+                {selectedEvent.amharicTitle && (
+                  <span className="modal-amharic">
+                    {selectedEvent.amharicTitle}
+                  </span>
+                )}
+              </div>
+
+              <p className="modal-full-description">
+                {selectedEvent.description}
+              </p>
+
+              <div className="modal-details">
+                <div className="modal-detail-item">
+                  <span className="modal-detail-icon">📅</span>
+                  <div>
+                    <span className="modal-detail-label">Start Date</span>
+                    <span className="modal-detail-value">
+                      {selectedEvent.startDate}
+                    </span>
+                  </div>
+                </div>
+                {selectedEvent.endDate &&
+                  selectedEvent.endDate !== selectedEvent.startDate && (
+                    <div className="modal-detail-item">
+                      <span className="modal-detail-icon">📅</span>
+                      <div>
+                        <span className="modal-detail-label">End Date</span>
+                        <span className="modal-detail-value">
+                          {selectedEvent.endDate}
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                <div className="modal-detail-item">
+                  <span className="modal-detail-icon">📍</span>
+                  <div>
+                    <span className="modal-detail-label">Location</span>
+                    <span className="modal-detail-value">
+                      {selectedEvent.location}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="modal-highlights">
+                <h4>✨ Event Highlights</h4>
+                <div className="modal-highlights-list">
+                  {selectedEvent.highlights.map((item, index) => (
+                    <span key={index} className="modal-highlight-tag">
+                      ✨ {item}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <button className="modal-book-btn">Book Now</button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* ===== BACK TO HOME ===== */}
       <section className="events-back">

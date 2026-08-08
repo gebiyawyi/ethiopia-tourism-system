@@ -1,26 +1,44 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Home.css";
+import Carousel from "../../components/Carousel/Carousel";
 
 // ============================================
 // 📸 IMPORT YOUR IMAGES HERE
 // ============================================
-//
-// TO ADD YOUR IMAGES:
-// 1. Place images in: frontend/src/assets/images/
-// 2. Import them like:
-//    import heroBgImage from '../../assets/images/hero-bg.jpg';
-//    import event1Image from '../../assets/images/events/event1.jpg';
-//    import event2Image from '../../assets/images/events/event2.jpg';
-//    import event3Image from '../../assets/images/events/event3.jpg';
-//    import event4Image from '../../assets/images/events/event4.jpg';
-//    import event5Image from '../../assets/images/events/event5.jpg';
-//    import event6Image from '../../assets/images/events/event6.jpg';
+// Place images in: frontend/src/assets/images/
 // ============================================
-
+import lalibela from "../../assets/images/lalibela.png";
+import denkel from "../../assets/images/Danakil-Depression.png";
+import semien from "../../assets/images/walia.png";
+import axum from "../../assets/images/axum.png";
+import ommo from "../../assets/images/ommovalley.png";
+import buhie from "../../assets/images/buhie.png";
+import timiket from "../../assets/images/timiket.png";
+import ashenda from "../../assets/images/ashenda.png";
+import newyear from "../../assets/images/newyear.png";
+import meskel from "../../assets/images/meskel.png";
+import fiche from "../../assets/images/fiche.png";
+import harari from "../../assets/images/harar.png";
+import denkele1 from "../../assets/images/denkele1.png";
+import coffee from "../../assets/images/coffee.png";
+import gondar from "../../assets/images/gondar.png";
+import ommo1 from "../../assets/images/ommo1.png";
+import rasdashen from "../../assets/images/rasdashen.png";
+import wildanimal from "../../assets/images/wildanimal.png";
+import semien2 from "../../assets/images/semien2.png";
+import bluenile from "../../assets/images/bluenile.png";
+import etcu from "../../assets/images/etcu.png";
+import culturalfe from "../../assets/images/culturalfe.png";
+import debredamo from "../../assets/images/debredamo.png";
+import national from "../../assets/images/national.png";
+import tana from "../../assets/images/tana.png";
+import etmap from "../../assets/images/etmap.png";
+import lwommo from "../../assets/images/lwommo.png";
+import lwaw from "../../assets/images/lwaw.png";
+import konso from "../../assets/images/konso.png";
 const Home = () => {
   const [scrolled, setScrolled] = useState(false);
-  const [currentSlide, setCurrentSlide] = useState(0);
   const [verticalOffset, setVerticalOffset] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -29,72 +47,53 @@ const Home = () => {
   // ============================================
   const images = {
     // ===== HERO BACKGROUND =====
-    // 📸 REPLACE with your hero background image
     heroBg:
       "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=1920&h=1080&fit=crop",
 
     // ===== VIDEO =====
-    // 📸 REPLACE with your hero video
     heroVideo: "https://www.w3schools.com/html/mov_bbb.mp4",
 
     // ===== VERTICAL LEFT SIDE IMAGES =====
-    // 📸 REPLACE with your images
     verticalLeft1:
-      "https://images.unsplash.com/photo-1589802829985-817e51171b92?w=400&h=300&fit=crop",
+      lalibela,
     verticalLeft2:
-      "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=400&h=300&fit=crop",
+      semien2,
     verticalLeft3:
-      "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=400&h=300&fit=crop",
+      denkele1,
     verticalLeft4:
-      "https://images.unsplash.com/photo-1523805009344-8f45bb7a72e6?w=400&h=300&fit=crop",
+      ommo1,
     verticalLeft5:
-      "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=400&h=300&fit=crop",
+    axum,
     verticalLeft6:
-      "https://images.unsplash.com/photo-1590050752117-23802e9b3ee2?w=400&h=300&fit=crop",
+      harari,
     verticalLeft7:
-      "https://images.unsplash.com/photo-1551632811-561732d8a11e?w=400&h=300&fit=crop",
+      gondar,
     verticalLeft8:
-      "https://images.unsplash.com/photo-1547592180-85f173990554?w=400&h=300&fit=crop",
+      bluenile,
 
     // ===== VERTICAL RIGHT SIDE IMAGES =====
-    // 📸 REPLACE with your images
     verticalRight1:
-      "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=400&h=300&fit=crop",
+     etcu,
     verticalRight2:
-      "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=400&h=300&fit=crop",
+      coffee,
     verticalRight3:
-      "https://images.unsplash.com/photo-1533105079780-92b9be482077?w=400&h=300&fit=crop",
+      wildanimal,
     verticalRight4:
-      "https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=400&h=300&fit=crop",
+      rasdashen,
     verticalRight5:
-      "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=400&h=300&fit=crop",
+      culturalfe,
     verticalRight6:
-      "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=400&h=300&fit=crop",
+    debredamo,
     verticalRight7:
-      "https://images.unsplash.com/photo-1523805009344-8f45bb7a72e6?w=400&h=300&fit=crop",
+      national,
     verticalRight8:
-      "https://images.unsplash.com/photo-1589802829985-817e51171b92?w=400&h=300&fit=crop",
+      tana,
 
     // ===== CENTER MAP =====
-    // 📸 REPLACE with your Ethiopia map image
     ethiopiaMap:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Ethiopia_Map.png/800px-Ethiopia_Map.png",
-
-    // ===== CAROUSEL IMAGES =====
-    // 📸 REPLACE with your carousel images
-    carousel1:
-      "https://images.unsplash.com/photo-1589802829985-817e51171b92?w=1200&h=600&fit=crop",
-    carousel2:
-      "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=1200&h=600&fit=crop",
-    carousel3:
-      "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1200&h=600&fit=crop",
-    carousel4:
-      "https://images.unsplash.com/photo-1523805009344-8f45bb7a72e6?w=1200&h=600&fit=crop",
-    carousel5:
-      "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=1200&h=600&fit=crop",
+      etmap,
 
     // ===== FEATURED DESTINATION IMAGES =====
-    // 📸 REPLACE with your images
     featured1:
       "https://images.unsplash.com/photo-1589802829985-817e51171b92?w=600&h=400&fit=crop",
     featured2:
@@ -105,31 +104,65 @@ const Home = () => {
       "https://images.unsplash.com/photo-1523805009344-8f45bb7a72e6?w=600&h=400&fit=crop",
 
     // ===== UNESCO IMAGES =====
-    // 📸 REPLACE with your UNESCO images
     unesco1:
-      "https://images.unsplash.com/photo-1590050752117-23802e9b3ee2?w=600&h=400&fit=crop",
+      harari,
     unesco2:
-      "https://images.unsplash.com/photo-1523805009344-8f45bb7a72e6?w=600&h=400&fit=crop",
+     lwommo,
     unesco3:
-      "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=600&h=400&fit=crop",
+      lwaw,
     unesco4:
-      "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=600&h=400&fit=crop",
+    konso,
 
     // ===== EVENTS IMAGES =====
-    // 📸 REPLACE with your event images
     event1:
-      "https://images.unsplash.com/photo-1533105079780-92b9be482077?w=600&h=400&fit=crop",
+      timiket,
     event2:
-      "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=600&h=400&fit=crop",
+      buhie,
     event3:
-      "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=600&h=400&fit=crop",
+     ashenda,
     event4:
-      "https://images.unsplash.com/photo-1551632811-561732d8a11e?w=600&h=400&fit=crop",
-    event5:
-      "https://images.unsplash.com/photo-1547592180-85f173990554?w=600&h=400&fit=crop",
+     newyear,
+    event5:meskel
+     ,
     event6:
-      "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=600&h=400&fit=crop",
+     fiche,
   };
+
+  // ============================================
+  // ✅ CAROUSEL SLIDES DATA - FULL DESCRIPTIONS
+  // ============================================
+  const carouselItems = [
+    {
+      image: lalibela,
+      title: "Lalibela Rock Churches",
+      description:
+        "The Lalibela Rock Churches are a UNESCO World Heritage Site featuring 11 monolithic churches carved from the living rock in the 12th century. These remarkable structures, still active places of worship today, are connected by a network of tunnels and passages, representing a 'New Jerusalem' for pilgrims. The intricate architecture and ancient religious significance make it one of Ethiopia's most sacred and awe-inspiring destinations.",
+    },
+    {
+      image: semien,
+      title: "Simien Mountains National Park",
+      description:
+        "The Simien Mountains National Park is a UNESCO World Heritage Site renowned for its dramatic landscapes, deep valleys, and jagged peaks. Home to unique wildlife including the Gelada baboon and Ethiopian wolf, the park offers some of the most spectacular trekking experiences in Africa. The stunning escarpments and breathtaking views of the surrounding lowlands make it a paradise for nature lovers and adventure seekers.",
+    },
+    {
+      image: denkel,
+      title: "Danakil Depression",
+      description:
+        "The Danakil Depression is one of the most extreme and fascinating places on Earth, known as the 'Gateway to Hell.' Located in the Afar Triangle, it features colorful sulfur springs, vast salt flats, and active volcanoes like Erta Ale with its permanent lava lake. Despite being one of the hottest places on the planet, this surreal landscape attracts adventurers and photographers from around the world with its otherworldly beauty.",
+    },
+    {
+      image: ommo,
+      title: "Omo Valley Tribes",
+      description:
+        "The Omo Valley is a cultural treasure trove, home to some of Ethiopia's most fascinating indigenous tribes including the Hamer, Mursi, Karo, and Dassanech. This remote region offers a unique glimpse into ancient traditions, body painting, lip plates, and vibrant ceremonies that have been preserved for generations. Visiting the Omo Valley is an immersive cultural experience unlike any other in the world.",
+    },
+    {
+      image: axum,
+      title: "Axum Obelisks",
+      description:
+        "The ancient city of Axum was once the heart of the powerful Aksumite Empire. Today, it is famous for its towering obelisks, royal tombs, and the legendary Church of Our Lady Mary of Zion, which is said to house the Ark of the Covenant. These monumental granite stelae, some standing over 20 meters tall, are a testament to the engineering prowess and rich history of one of the oldest civilizations in Africa.",
+    },
+  ];
 
   // ============================================
   // VERTICAL IMAGES DATA
@@ -237,9 +270,8 @@ const Home = () => {
   ];
 
   // ============================================
-  // 📸 EVENTS & FESTIVALS DATA - ADD YOUR IMAGES
+  // 📸 EVENTS & FESTIVALS DATA
   // ============================================
-  // 📸 EDIT: Change titles, descriptions, dates, and images
   const eventsData = [
     {
       id: 1,
@@ -247,11 +279,10 @@ const Home = () => {
       amharicTitle: "ጥምቀት",
       description:
         "One of the most colorful and important festivals in Ethiopia, celebrating the baptism of Jesus Christ in the Jordan River.",
-      startDate: "Jan 19, 2026",
-      endDate: "Jan 20, 2026",
+      startDate: "Jan 10",
+      endDate: "Jan 11",
       location: "Nationwide (Especially Gonder, Lalibela)",
       category: "Religious",
-      // 📸 REPLACE with your image
       image: images.event1,
       highlights: [
         "Colorful Processions",
@@ -266,11 +297,9 @@ const Home = () => {
       amharicTitle: "ቡሄ",
       description:
         "Celebration of the Transfiguration of Jesus Christ, marked by traditional songs, bonfires, and festive meals.",
-      startDate: "Aug 19, 2026",
-      endDate: "Aug 19, 2026",
+      Date: "Aug 13",
       location: "Nationwide",
       category: "Religious",
-      // 📸 REPLACE with your image
       image: images.event2,
       highlights: [
         "Bonfires",
@@ -285,11 +314,9 @@ const Home = () => {
       amharicTitle: "አሸንዳ",
       description:
         "A colorful cultural festival celebrating young women with music, dance, and traditional attire across Tigray and Amhara regions.",
-      startDate: "Aug 22, 2026",
-      endDate: "Aug 25, 2026",
+      Date: "Aug 16---21",
       location: "Tigray & Amhara Regions",
       category: "Cultural",
-      // 📸 REPLACE with your image
       image: images.event3,
       highlights: [
         "Traditional Dance",
@@ -304,11 +331,9 @@ const Home = () => {
       amharicTitle: "እንቁጣጣሽ",
       description:
         "Celebrate the Ethiopian New Year with traditional feasts, coffee ceremonies, and the blooming of yellow daisies across the country.",
-      startDate: "Sep 11, 2026",
-      endDate: "Sep 12, 2026",
+      Date: "Sep 1",
       location: "Nationwide",
       category: "Festival",
-      // 📸 REPLACE with your image
       image: images.event4,
       highlights: [
         "New Year Celebrations",
@@ -323,11 +348,9 @@ const Home = () => {
       amharicTitle: "መስቀል",
       description:
         "A vibrant religious celebration with massive bonfires, colorful processions, and traditional music commemorating the discovery of the True Cross.",
-      startDate: "Sep 27, 2026",
-      endDate: "Sep 27, 2026",
+      startDate: "Sep 17",
       location: "Addis Ababa & Nationwide",
       category: "Religious",
-      // 📸 REPLACE with your image
       image: images.event5,
       highlights: [
         "Massive Bonfires",
@@ -346,7 +369,6 @@ const Home = () => {
       endDate: "Dec 13, 2026",
       location: "Sidama Region",
       category: "Cultural",
-      // 📸 REPLACE with your image
       image: images.event6,
       highlights: [
         "Cultural Performances",
@@ -354,62 +376,6 @@ const Home = () => {
         "Community Gatherings",
         "UNESCO Heritage",
       ],
-    },
-  ];
-
-  // ============================================
-  // CAROUSEL DATA
-  // ============================================
-  const carouselSlides = [
-    {
-      id: 1,
-      image: images.carousel1,
-      title: "🏛️ Lalibela Rock Churches",
-      description:
-        "Discover the ancient 12th-century rock-hewn churches carved from solid rock.",
-      location: "Amhara Region",
-      rating: "4.8 ⭐",
-      category: "UNESCO Heritage",
-    },
-    {
-      id: 2,
-      image: images.carousel2,
-      title: "🏔️ Simien Mountains National Park",
-      description:
-        "Experience breathtaking landscapes with dramatic escarpments and unique wildlife.",
-      location: "Gondar",
-      rating: "4.9 ⭐",
-      category: "Nature & Wildlife",
-    },
-    {
-      id: 3,
-      image: images.carousel3,
-      title: "🌋 Danakil Depression",
-      description:
-        "Explore one of the most extreme places on Earth with colorful sulfur springs.",
-      location: "Afar Region",
-      rating: "5.0 ⭐",
-      category: "Adventure",
-    },
-    {
-      id: 4,
-      image: images.carousel4,
-      title: "🎭 Omo Valley Tribes",
-      description:
-        "Immerse yourself in the rich cultural heritage of Ethiopia's indigenous tribes.",
-      location: "Southern Ethiopia",
-      rating: "4.7 ⭐",
-      category: "Cultural Experience",
-    },
-    {
-      id: 5,
-      image: images.carousel5,
-      title: "🏛️ Axum Obelisks",
-      description:
-        "Visit the ancient city of Axum, home to towering obelisks and royal tombs.",
-      location: "Tigray Region",
-      rating: "4.8 ⭐",
-      category: "Historical Site",
     },
   ];
 
@@ -494,13 +460,6 @@ const Home = () => {
   // EFFECTS
   // ============================================
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % carouselSlides.length);
-    }, 4000);
-    return () => clearInterval(timer);
-  }, [carouselSlides.length]);
-
-  useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
@@ -526,21 +485,6 @@ const Home = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const goToSlide = (index) => {
-    setCurrentSlide(index);
-  };
-
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % carouselSlides.length);
-  };
-
-  const prevSlide = () => {
-    setCurrentSlide(
-      (prev) => (prev - 1 + carouselSlides.length) % carouselSlides.length,
-    );
-  };
-
-  // Get category color
   const getCategoryColor = (category) => {
     const colors = {
       Religious: "#7c3aed",
@@ -583,8 +527,6 @@ const Home = () => {
               <p className="hero-description">
                 Prepare for an unforgettable journey through the heart of
                 Ethiopia, where ancient traditions meet breathtaking landscapes.
-                From the historic wonders of Lalibela and Axum to the stunning
-                natural beauty of the Simien Mountains and the Blue Nile Falls.
               </p>
               <div className="hero-buttons">
                 <Link to="/destinations" className="btn-primary">
@@ -620,7 +562,7 @@ const Home = () => {
       </section>
 
       {/* ============================================ */}
-      {/* CAROUSEL SECTION */}
+      {/* ✅ CAROUSEL SECTION - Changes every 3 seconds */}
       {/* ============================================ */}
       <section className="section carousel-section">
         <div className="container">
@@ -632,62 +574,13 @@ const Home = () => {
             </p>
           </div>
 
-          <div className="carousel-container">
-            <div className="carousel-track">
-              {carouselSlides.map((slide, index) => (
-                <div
-                  key={slide.id}
-                  className={`carousel-slide ${index === currentSlide ? "active" : ""}`}
-                  style={{
-                    transform: `translateX(${(index - currentSlide) * 100}%)`,
-                  }}
-                >
-                  <div className="carousel-slide-content">
-                    <img src={slide.image} alt={slide.title} />
-                    <div className="carousel-overlay">
-                      <div className="carousel-badge">{slide.category}</div>
-                      <h3>{slide.title}</h3>
-                      <p>{slide.description}</p>
-                      <div className="carousel-meta">
-                        <span className="carousel-location">
-                          📍 {slide.location}
-                        </span>
-                        <span className="carousel-rating">{slide.rating}</span>
-                      </div>
-                      <Link
-                        to={`/destinations/${slide.id}`}
-                        className="carousel-btn"
-                      >
-                        Explore Now →
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <button className="carousel-nav prev" onClick={prevSlide}>
-              ❮
-            </button>
-            <button className="carousel-nav next" onClick={nextSlide}>
-              ❯
-            </button>
-
-            <div className="carousel-dots">
-              {carouselSlides.map((_, index) => (
-                <button
-                  key={index}
-                  className={`carousel-dot ${index === currentSlide ? "active" : ""}`}
-                  onClick={() => goToSlide(index)}
-                />
-              ))}
-            </div>
-          </div>
+          {/* ✅ interval={3000} = Changes every 3 seconds */}
+          <Carousel items={carouselItems} autoPlay={true} interval={3000} />
         </div>
       </section>
 
       {/* ============================================ */}
-      {/* ✨ EVENTS & FESTIVALS SECTION */}
+      {/* EVENTS SECTION */}
       {/* ============================================ */}
       <section className="section events-section">
         <div className="container">
@@ -704,8 +597,14 @@ const Home = () => {
             {eventsData.map((event) => (
               <div key={event.id} className="event-card">
                 <div className="event-image">
-                  {/* 📸 Image from eventsData */}
-                  <img src={event.image} alt={event.title} />
+                  <img
+                    src={event.image}
+                    alt={event.title}
+                    onError={(e) => {
+                      e.target.src =
+                        "https://via.placeholder.com/600x400/1e3a5f/ffffff?text=Event";
+                    }}
+                  />
                   <span
                     className="event-category"
                     style={{ background: getCategoryColor(event.category) }}
@@ -757,9 +656,6 @@ const Home = () => {
             ))}
           </div>
 
-          {/* ============================================ */}
-          {/* ✅ EVENTS FOOTER - FIXED LINK TO /events */}
-          {/* ============================================ */}
           <div className="events-footer">
             <Link to="/events" className="events-view-all">
               View All Events 📅
