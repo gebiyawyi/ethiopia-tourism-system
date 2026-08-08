@@ -1,7 +1,3 @@
-// ============================================
-// 📝 REGISTER PAGE - WITH PROFILE IMAGE
-// ============================================
-
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Register.css";
@@ -15,8 +11,8 @@ const Register = () => {
     confirmPassword: "",
     full_name: "",
   });
-  const [profileImage, setProfileImage] = useState(null); // ✅ Selected file
-  const [imagePreview, setImagePreview] = useState(null); // ✅ Preview URL
+  const [profileImage, setProfileImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
@@ -29,7 +25,6 @@ const Register = () => {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      // Validate file type
       const allowedTypes = [
         "image/jpeg",
         "image/png",
@@ -41,15 +36,12 @@ const Register = () => {
         return;
       }
 
-      // Validate file size (max 2MB)
       if (file.size > 2 * 1024 * 1024) {
         setError("Image size must be less than 2MB");
         return;
       }
 
       setProfileImage(file);
-
-      // Create preview
       const reader = new FileReader();
       reader.onloadend = () => {
         setImagePreview(reader.result);
@@ -116,7 +108,6 @@ const Register = () => {
     setLoading(true);
 
     try {
-      // Create FormData for file upload
       const formDataToSend = new FormData();
       formDataToSend.append("username", formData.username.trim());
       formDataToSend.append("email", formData.email.trim());
@@ -126,12 +117,10 @@ const Register = () => {
         formData.full_name.trim() || formData.username.trim(),
       );
 
-      // ✅ Append image if selected
       if (profileImage) {
         formDataToSend.append("profile_image", profileImage);
       }
 
-      // Send to backend
       const response = await api.post("/auth/register", formDataToSend, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -141,28 +130,24 @@ const Register = () => {
       console.log("✅ Registration response:", response.data);
 
       if (response.data.success) {
-        // ✅ Save to localStorage
+        // ✅ Save token
         localStorage.setItem("token", response.data.token);
-        localStorage.setItem("user", JSON.stringify(response.data.user));
+
+        // ✅ Save FULL user data (including profile_image)
+        const userData = response.data.user;
+        console.log("📸 User data with profile image:", userData);
+        localStorage.setItem("user", JSON.stringify(userData));
 
         setSuccess(true);
-
-        // Redirect after 1.5 seconds
         setTimeout(() => {
           navigate("/");
         }, 1500);
       }
     } catch (err) {
       console.error("❌ Registration error:", err.response?.data);
-
-      const errorMessage = err.response?.data?.message;
-      if (errorMessage === "User already exists with this email or username") {
-        setError("❌ An account with this email or username already exists.");
-      } else if (err.response?.status === 500) {
-        setError("❌ Server error. Please try again later.");
-      } else {
-        setError(errorMessage || "❌ Registration failed. Please try again.");
-      }
+      setError(
+        err.response?.data?.message || "Registration failed. Please try again.",
+      );
     } finally {
       setLoading(false);
     }
@@ -192,7 +177,6 @@ const Register = () => {
             <p>Join us to explore Ethiopia</p>
           </div>
 
-          {/* Error Message */}
           {error && (
             <div className="register-error">
               <span className="error-text">{error}</span>
@@ -202,7 +186,6 @@ const Register = () => {
             </div>
           )}
 
-          {/* Success Message */}
           {success && (
             <div className="register-success">
               <span className="success-icon">✅</span>
@@ -217,9 +200,7 @@ const Register = () => {
             className="register-form"
             encType="multipart/form-data"
           >
-            {/* ============================================
-                📸 PROFILE PHOTO UPLOAD
-            ============================================ */}
+            {/* Profile Photo Upload */}
             <div className="form-group full-width">
               <label>
                 Profile Photo <span className="optional">(Optional)</span>

@@ -11,13 +11,13 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   // ============================================
-  // ✅ CHECK LOGIN STATUS & GET USER DATA
+  // ✅ CHECK LOGIN STATUS
   // ============================================
   useEffect(() => {
     const checkAuth = () => {
       const token = localStorage.getItem("token");
       const userData = localStorage.getItem("user");
-      
+
       if (token && userData) {
         setIsLoggedIn(true);
         try {
@@ -36,10 +36,10 @@ const Navbar = () => {
   }, [location]);
 
   // ============================================
-  // ✅ GET USER DATA FROM LOCALSTORAGE
+  // ✅ GET USER DATA
   // ============================================
   const getUser = () => {
-    const userData = localStorage.getItem('user');
+    const userData = localStorage.getItem("user");
     if (userData) {
       try {
         return JSON.parse(userData);
@@ -65,7 +65,9 @@ const Navbar = () => {
   // ============================================
   const getAvatarLetter = () => {
     if (!currentUser) return "U";
-    return (currentUser.full_name || currentUser.username || "U").charAt(0).toUpperCase();
+    return (currentUser.full_name || currentUser.username || "U")
+      .charAt(0)
+      .toUpperCase();
   };
 
   // ============================================
@@ -119,7 +121,9 @@ const Navbar = () => {
   return (
     <header className={`navbar ${scrolled ? "scrolled" : ""}`}>
       <div className="navbar-container">
-        {/* Logo */}
+        {/* ============================================
+            LOGO
+        ============================================ */}
         <Link
           to="/"
           className="navbar-logo"
@@ -131,7 +135,9 @@ const Navbar = () => {
           </h2>
         </Link>
 
-        {/* Desktop Navigation */}
+        {/* ============================================
+            DESKTOP NAVIGATION - CLEAN & SIMPLE
+        ============================================ */}
         <nav className="navbar-links-desktop">
           <Link to="/" className={`nav-link ${isActive("/") ? "active" : ""}`}>
             Home
@@ -163,25 +169,23 @@ const Navbar = () => {
         </nav>
 
         {/* ============================================
-            ✅ PROFILE LINK WITH IMAGE
-            ============================================ */}
+            ACTIONS - Login/Register OR Profile/Logout
+        ============================================ */}
         <div className="navbar-actions">
           {isLoggedIn && currentUser ? (
-            // ✅ Logged In - Show Profile with Image & Name
+            // ✅ LOGGED IN - Show Profile with Image & Logout
             <>
               <Link to="/profile" className="profile-link">
-                {/* ✅ Show profile image if exists, otherwise show initials */}
                 {currentUser?.profile_image ? (
-                  <img 
-                    src={currentUser.profile_image} 
-                    alt="Profile" 
+                  <img
+                    src={currentUser.profile_image}
+                    alt="Profile"
                     className="avatar-image-small"
                     onError={(e) => {
-                      // ✅ If image fails to load, show initials
-                      e.target.style.display = 'none';
+                      e.target.style.display = "none";
                       const parent = e.target.parentElement;
-                      const span = document.createElement('span');
-                      span.className = 'avatar-circle-small';
+                      const span = document.createElement("span");
+                      span.className = "avatar-circle-small";
                       span.textContent = getAvatarLetter();
                       parent.insertBefore(span, e.target);
                     }}
@@ -191,16 +195,14 @@ const Navbar = () => {
                     {getAvatarLetter()}
                   </span>
                 )}
-                <span className="profile-name">
-                  {getDisplayName()}
-                </span>
+                <span className="profile-name">{getDisplayName()}</span>
               </Link>
               <button onClick={handleLogout} className="logout-btn">
                 Logout
               </button>
             </>
           ) : (
-            // ✅ Logged Out - Show Login & Register
+            // ✅ LOGGED OUT - Show Login & Register
             <>
               <Link to="/login" className="btn-login">
                 Sign In
@@ -211,7 +213,7 @@ const Navbar = () => {
             </>
           )}
 
-          {/* Hamburger Menu */}
+          {/* Hamburger Menu - Mobile Only */}
           <button
             className={`hamburger ${isMobileMenuOpen ? "active" : ""}`}
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -223,13 +225,17 @@ const Navbar = () => {
           </button>
         </div>
 
-        {/* Mobile Overlay */}
+        {/* ============================================
+            MOBILE OVERLAY
+        ============================================ */}
         <div
           className={`mobile-overlay ${isMobileMenuOpen ? "active" : ""}`}
           onClick={() => setIsMobileMenuOpen(false)}
         ></div>
 
-        {/* Mobile Menu */}
+        {/* ============================================
+            MOBILE MENU - CLEAN & SIMPLE
+        ============================================ */}
         <div className={`mobile-menu ${isMobileMenuOpen ? "active" : ""}`}>
           <div className="mobile-menu-header">
             <Link

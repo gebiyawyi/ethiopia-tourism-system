@@ -24,23 +24,19 @@ const Profile = () => {
   const [imagePreview, setImagePreview] = useState(null);
   const navigate = useNavigate();
 
-  // ============================================
-  // ✅ GET DISPLAY NAME
-  // ============================================
   const getDisplayName = () => {
     if (!user) return "User";
     return user.full_name || user.username || "User";
   };
 
-  // ============================================
-  // ✅ GET INITIALS FOR AVATAR
-  // ============================================
   const getInitials = () => {
     if (!user) return "U";
     const name = user.full_name || user.username || "User";
     if (name.includes(" ")) {
       const parts = name.split(" ");
-      return (parts[0].charAt(0) + parts[parts.length - 1].charAt(0)).toUpperCase();
+      return (
+        parts[0].charAt(0) + parts[parts.length - 1].charAt(0)
+      ).toUpperCase();
     }
     return name.charAt(0).toUpperCase();
   };
@@ -90,9 +86,17 @@ const Profile = () => {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const allowedTypes = ["image/jpeg", "image/png", "image/gif", "image/webp"];
+      const allowedTypes = [
+        "image/jpeg",
+        "image/png",
+        "image/gif",
+        "image/webp",
+      ];
       if (!allowedTypes.includes(file.type)) {
-        setMessage({ text: "Please upload a valid image (JPEG, PNG, GIF, or WEBP)", type: "error" });
+        setMessage({
+          text: "Please upload a valid image (JPEG, PNG, GIF, or WEBP)",
+          type: "error",
+        });
         return;
       }
 
@@ -112,7 +116,7 @@ const Profile = () => {
   };
 
   // ============================================
-  // ✅ REMOVE IMAGE
+  // 🗑️ REMOVE IMAGE
   // ============================================
   const removeImage = () => {
     setNewProfileImage(null);
@@ -179,7 +183,9 @@ const Profile = () => {
     } catch (error) {
       console.error("❌ Profile update error:", error.response?.data);
       setMessage({
-        text: error.response?.data?.message || "Error updating profile. Please try again.",
+        text:
+          error.response?.data?.message ||
+          "Error updating profile. Please try again.",
         type: "error",
       });
     } finally {
@@ -202,7 +208,10 @@ const Profile = () => {
     }
 
     if (passwordData.newPassword.length < 6) {
-      setMessage({ text: "Password must be at least 6 characters!", type: "error" });
+      setMessage({
+        text: "Password must be at least 6 characters!",
+        type: "error",
+      });
       setLoading(false);
       return;
     }
@@ -225,7 +234,9 @@ const Profile = () => {
     } catch (error) {
       console.error("❌ Password change error:", error.response?.data);
       setMessage({
-        text: error.response?.data?.message || "Error changing password. Please try again.",
+        text:
+          error.response?.data?.message ||
+          "Error changing password. Please try again.",
         type: "error",
       });
     } finally {
@@ -260,22 +271,21 @@ const Profile = () => {
       <div className="container">
         <div className="profile-container">
           {/* ============================================
-              ✅ PROFILE AVATAR - SHOW IMAGE
+              SIDEBAR - Profile Image
           ============================================ */}
           <div className="profile-sidebar">
             <div className="profile-avatar">
-              {/* ✅ Show profile image if exists, otherwise show initials */}
+              {/* ✅ Show profile image if exists */}
               {user?.profile_image ? (
                 <img
                   src={user.profile_image}
                   alt="Profile"
                   className="profile-image-large"
                   onError={(e) => {
-                    // If image fails to load, show initials
-                    e.target.style.display = 'none';
+                    e.target.style.display = "none";
                     const parent = e.target.parentElement;
-                    const div = document.createElement('div');
-                    div.className = 'avatar-circle-large';
+                    const div = document.createElement("div");
+                    div.className = "avatar-circle-large";
                     div.textContent = getInitials();
                     parent.insertBefore(div, e.target);
                   }}
@@ -307,7 +317,10 @@ const Profile = () => {
               >
                 📋 My Bookings
               </button>
-              <button className="profile-nav-item logout" onClick={handleLogout}>
+              <button
+                className="profile-nav-item logout"
+                onClick={handleLogout}
+              >
                 🚪 Logout
               </button>
             </nav>
@@ -325,7 +338,11 @@ const Profile = () => {
             {activeTab === "profile" && (
               <div className="profile-tab">
                 <h2>My Profile</h2>
-                <form onSubmit={handleSaveProfile} className="profile-form" encType="multipart/form-data">
+                <form
+                  onSubmit={handleSaveProfile}
+                  className="profile-form"
+                  encType="multipart/form-data"
+                >
                   {/* Profile Photo Upload */}
                   <div className="form-group full-width">
                     <label>Profile Photo</label>
@@ -365,7 +382,10 @@ const Profile = () => {
                         )}
                       </div>
                       <div className="photo-upload-actions">
-                        <label htmlFor="profile-image-input" className="upload-btn">
+                        <label
+                          htmlFor="profile-image-input"
+                          className="upload-btn"
+                        >
                           Choose Photo
                         </label>
                         <input
@@ -501,7 +521,9 @@ const Profile = () => {
                       <h4>Lalibela Tour Package</h4>
                       <p>📅 Jan 15, 2026 - Jan 18, 2026</p>
                       <p>👥 2 guests</p>
-                      <span className="booking-status confirmed">Confirmed</span>
+                      <span className="booking-status confirmed">
+                        Confirmed
+                      </span>
                     </div>
                     <button className="booking-view-btn">View Details →</button>
                   </div>
@@ -521,7 +543,9 @@ const Profile = () => {
                       <h4>Danakil Depression Adventure</h4>
                       <p>📅 Mar 1, 2026 - Mar 5, 2026</p>
                       <p>👥 1 guest</p>
-                      <span className="booking-status cancelled">Cancelled</span>
+                      <span className="booking-status cancelled">
+                        Cancelled
+                      </span>
                     </div>
                     <button className="booking-view-btn">View Details →</button>
                   </div>

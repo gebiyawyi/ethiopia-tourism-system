@@ -1,48 +1,36 @@
-// ============================================
-// 📸 CLOUDINARY CONFIGURATION
-// ============================================
-// Purpose: Configure Cloudinary for image upload
-// This file connects your app to Cloudinary cloud storage
-// ============================================
-
 const cloudinary = require("cloudinary").v2;
 const dotenv = require("dotenv");
 
 dotenv.config();
 
-// Configure Cloudinary with credentials from .env
+// ✅ Configure Cloudinary
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
-  secure: true, // Use HTTPS
+  secure: true,
 });
 
-// ============================================
-// 📤 UPLOAD IMAGE FUNCTION
-// ============================================
-// Purpose: Upload image from buffer to Cloudinary
-// Parameter: fileBuffer - image data as buffer
-// Parameter: folder - where to store in Cloudinary
-// Returns: { public_id, url, width, height }
-// ============================================
-
+// ✅ Upload image from buffer
 const uploadImage = async (fileBuffer, folder = "ethiopia_tourism") => {
   try {
-    // Convert buffer to base64 string
+    console.log("📸 Starting Cloudinary upload...");
+
+    // Convert buffer to base64
     const base64String = fileBuffer.toString("base64");
     const dataURI = `data:image/jpeg;base64,${base64String}`;
 
-    // Upload to Cloudinary
     const result = await cloudinary.uploader.upload(dataURI, {
       folder: folder,
       transformation: [
-        { width: 200, height: 200, crop: "fill" }, // Resize to 200x200
-        { quality: "auto" }, // Auto compress
+        { width: 200, height: 200, crop: "fill" },
+        { quality: "auto" },
       ],
     });
 
-    // Return image details
+    console.log("✅ Cloudinary upload successful!");
+    console.log("📸 URL:", result.secure_url);
+
     return {
       public_id: result.public_id,
       url: result.secure_url,
@@ -50,27 +38,9 @@ const uploadImage = async (fileBuffer, folder = "ethiopia_tourism") => {
       height: result.height,
     };
   } catch (error) {
-    console.error("❌ Cloudinary upload error:", error);
+    console.error("❌ Cloudinary upload error:", error.message);
     throw error;
   }
 };
 
-// ============================================
-// 🗑️ DELETE IMAGE FUNCTION
-// ============================================
-// Purpose: Delete image from Cloudinary
-// Parameter: publicId - Cloudinary public ID
-// ============================================
-
-const deleteImage = async (publicId) => {
-  try {
-    const result = await cloudinary.uploader.destroy(publicId);
-    return result;
-  } catch (error) {
-    console.error("❌ Cloudinary delete error:", error);
-    throw error;
-  }
-};
-
-// Export functions
-module.exports = { cloudinary, uploadImage, deleteImage };
+module.exports = { cloudinary, uploadImage };

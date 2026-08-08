@@ -1,11 +1,7 @@
-// ============================================
-// 🔐 AUTH CONTROLLER - WITH IMAGE UPLOAD
-// ============================================
-
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { promisePool } = require("../config/database");
-const { uploadImage } = require("../config/cloudinary"); // ✅ Import Cloudinary
+const { uploadImage } = require("../config/cloudinary");
 
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -14,17 +10,21 @@ const generateToken = (id) => {
 };
 
 // ============================================
-// 📝 REGISTER - WITH PROFILE IMAGE
+// ✅ REGISTER - WITH PROFILE IMAGE
 // ============================================
 const register = async (req, res) => {
   try {
     console.log("📝 ============ REGISTRATION STARTED ============");
-    console.log("📝 Request body:", req.body);
     console.log("📸 File received:", req.file ? "✅ YES" : "❌ NO");
+    if (req.file) {
+      console.log("📸 File name:", req.file.originalname);
+      console.log("📸 File size:", req.file.size);
+      console.log("📸 File type:", req.file.mimetype);
+    }
 
     const { username, email, password, full_name } = req.body;
 
-    // Validate required fields
+    // Validate
     if (!username || !email || !password) {
       return res.status(400).json({
         success: false,
@@ -32,8 +32,7 @@ const register = async (req, res) => {
       });
     }
 
-    // Check if user already exists
-    console.log("🔍 Checking if user exists...");
+    // Check if user exists
     const [existing] = await promisePool.query(
       "SELECT id FROM users WHERE email = ? OR username = ?",
       [email, username],
@@ -47,18 +46,15 @@ const register = async (req, res) => {
     }
 
     // Hash password
-    console.log("🔐 Hashing password...");
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    // ============================================
-    // 📸 UPLOAD IMAGE TO CLOUDINARY (IF PROVIDED)
-    // ============================================
     let profileImageUrl = null;
 
+    // ✅ Upload image to Cloudinary if provided
     if (req.file) {
       try {
-        console.log("📸 Uploading image to Cloudinary...");
+        console.log("📸 Uploading to Cloudinary...");
         const result = await uploadImage(
           req.file.buffer,
           "ethiopia_tourism/profiles",
@@ -66,20 +62,13 @@ const register = async (req, res) => {
         profileImageUrl = result.url;
         console.log("✅ Image uploaded successfully!");
         console.log("📸 Image URL:", profileImageUrl);
-        console.log("📸 Public ID:", result.public_id);
       } catch (uploadError) {
         console.error("❌ Image upload error:", uploadError.message);
-        // Continue registration even if image upload fails
-        // This way the user can still register without an image
+        // Continue without image
       }
-    } else {
-      console.log("📸 No image provided, skipping upload");
     }
 
-    // ============================================
-    // 💾 SAVE USER TO DATABASE
-    // ============================================
-    console.log("💾 Saving user to database...");
+    // ✅ Insert user with profile_image
     const [result] = await promisePool.query(
       `INSERT INTO users (username, email, password_hash, full_name, profile_image) 
        VALUES (?, ?, ?, ?, ?)`,
@@ -87,26 +76,21 @@ const register = async (req, res) => {
     );
 
     console.log("✅ User registered with ID:", result.insertId);
+    console.log("📸 Profile Image URL saved:", profileImageUrl);
 
-    // ============================================
-    // 🔐 GENERATE JWT TOKEN
-    // ============================================
     const token = generateToken(result.insertId);
 
-    // ============================================
-    // 📤 RETURN USER DATA
-    // ============================================
+    // ✅ Return user with profile_image
     const userData = {
       id: result.insertId,
       username,
       email,
       full_name: full_name || username,
       role: "user",
-      profile_image: profileImageUrl, // ✅ This is the key!
+      profile_image: profileImageUrl,
     };
 
     console.log("📤 Returning user data:", userData);
-    console.log("📸 Profile image URL in response:", profileImageUrl);
     console.log("📝 ============ REGISTRATION COMPLETED ============");
 
     res.status(201).json({
@@ -116,16 +100,15 @@ const register = async (req, res) => {
     });
   } catch (error) {
     console.error("❌ Registration error:", error);
-    console.error("❌ Error stack:", error.stack);
     res.status(500).json({
       success: false,
-      message: "Server error during registration: " + error.message,
+      message: "Server error during registration",
     });
   }
 };
 
 // ============================================
-// 🔑 LOGIN - Return profile image
+// ✅ LOGIN
 // ============================================
 const login = async (req, res) => {
   try {
@@ -164,7 +147,7 @@ const login = async (req, res) => {
         email: user.email,
         full_name: user.full_name,
         role: user.role,
-        profile_image: user.profile_image, // ✅ Return profile image
+        profile_image: user.profile_image,
       },
     });
   } catch (error) {
@@ -177,7 +160,7 @@ const login = async (req, res) => {
 };
 
 // ============================================
-// 👤 GET CURRENT USER
+// ✅ GET CURRENT USER
 // ============================================
 const getMe = async (req, res) => {
   try {

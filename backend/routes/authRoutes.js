@@ -1,30 +1,16 @@
-// ============================================
-// 🔐 AUTH ROUTES
-// ============================================
-
 const express = require("express");
 const router = express.Router();
 const { register, login, getMe } = require("../controllers/authController");
 const { protect } = require("../middleware/auth");
-const { uploadSingle } = require("../config/multer"); // ✅ Import multer
+const { uploadSingle } = require("../config/multer");
 
-// ============================================
-// 📝 REGISTER - With optional profile image
-// ============================================
-// uploadSingle handles the file upload
-// The field name must be 'profile_image' (matches frontend)
-// ============================================
-
+// ✅ Register with optional profile image
 router.post("/register", uploadSingle, register);
 
-// ============================================
-// 🔑 LOGIN
-// ============================================
+// ✅ Login
 router.post("/login", login);
 
-// ============================================
-// 👤 GET CURRENT USER
-// ============================================
+// ✅ Get current user
 router.get("/me", protect, getMe);
 
 module.exports = router;
