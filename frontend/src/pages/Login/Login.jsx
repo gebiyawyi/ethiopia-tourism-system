@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import "./Login.css";
 import api from "../../services/api";
+import { useAuth } from "../../context/AuthContext";
 
 const Login = () => {
   const [identifier, setIdentifier] = useState("");
@@ -11,10 +12,14 @@ const Login = () => {
   const [fieldErrors, setFieldErrors] = useState({});
   const [attemptCount, setAttemptCount] = useState(0);
   const navigate = useNavigate();
+  const location = useLocation();
+  const { login } = useAuth();
 
-  // ============================================
-  // ✅ VALIDATE FORM
-  // ============================================
+  const getReturnUrl = () => {
+    const params = new URLSearchParams(location.search);
+    return params.get("return") || "/";
+  };
+
   const validateForm = () => {
     const errors = {};
 
@@ -30,15 +35,9 @@ const Login = () => {
     return Object.keys(errors).length === 0;
   };
 
-  // ============================================
-  // ✅ HANDLE SUBMIT
-  // ============================================
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // ✅ Don't clear error on submit - keep it until corrected
-
-    // Validate form
     if (!validateForm()) {
       return;
     }
@@ -54,21 +53,22 @@ const Login = () => {
       console.log("✅ Login response:", response.data);
 
       if (response.data.success) {
-        // ✅ Clear error on success
+        const { token, user } = response.data;
+
         setError("");
         setFieldErrors({});
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("user", JSON.stringify(response.data.user));
-        navigate("/");
+
+        // ✅ Use AuthContext login
+        login(token, user);
+
+        const returnUrl = getReturnUrl();
+        navigate(returnUrl);
       } else {
-        // ✅ Set error - this will stay
         setError(response.data.message || "Login failed. Please try again.");
         setAttemptCount(attemptCount + 1);
       }
     } catch (err) {
       console.error("❌ Login error:", err.response?.data);
-
-      // ✅ Set specific error - this will stay
       const errorMessage = err.response?.data?.message;
 
       if (errorMessage === "Invalid username/email or password") {
@@ -94,15 +94,11 @@ const Login = () => {
     }
   };
 
-  // ============================================
-  // ✅ HANDLE FIELD CHANGE - Only clear field errors
-  // ============================================
   const handleFieldChange = (e) => {
     const { name, value } = e.target;
 
     if (name === "identifier") {
       setIdentifier(value);
-      // ✅ Clear field error when user types
       if (fieldErrors.identifier) {
         setFieldErrors({ ...fieldErrors, identifier: "" });
       }
@@ -112,25 +108,10 @@ const Login = () => {
         setFieldErrors({ ...fieldErrors, password: "" });
       }
     }
-
-    // ✅ IMPORTANT: General error STAYS until corrected
-    // It will only clear when:
-    // 1. User clicks the close (✕) button
-    // 2. Successful login
   };
 
-  // ============================================
-  // ✅ CLEAR ERROR MANUALLY
-  // ============================================
   const clearError = () => {
     setError("");
-  };
-
-  // ============================================
-  // ✅ Check if fields are filled
-  // ============================================
-  const isFormFilled = () => {
-    return identifier.trim().length > 0 && password.trim().length > 0;
   };
 
   return (
@@ -142,7 +123,6 @@ const Login = () => {
             <p>Sign in with your username or email</p>
           </div>
 
-          {/* ✅ Error Message - STAYS until corrected or dismissed */}
           {error && (
             <div className="login-error">
               <span className="error-text">{error}</span>
@@ -153,7 +133,6 @@ const Login = () => {
           )}
 
           <form onSubmit={handleSubmit} className="login-form">
-            {/* ✅ Username/Email Field */}
             <div className="form-group">
               <label htmlFor="identifier">Username or Email</label>
               <input
@@ -174,7 +153,6 @@ const Login = () => {
               </span>
             </div>
 
-            {/* ✅ Password Field */}
             <div className="form-group">
               <label htmlFor="password">Password</label>
               <input

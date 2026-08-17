@@ -3,6 +3,11 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+// ============================================
+// ✅ AUTH CONTEXT
+// ============================================
+import { AuthProvider } from "./context/AuthContext";
+
 // Components
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
@@ -11,6 +16,8 @@ import Footer from "./components/Footer/Footer";
 import Home from "./pages/Home/Home";
 import Events from "./pages/Events/Events";
 import Destinations from "./pages/Destinations/Destinations";
+import DestinationDetail from "./pages/DestinationDetail/DestinationDetail";
+import Transport from "./pages/Transport/Transport";
 import Hotels from "./pages/Hotels/Hotels";
 import About from "./pages/About/About";
 import Contact from "./pages/Contact/Contact";
@@ -28,47 +35,51 @@ import "./index.css";
 
 function App() {
   return (
-    <Router>
-      <div className="app">
-        <Navbar />
+    <AuthProvider>
+      <Router>
+        <div className="app">
+          <Navbar />
 
-        <main className="main-content">
-          <Routes>
-            {/* Public Routes */}
-            <Route path="/" element={<Home />} />
-            <Route path="/events" element={<Events />} />
-            <Route path="/destinations" element={<Destinations />} />
-            <Route path="/hotels" element={<Hotels />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+          <main className="main-content">
+            <Routes>
+              {/* Public Routes */}
+              <Route path="/" element={<Home />} />
+              <Route path="/events" element={<Events />} />
+              <Route path="/destinations" element={<Destinations />} />
+              <Route path="/destinations/:id" element={<DestinationDetail />} />
+              <Route path="/transport" element={<Transport />} />
+              <Route path="/hotels" element={<Hotels />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
 
-            {/* Protected Routes (Requires Login) */}
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/bookings" element={<Bookings />} />
+              {/* Protected Routes (Requires Login) */}
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/bookings" element={<Bookings />} />
 
-            {/* Admin Routes */}
-            <Route path="/admin/dashboard" element={<AdminDashboard />} />
-          </Routes>
-        </main>
+              {/* Admin Routes */}
+              <Route path="/admin/dashboard" element={<AdminDashboard />} />
+            </Routes>
+          </main>
 
-        <Footer />
+          <Footer />
 
-        <ToastContainer
-          position="top-right"
-          autoClose={3000}
-          hideProgressBar={false}
-          newestOnTop
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="light"
-        />
-      </div>
-    </Router>
+          <ToastContainer
+            position="top-right"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+          />
+        </div>
+      </Router>
+    </AuthProvider>
   );
 }
 

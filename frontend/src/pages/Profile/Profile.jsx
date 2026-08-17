@@ -24,11 +24,17 @@ const Profile = () => {
   const [imagePreview, setImagePreview] = useState(null);
   const navigate = useNavigate();
 
+  // ============================================
+  // ✅ GET DISPLAY NAME
+  // ============================================
   const getDisplayName = () => {
     if (!user) return "User";
     return user.full_name || user.username || "User";
   };
 
+  // ============================================
+  // ✅ GET INITIALS FOR AVATAR
+  // ============================================
   const getInitials = () => {
     if (!user) return "U";
     const name = user.full_name || user.username || "User";
@@ -64,6 +70,7 @@ const Profile = () => {
             username: userData.username || "",
             profile_image: userData.profile_image || "",
           });
+          // Update localStorage with fresh data
           localStorage.setItem("user", JSON.stringify(userData));
         }
       } catch (error) {
@@ -168,6 +175,7 @@ const Profile = () => {
 
       if (response.data.success) {
         const updatedUser = response.data.user;
+        // ✅ Update localStorage with new user data
         localStorage.setItem("user", JSON.stringify(updatedUser));
         setUser(updatedUser);
         setFormData({
@@ -179,6 +187,11 @@ const Profile = () => {
 
         setMessage({ text: "Profile updated successfully!", type: "success" });
         setTimeout(() => setMessage({ text: "", type: "" }), 3000);
+
+        // ✅ Refresh to update Navbar
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
       }
     } catch (error) {
       console.error("❌ Profile update error:", error.response?.data);
@@ -253,6 +266,9 @@ const Profile = () => {
     navigate("/login");
   };
 
+  // ============================================
+  // ✅ RENDER LOADING
+  // ============================================
   if (loading) {
     return (
       <div className="profile-page">
@@ -266,12 +282,15 @@ const Profile = () => {
     );
   }
 
+  // ============================================
+  // ✅ RENDER
+  // ============================================
   return (
     <div className="profile-page">
       <div className="container">
         <div className="profile-container">
           {/* ============================================
-              SIDEBAR - Profile Image
+              SIDEBAR - Profile Image & Navigation
           ============================================ */}
           <div className="profile-sidebar">
             <div className="profile-avatar">
@@ -326,7 +345,9 @@ const Profile = () => {
             </nav>
           </div>
 
-          {/* Content */}
+          {/* ============================================
+              CONTENT
+          ============================================ */}
           <div className="profile-content">
             {message.text && (
               <div className={`profile-message ${message.type}`}>
@@ -334,7 +355,7 @@ const Profile = () => {
               </div>
             )}
 
-            {/* Profile Tab */}
+            {/* ===== PROFILE TAB ===== */}
             {activeTab === "profile" && (
               <div className="profile-tab">
                 <h2>My Profile</h2>
@@ -430,8 +451,12 @@ const Profile = () => {
                       value={formData.username}
                       onChange={handleChange}
                       placeholder="Enter your username"
+                      className="disabled-input"
+                      disabled
                     />
-                    <span className="input-hint">Choose a unique username</span>
+                    <span className="input-hint">
+                      Username cannot be changed
+                    </span>
                   </div>
 
                   <div className="form-group">
@@ -457,13 +482,13 @@ const Profile = () => {
                   </div>
 
                   <button type="submit" className="save-btn" disabled={loading}>
-                    {loading ? "Saving..." : "Save Changes"}
+                    {loading ? "Saving..." : "💾 Save Changes"}
                   </button>
                 </form>
               </div>
             )}
 
-            {/* Change Password Tab */}
+            {/* ===== CHANGE PASSWORD TAB ===== */}
             {activeTab === "password" && (
               <div className="profile-tab">
                 <h2>Change Password</h2>
@@ -505,13 +530,13 @@ const Profile = () => {
                   </div>
 
                   <button type="submit" className="save-btn" disabled={loading}>
-                    {loading ? "Changing..." : "Change Password"}
+                    {loading ? "Changing..." : "🔒 Change Password"}
                   </button>
                 </form>
               </div>
             )}
 
-            {/* Bookings Tab */}
+            {/* ===== BOOKINGS TAB ===== */}
             {activeTab === "bookings" && (
               <div className="profile-tab">
                 <h2>My Bookings</h2>

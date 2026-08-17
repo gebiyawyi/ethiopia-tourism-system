@@ -1,14 +1,31 @@
 const express = require("express");
 const router = express.Router();
-const {
-  getBookings,
-  createBooking,
-  cancelBooking,
-} = require("../controllers/bookingController");
 const { protect } = require("../middleware/auth");
 
-router.get("/", protect, getBookings);
-router.post("/", protect, createBooking);
-router.put("/:id/cancel", protect, cancelBooking);
+// ✅ Import controllers
+const {
+  getBookings,
+  getBookingById,
+  createBooking,
+  updateBooking,
+  cancelBooking,
+  getTransportByDestination,
+  getHotelsByDestination,
+} = require("../controllers/bookingController");
 
-module.exports = router; // ✅ MUST HAVE THIS
+// ============================================
+// ✅ BOOKING ROUTES (Protected)
+// ============================================
+router.get("/", protect, getBookings); // ← Line 18 - FIXED
+router.get("/:id", protect, getBookingById);
+router.post("/", protect, createBooking);
+router.put("/:id", protect, updateBooking);
+router.delete("/:id", protect, cancelBooking);
+
+// ============================================
+// ✅ RELATED ROUTES
+// ============================================
+router.get("/transport/:destinationId", protect, getTransportByDestination);
+router.get("/hotels/:destinationId", protect, getHotelsByDestination);
+
+module.exports = router;

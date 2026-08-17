@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import "./Register.css";
 import api from "../../services/api";
+import { useAuth } from "../../context/AuthContext";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -18,10 +19,14 @@ const Register = () => {
   const [success, setSuccess] = useState(false);
   const [fieldErrors, setFieldErrors] = useState({});
   const navigate = useNavigate();
+  const location = useLocation();
+  const { register } = useAuth();
 
-  // ============================================
-  // 📸 HANDLE IMAGE SELECTION
-  // ============================================
+  const getReturnUrl = () => {
+    const params = new URLSearchParams(location.search);
+    return params.get("return") || "/";
+  };
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -51,18 +56,12 @@ const Register = () => {
     }
   };
 
-  // ============================================
-  // 🗑️ REMOVE IMAGE
-  // ============================================
   const removeImage = () => {
     setProfileImage(null);
     setImagePreview(null);
     document.getElementById("profile-image-input").value = "";
   };
 
-  // ============================================
-  // ✅ VALIDATE FORM
-  // ============================================
   const validateForm = () => {
     const errors = {};
 
@@ -92,9 +91,6 @@ const Register = () => {
     return Object.keys(errors).length === 0;
   };
 
-  // ============================================
-  // 📤 HANDLE SUBMIT
-  // ============================================
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -127,20 +123,18 @@ const Register = () => {
         },
       });
 
-      console.log("✅ Registration response:", response.data);
+      console.log("✅ Register response:", response.data);
 
       if (response.data.success) {
-        // ✅ Save token
-        localStorage.setItem("token", response.data.token);
+        const { token, user } = response.data;
 
-        // ✅ Save FULL user data (including profile_image)
-        const userData = response.data.user;
-        console.log("📸 User data with profile image:", userData);
-        localStorage.setItem("user", JSON.stringify(userData));
+        // ✅ Use AuthContext register
+        register(token, user);
 
         setSuccess(true);
         setTimeout(() => {
-          navigate("/");
+          const returnUrl = getReturnUrl();
+          navigate(returnUrl);
         }, 1500);
       }
     } catch (err) {
@@ -153,9 +147,6 @@ const Register = () => {
     }
   };
 
-  // ============================================
-  // 🔄 HANDLE FIELD CHANGE
-  // ============================================
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Destinations.css";
+import { useAuth } from "../../context/AuthContext";
 
 // ============================================
 // 📸 IMPORT YOUR IMAGES HERE
@@ -19,7 +20,7 @@ import DallolSprings from "../../assets/images/DallolSprings.png";
 import ommo1 from "../../assets/images/ommo1.png";
 import Mago from "../../assets/images/Mago.png";
 import turmimarket from "../../assets/images/turmimarket.png";
-import harar from "../../assets/images/harar.png"; 
+import harar from "../../assets/images/harar.png";
 import hararcityfes from "../../assets/images/hararcityfes.png";
 import bale from "../../assets/images/bale.png";
 import SofOmar from "../../assets/images/SofOmar.png";
@@ -27,14 +28,17 @@ import LakeLangano from "../../assets/images/LakeLangano.png";
 import NationalMuseum from "../../assets/images/NationalMuseum.png";
 import MountEntoto from "../../assets/images/MountEntoto.png";
 import Merkato from "../../assets/images/Merkato.png";
+import ethiopiaMap from "../../assets/images/flag.png";
 
 // ============================================
 // 📸 FALLBACK IMAGES (if imports fail)
 // ============================================
 const FALLBACK_IMAGE =
-  "https://images.unsplash.com/photo-1589802829985-817e51171b92?w=600&h=400&fit=crop";
+  "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=600&h=400&fit=crop";
 
 const Destinations = () => {
+  const { isLoggedIn } = useAuth();
+  const navigate = useNavigate();
   const [destinations, setDestinations] = useState([]);
   const [filteredDestinations, setFilteredDestinations] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -45,7 +49,32 @@ const Destinations = () => {
   // 📸 COMPLETE DESTINATION DATA
   // ============================================
   const destinationData = [
-    // ===== AMHARA REGION =====
+    // ============================================
+    // 🌍 ETHIOPIA - THE LAND OF ORIGINS
+    // ============================================
+    {
+      id: 0,
+      name: "Ethiopia - The Land of Origins",
+      region: "Nationwide",
+      subRegion: "All Regions",
+      description:
+        "Ethiopia is a country of immense diversity and ancient history. Known as the 'Land of Origins', it is home to some of the oldest human fossils, ancient civilizations, and rich cultural heritage. From the rock-hewn churches of Lalibela to the colorful tribes of the Omo Valley, Ethiopia offers a journey through time and culture.",
+      image: ethiopiaMap || FALLBACK_IMAGE,
+      price: 0,
+      rating: 4.9,
+      reviews: 5000,
+      attractions: [
+        "Ancient History",
+        "Cultural Diversity",
+        "UNESCO Sites",
+        "Unique Cuisine",
+      ],
+      bestTime: "Year-round",
+    },
+
+    // ============================================
+    // 📍 AMHARA REGION
+    // ============================================
     {
       id: 1,
       name: "Lalibela Rock Churches",
@@ -57,12 +86,7 @@ const Destinations = () => {
       price: 1200,
       rating: 4.8,
       reviews: 1234,
-      attractions: [
-        "Rock Churches",
-        "Ancient History",
-        "Pilgrimage",
-        "UNESCO Site",
-      ],
+      attractions: ["Rock Churches", "Ancient History", "Pilgrimage"],
       bestTime: "October to March",
     },
     {
@@ -76,7 +100,7 @@ const Destinations = () => {
       price: 1500,
       rating: 4.9,
       reviews: 987,
-      attractions: ["Trekking", "Wildlife", "Scenic Views", "UNESCO Site"],
+      attractions: ["Trekking", "Wildlife", "Scenic Views"],
       bestTime: "September to November",
     },
     {
@@ -90,7 +114,7 @@ const Destinations = () => {
       price: 800,
       rating: 4.6,
       reviews: 654,
-      attractions: ["Castles", "Royal History", "Architecture", "UNESCO Site"],
+      attractions: ["Castles", "Royal History", "Architecture"],
       bestTime: "October to April",
     },
     {
@@ -104,12 +128,7 @@ const Destinations = () => {
       price: 600,
       rating: 4.5,
       reviews: 543,
-      attractions: [
-        "Lake Tours",
-        "Monasteries",
-        "Bird Watching",
-        "Boat Cruises",
-      ],
+      attractions: ["Lake Tours", "Monasteries", "Bird Watching"],
       bestTime: "November to April",
     },
     {
@@ -123,11 +142,13 @@ const Destinations = () => {
       price: 400,
       rating: 4.4,
       reviews: 432,
-      attractions: ["Waterfalls", "Hiking", "Photography", "Nature"],
+      attractions: ["Waterfalls", "Hiking", "Photography"],
       bestTime: "June to September",
     },
 
-    // ===== TIGRAY REGION =====
+    // ============================================
+    // 📍 TIGRAY REGION
+    // ============================================
     {
       id: 6,
       name: "Axum Obelisks",
@@ -139,12 +160,7 @@ const Destinations = () => {
       price: 900,
       rating: 4.6,
       reviews: 765,
-      attractions: [
-        "Ancient History",
-        "Archaeology",
-        "UNESCO Site",
-        "Obelisks",
-      ],
+      attractions: ["Ancient History", "Archaeology", "Obelisks"],
       bestTime: "October to April",
     },
     {
@@ -158,7 +174,7 @@ const Destinations = () => {
       price: 700,
       rating: 4.7,
       reviews: 543,
-      attractions: ["Rock Churches", "Climbing", "Ancient Art", "UNESCO Site"],
+      attractions: ["Rock Churches", "Climbing", "Ancient Art"],
       bestTime: "October to March",
     },
     {
@@ -172,16 +188,13 @@ const Destinations = () => {
       price: 500,
       rating: 4.3,
       reviews: 321,
-      attractions: [
-        "Monastery",
-        "Climbing",
-        "Religious History",
-        "Scenic Views",
-      ],
+      attractions: ["Monastery", "Climbing", "Religious History"],
       bestTime: "October to April",
     },
 
-    // ===== AFAR REGION =====
+    // ============================================
+    // 📍 AFAR REGION
+    // ============================================
     {
       id: 9,
       name: "Danakil Depression",
@@ -193,12 +206,7 @@ const Destinations = () => {
       price: 1800,
       rating: 5.0,
       reviews: 876,
-      attractions: [
-        "Volcanoes",
-        "Salt Flats",
-        "Extreme Adventure",
-        "Sulfur Springs",
-      ],
+      attractions: ["Volcanoes", "Salt Flats", "Extreme Adventure"],
       bestTime: "November to March",
     },
     {
@@ -212,7 +220,7 @@ const Destinations = () => {
       price: 2000,
       rating: 4.9,
       reviews: 654,
-      attractions: ["Volcano", "Lava Lake", "Night Trekking", "Adventure"],
+      attractions: ["Volcano", "Lava Lake", "Night Trekking"],
       bestTime: "November to March",
     },
     {
@@ -226,14 +234,13 @@ const Destinations = () => {
       price: 1600,
       rating: 4.8,
       reviews: 543,
-      attractions: [
-        "Sulfur Springs",
-        "Photography",
-        "Geothermal",
-        "Unique Landscape",
-      ],
+      attractions: ["Sulfur Springs", "Photography", "Geothermal"],
       bestTime: "November to March",
     },
+
+    // ============================================
+    // 📍 SOUTHERN REGION
+    // ============================================
     {
       id: 12,
       name: "Omo Valley Tribes",
@@ -249,7 +256,6 @@ const Destinations = () => {
         "Cultural Tours",
         "Tribal Villages",
         "Traditional Ceremonies",
-        "Photography",
       ],
       bestTime: "November to March",
     },
@@ -264,12 +270,7 @@ const Destinations = () => {
       price: 800,
       rating: 4.4,
       reviews: 432,
-      attractions: [
-        "Wildlife Safari",
-        "Mursi Tribe",
-        "Bird Watching",
-        "Nature",
-      ],
+      attractions: ["Wildlife Safari", "Mursi Tribe", "Bird Watching"],
       bestTime: "November to March",
     },
     {
@@ -283,14 +284,13 @@ const Destinations = () => {
       price: 500,
       rating: 4.3,
       reviews: 321,
-      attractions: [
-        "Local Market",
-        "Culture",
-        "Photography",
-        "Traditional Crafts",
-      ],
+      attractions: ["Local Market", "Culture", "Traditional Crafts"],
       bestTime: "November to March",
     },
+
+    // ============================================
+    // 📍 HARARI REGION
+    // ============================================
     {
       id: 15,
       name: "Harar Jugol",
@@ -298,16 +298,11 @@ const Destinations = () => {
       subRegion: "Harar",
       description:
         "Fortified historic town with unique culture, architecture, and the famous hyena feeding",
-      image: harar || FALLBACK_IMAGE, 
+      image: harar || FALLBACK_IMAGE,
       price: 800,
       rating: 4.5,
       reviews: 654,
-      attractions: [
-        "Historic Walls",
-        "Hyena Feeding",
-        "Museums",
-        "UNESCO Site",
-      ],
+      attractions: ["Historic Walls", "Hyena Feeding", "Museums"],
       bestTime: "October to April",
     },
     {
@@ -321,9 +316,13 @@ const Destinations = () => {
       price: 600,
       rating: 4.4,
       reviews: 432,
-      attractions: ["Old City", "Mosques", "Traditional Houses", "Culture"],
+      attractions: ["Old City", "Mosques", "Traditional Houses"],
       bestTime: "October to April",
     },
+
+    // ============================================
+    // 📍 OROMIA REGION
+    // ============================================
     {
       id: 17,
       name: "Bale Mountains National Park",
@@ -335,7 +334,7 @@ const Destinations = () => {
       price: 1000,
       rating: 4.7,
       reviews: 543,
-      attractions: ["Wildlife", "Trekking", "Scenic Views", "Ethiopian Wolf"],
+      attractions: ["Wildlife", "Trekking", "Ethiopian Wolf"],
       bestTime: "October to April",
     },
     {
@@ -353,7 +352,6 @@ const Destinations = () => {
         "Cave Exploration",
         "Underground Rivers",
         "Rock Formations",
-        "Adventure",
       ],
       bestTime: "October to April",
     },
@@ -368,11 +366,13 @@ const Destinations = () => {
       price: 500,
       rating: 4.2,
       reviews: 432,
-      attractions: ["Swimming", "Bird Watching", "Lake Views", "Relaxation"],
+      attractions: ["Swimming", "Bird Watching", "Relaxation"],
       bestTime: "November to April",
     },
 
-    // ===== ADDIS ABABA REGION =====
+    // ============================================
+    // 📍 ADDIS ABABA REGION
+    // ============================================
     {
       id: 20,
       name: "National Museum of Ethiopia",
@@ -384,7 +384,7 @@ const Destinations = () => {
       price: 300,
       rating: 4.6,
       reviews: 876,
-      attractions: ["Museum", "Lucy Fossil", "History", "Culture"],
+      attractions: ["Museum", "Lucy Fossil", "History"],
       bestTime: "Year-round",
     },
     {
@@ -398,7 +398,7 @@ const Destinations = () => {
       price: 400,
       rating: 4.4,
       reviews: 654,
-      attractions: ["Mountain Views", "Hiking", "Churches", "Nature"],
+      attractions: ["Mountain Views", "Hiking", "Churches"],
       bestTime: "October to March",
     },
     {
@@ -412,16 +412,21 @@ const Destinations = () => {
       price: 200,
       rating: 4.3,
       reviews: 543,
-      attractions: ["Shopping", "Local Culture", "Spices", "Crafts"],
+      attractions: ["Shopping", "Local Culture", "Spices"],
       bestTime: "Year-round",
     },
   ];
 
   // ============================================
-  // REGIONS
+  // REGIONS (with ETHIOPIA added)
   // ============================================
   const regions = [
     { value: "all", label: "All Regions", count: destinationData.length },
+    {
+      value: "Nationwide",
+      label: "🌍 Ethiopia",
+      count: destinationData.filter((d) => d.region === "Nationwide").length,
+    },
     {
       value: "Amhara",
       label: " Amhara",
@@ -464,16 +469,18 @@ const Destinations = () => {
   // ============================================
   const getRegionIcon = (region) => {
     const icons = {
+      Nationwide: "🌍",
       Amhara: "",
       Tigray: "",
       Afar: "",
       Southern: "",
       Harari: "",
       Oromia: "",
-      "Addis Ababa": "",
+      "Addis Ababa": "🏙️",
     };
     return icons[region] || "";
   };
+
   useEffect(() => {
     setTimeout(() => {
       setDestinations(destinationData);
@@ -501,12 +508,27 @@ const Destinations = () => {
     setFilteredDestinations(result);
   }, [searchTerm, selectedRegion, destinations]);
 
+  // ============================================
+  // ✅ HANDLE VISIT BUTTON WITH AUTH CHECK
+  // ============================================
+  const handleVisit = (destinationName) => {
+    // ✅ Check if user is logged in
+    if (!isLoggedIn) {
+      alert("🔐 Please sign in or register to plan your trip!");
+      navigate("/login?return=/destinations");
+      return;
+    }
+
+    // ✅ If logged in, navigate to events
+    navigate(`/events?destination=${encodeURIComponent(destinationName)}`);
+  };
+
   return (
     <div className="destinations-page">
       {/* ===== HERO SECTION ===== */}
       <section className="destinations-hero">
         <div className="destinations-hero-content">
-          <h1>   Explore Destinations</h1>
+          <h1>📍 Explore Destinations</h1>
           <p>
             Discover {destinationData.length} amazing places across Ethiopia
           </p>
@@ -638,25 +660,26 @@ const Destinations = () => {
                       {dest.description}
                     </p>
                     <div className="destination-attractions">
-                      {dest.attractions.slice(0, 3).map((item, index) => (
+                      {dest.attractions.map((item, index) => (
                         <span key={index} className="attraction-tag">
                           {item}
                         </span>
                       ))}
-                      {dest.attractions.length > 3 && (
-                        <span className="attraction-tag more">
-                          +{dest.attractions.length - 3}
-                        </span>
-                      )}
                     </div>
-                    <div className="destination-footer">
-                      <div>
-                        <span className="destination-price">${dest.price}</span>
-                        <span className="destination-per-person">/ person</span>
-                      </div>
+                    {/* ============================================
+                        ✅ UPDATED: Visit Button with Auth Check
+                        ============================================ */}
+                    <div className="destination-actions">
+                      {/* ✅ "Visit" button now checks auth before navigating */}
+                      <button
+                        onClick={() => handleVisit(dest.name)}
+                        className="visit-btn-card"
+                      >
+                        Visit
+                      </button>
                       <Link
                         to={`/destinations/${dest.id}`}
-                        className="destination-btn"
+                        className="view-details-btn"
                       >
                         View Details →
                       </Link>

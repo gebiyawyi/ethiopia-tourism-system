@@ -3,91 +3,95 @@ const jwt = require("jsonwebtoken");
 const { promisePool } = require("../config/database");
 const { uploadImage } = require("../config/cloudinary");
 
-const generateToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, {
+// ============================================
+// ✅ GENERATE JWT TOKEN
+// ============================================
+const generateToken = (userId) => {
+  return jwt.sign({ id: userId }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRE || "7d",
   });
 };
 
 // ============================================
-// ✅ REGISTER - WITH PROFILE IMAGE
+// ✅ REGISTER USER
 // ============================================
 const register = async (req, res) => {
-  try {
-    console.log("📝 ============ REGISTRATION STARTED ============");
-    console.log("📸 File received:", req.file ? "✅ YES" : "❌ NO");
-    if (req.file) {
-      console.log("📸 File name:", req.file.originalname);
-      console.log("📸 File size:", req.file.size);
-      console.log("📸 File type:", req.file.mimetype);
-    }
+  console.log("📝 ============ REGISTRATION STARTED ============");
 
+  try {
     const { username, email, password, full_name } = req.body;
 
-    // Validate
     if (!username || !email || !password) {
       return res.status(400).json({
         success: false,
-        message: "Username, email, and password are required",
+        message: "Please provide username, email and password",
       });
     }
 
-    // Check if user exists
-    const [existing] = await promisePool.query(
-      "SELECT id FROM users WHERE email = ? OR username = ?",
-      [email, username],
+    const [existingUsers] = await promisePool.query(
+      "SELECT id FROM users WHERE username = ? OR email = ?",
+      [username, email],
     );
 
-    if (existing.length > 0) {
+    if (existingUsers.length > 0) {
       return res.status(400).json({
         success: false,
-        message: "User already exists with this email or username",
+        message: "Username or email already exists",
       });
     }
 
-    // Hash password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
     let profileImageUrl = null;
+    console.log("📸 File received:", req.file ? "✅ YES" : "❌ NO");
 
-    // ✅ Upload image to Cloudinary if provided
     if (req.file) {
       try {
-        console.log("📸 Uploading to Cloudinary...");
-        const result = await uploadImage(
+        console.log("📸 Uploading image to Cloudinary...");
+        const uploadResult = await uploadImage(
           req.file.buffer,
           "ethiopia_tourism/profiles",
         );
-        profileImageUrl = result.url;
-        console.log("✅ Image uploaded successfully!");
-        console.log("📸 Image URL:", profileImageUrl);
+        profileImageUrl = uploadResult.url;
+        console.log("✅ Image uploaded:", profileImageUrl);
       } catch (uploadError) {
-        console.error("❌ Image upload error:", uploadError.message);
-        // Continue without image
+        console.error("❌ Image upload failed:", uploadError);
       }
     }
 
-    // ✅ Insert user with profile_image
     const [result] = await promisePool.query(
-      `INSERT INTO users (username, email, password_hash, full_name, profile_image) 
-       VALUES (?, ?, ?, ?, ?)`,
-      [username, email, hashedPassword, full_name || username, profileImageUrl],
+      `INSERT INTO users (username, email, password_hash, full_name, profile_image, role) 
+       VALUES (?, ?, ?, ?, ?, ?)`,
+      [
+        username,
+        email,
+        hashedPassword,
+        full_name || username,
+        profileImageUrl,
+        "user",
+      ],
     );
 
-    console.log("✅ User registered with ID:", result.insertId);
-    console.log("📸 Profile Image URL saved:", profileImageUrl);
+    const userId = result.insertId;
+    console.log(`✅ User registered with ID: ${userId}`);
 
-    const token = generateToken(result.insertId);
+    const [users] = await promisePool.query(
+      "SELECT id, username, email, full_name, profile_image, role, created_at FROM users WHERE id = ?",
+      [userId],
+    );
 
-    // ✅ Return user with profile_image
+    const user = users[0];
+    const token = generateToken(user.id);
+
     const userData = {
-      id: result.insertId,
-      username,
-      email,
-      full_name: full_name || username,
-      role: "user",
-      profile_image: profileImageUrl,
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      full_name: user.full_name,
+      role: user.role,
+      profile_image: user.profile_image,
+      created_at: user.created_at,
     };
 
     console.log("📤 Returning user data:", userData);
@@ -95,7 +99,7 @@ const register = async (req, res) => {
 
     res.status(201).json({
       success: true,
-      token,
+      token: token,
       user: userData,
     });
   } catch (error) {
@@ -108,18 +112,29 @@ const register = async (req, res) => {
 };
 
 // ============================================
-// ✅ LOGIN
+// ✅ LOGIN USER
 // ============================================
 const login = async (req, res) => {
+  console.log("📝 ============ LOGIN STARTED ============");
+
   try {
     const { identifier, password } = req.body;
+    console.log("🔑 Login attempt for:", identifier);
+
+    if (!identifier || !password) {
+      return res.status(400).json({
+        success: false,
+        message: "Please provide username/email and password",
+      });
+    }
 
     const [users] = await promisePool.query(
-      "SELECT id, username, email, password_hash, full_name, role, profile_image FROM users WHERE email = ? OR username = ?",
+      "SELECT * FROM users WHERE username = ? OR email = ?",
       [identifier, identifier],
     );
 
     if (users.length === 0) {
+      console.log("❌ User not found:", identifier);
       return res.status(401).json({
         success: false,
         message: "Invalid username/email or password",
@@ -127,28 +142,43 @@ const login = async (req, res) => {
     }
 
     const user = users[0];
-    const isMatch = await bcrypt.compare(password, user.password_hash);
+    console.log("✅ User found:", user.username);
 
+    const isMatch = await bcrypt.compare(password, user.password_hash);
     if (!isMatch) {
+      console.log("❌ Password mismatch for:", user.username);
       return res.status(401).json({
         success: false,
         message: "Invalid username/email or password",
       });
     }
 
+    console.log("✅ Password matched for:", user.username);
+
     const token = generateToken(user.id);
 
-    res.json({
+    await promisePool.query(
+      "UPDATE users SET last_login = NOW() WHERE id = ?",
+      [user.id],
+    );
+
+    const userData = {
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      full_name: user.full_name,
+      role: user.role,
+      profile_image: user.profile_image,
+      created_at: user.created_at,
+    };
+
+    console.log("📤 Returning user data:", userData);
+    console.log("📝 ============ LOGIN COMPLETED ============");
+
+    res.status(200).json({
       success: true,
-      token,
-      user: {
-        id: user.id,
-        username: user.username,
-        email: user.email,
-        full_name: user.full_name,
-        role: user.role,
-        profile_image: user.profile_image,
-      },
+      token: token,
+      user: userData,
     });
   } catch (error) {
     console.error("❌ Login error:", error);
@@ -162,15 +192,28 @@ const login = async (req, res) => {
 // ============================================
 // ✅ GET CURRENT USER
 // ============================================
-const getMe = async (req, res) => {
+const getCurrentUser = async (req, res) => {
   try {
+    const userId = req.user.id;
+
     const [users] = await promisePool.query(
-      "SELECT id, username, email, full_name, phone, role, profile_image, created_at FROM users WHERE id = ?",
-      [req.user.id],
+      "SELECT id, username, email, full_name, profile_image, role, created_at, last_login, phone, bio FROM users WHERE id = ?",
+      [userId],
     );
-    res.json({ success: true, user: users[0] });
+
+    if (users.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      user: users[0],
+    });
   } catch (error) {
-    console.error("❌ GetMe error:", error);
+    console.error("❌ Get current user error:", error);
     res.status(500).json({
       success: false,
       message: "Server error",
@@ -178,4 +221,155 @@ const getMe = async (req, res) => {
   }
 };
 
-module.exports = { register, login, getMe };
+// ============================================
+// ✅ UPDATE PROFILE
+// ============================================
+const updateProfile = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const { full_name, phone, bio } = req.body;
+
+    let profileImageUrl = null;
+    if (req.file) {
+      try {
+        const uploadResult = await uploadImage(
+          req.file.buffer,
+          "ethiopia_tourism/profiles",
+        );
+        profileImageUrl = uploadResult.url;
+      } catch (uploadError) {
+        console.error("❌ Image upload failed:", uploadError);
+      }
+    }
+
+    // Build update query
+    let updateFields = [];
+    let updateValues = [];
+
+    if (full_name !== undefined) {
+      updateFields.push("full_name = ?");
+      updateValues.push(full_name);
+    }
+    if (phone !== undefined) {
+      updateFields.push("phone = ?");
+      updateValues.push(phone);
+    }
+    if (bio !== undefined) {
+      updateFields.push("bio = ?");
+      updateValues.push(bio);
+    }
+    if (profileImageUrl) {
+      updateFields.push("profile_image = ?");
+      updateValues.push(profileImageUrl);
+    }
+
+    if (updateFields.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "No fields to update",
+      });
+    }
+
+    updateValues.push(userId);
+    const query = `UPDATE users SET ${updateFields.join(", ")} WHERE id = ?`;
+
+    await promisePool.query(query, updateValues);
+
+    // Get updated user
+    const [users] = await promisePool.query(
+      "SELECT id, username, email, full_name, profile_image, role, phone, bio FROM users WHERE id = ?",
+      [userId],
+    );
+
+    res.status(200).json({
+      success: true,
+      message: "Profile updated successfully",
+      user: users[0],
+    });
+  } catch (error) {
+    console.error("❌ Update profile error:", error);
+    res.status(500).json({
+      success: false,
+      message: "Server error updating profile",
+    });
+  }
+};
+
+// ============================================
+// ✅ CHANGE PASSWORD
+// ============================================
+const changePassword = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const { currentPassword, newPassword } = req.body;
+
+    if (!currentPassword || !newPassword) {
+      return res.status(400).json({
+        success: false,
+        message: "Please provide current and new password",
+      });
+    }
+
+    if (newPassword.length < 6) {
+      return res.status(400).json({
+        success: false,
+        message: "New password must be at least 6 characters",
+      });
+    }
+
+    // Get user with password
+    const [users] = await promisePool.query(
+      "SELECT * FROM users WHERE id = ?",
+      [userId],
+    );
+
+    if (users.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    const user = users[0];
+
+    // Verify current password
+    const isMatch = await bcrypt.compare(currentPassword, user.password_hash);
+    if (!isMatch) {
+      return res.status(401).json({
+        success: false,
+        message: "Current password is incorrect",
+      });
+    }
+
+    // Hash new password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+    await promisePool.query("UPDATE users SET password_hash = ? WHERE id = ?", [
+      hashedPassword,
+      userId,
+    ]);
+
+    res.status(200).json({
+      success: true,
+      message: "Password changed successfully",
+    });
+  } catch (error) {
+    console.error("❌ Change password error:", error);
+    res.status(500).json({
+      success: false,
+      message: "Server error changing password",
+    });
+  }
+};
+
+// ============================================
+// ✅ EXPORT ALL CONTROLLERS
+// ============================================
+module.exports = {
+  register,
+  login,
+  getCurrentUser,
+  updateProfile,
+  changePassword,
+};

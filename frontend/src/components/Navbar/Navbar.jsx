@@ -1,73 +1,40 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./Navbar.css";
+import { useAuth } from "../../context/AuthContext";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [user, setUser] = useState(null);
   const location = useLocation();
   const navigate = useNavigate();
 
+  // ✅ Use AuthContext instead of localStorage directly
+  const { user, isLoggedIn, logout, refreshUser } = useAuth();
+
   // ============================================
-  // ✅ CHECK LOGIN STATUS
+  // ✅ REFRESH USER ON LOCATION CHANGE
   // ============================================
   useEffect(() => {
-    const checkAuth = () => {
-      const token = localStorage.getItem("token");
-      const userData = localStorage.getItem("user");
-
-      if (token && userData) {
-        setIsLoggedIn(true);
-        try {
-          setUser(JSON.parse(userData));
-        } catch (e) {
-          setIsLoggedIn(false);
-          setUser(null);
-        }
-      } else {
-        setIsLoggedIn(false);
-        setUser(null);
-      }
-    };
-
-    checkAuth();
-  }, [location]);
-
-  // ============================================
-  // ✅ GET USER DATA
-  // ============================================
-  const getUser = () => {
-    const userData = localStorage.getItem("user");
-    if (userData) {
-      try {
-        return JSON.parse(userData);
-      } catch (e) {
-        return null;
-      }
-    }
-    return null;
-  };
-
-  const currentUser = getUser();
+    console.log("🔄 Navbar - Location changed, refreshing user...");
+    refreshUser();
+  }, [location, refreshUser]);
 
   // ============================================
   // ✅ GET DISPLAY NAME
   // ============================================
   const getDisplayName = () => {
-    if (!currentUser) return "User";
-    return currentUser.full_name || currentUser.username || "User";
+    if (!user) return "User";
+    return user.full_name || user.username || "User";
   };
 
   // ============================================
   // ✅ GET AVATAR LETTER
   // ============================================
   const getAvatarLetter = () => {
-    if (!currentUser) return "U";
-    return (currentUser.full_name || currentUser.username || "U")
-      .charAt(0)
-      .toUpperCase();
+    if (!user) return "U";
+    const name = user.full_name || user.username || "User";
+    return name.charAt(0).toUpperCase();
   };
 
   // ============================================
@@ -106,10 +73,7 @@ const Navbar = () => {
   // ✅ LOGOUT HANDLER
   // ============================================
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    setIsLoggedIn(false);
-    setUser(null);
+    logout();
     navigate("/");
   };
 
@@ -117,6 +81,11 @@ const Navbar = () => {
   // ✅ CHECK ACTIVE LINK
   // ============================================
   const isActive = (path) => location.pathname === path;
+
+  // ✅ Debug logs
+  console.log("🔍 Navbar - User:", user);
+  console.log("🔍 Navbar - isLoggedIn:", isLoggedIn);
+  console.log("🔍 Navbar - Display Name:", getDisplayName());
 
   return (
     <header className={`navbar ${scrolled ? "scrolled" : ""}`}>
@@ -136,7 +105,7 @@ const Navbar = () => {
         </Link>
 
         {/* ============================================
-            DESKTOP NAVIGATION - CLEAN & SIMPLE
+            DESKTOP NAVIGATION
         ============================================ */}
         <nav className="navbar-links-desktop">
           <Link to="/" className={`nav-link ${isActive("/") ? "active" : ""}`}>
@@ -147,6 +116,12 @@ const Navbar = () => {
             className={`nav-link ${isActive("/destinations") ? "active" : ""}`}
           >
             Destinations
+          </Link>
+          <Link
+            to="/transport"
+            className={`nav-link ${isActive("/transport") ? "active" : ""}`}
+          >
+            🚌 Transport
           </Link>
           <Link
             to="/hotels"
@@ -172,13 +147,13 @@ const Navbar = () => {
             ACTIONS - Login/Register OR Profile/Logout
         ============================================ */}
         <div className="navbar-actions">
-          {isLoggedIn && currentUser ? (
-            // ✅ LOGGED IN - Show Profile with Image & Logout
+          {isLoggedIn && user ? (
+            // ✅ LOGGED IN - Uses user state from AuthContext
             <>
               <Link to="/profile" className="profile-link">
-                {currentUser?.profile_image ? (
+                {user?.profile_image ? (
                   <img
-                    src={currentUser.profile_image}
+                    src={user.profile_image}
                     alt="Profile"
                     className="avatar-image-small"
                     onError={(e) => {
@@ -234,7 +209,7 @@ const Navbar = () => {
         ></div>
 
         {/* ============================================
-            MOBILE MENU - CLEAN & SIMPLE
+            MOBILE MENU
         ============================================ */}
         <div className={`mobile-menu ${isMobileMenuOpen ? "active" : ""}`}>
           <div className="mobile-menu-header">
@@ -272,6 +247,13 @@ const Navbar = () => {
               <span className="mobile-nav-icon">📍</span> Destinations
             </Link>
             <Link
+              to="/transport"
+              className={`mobile-nav-link ${isActive("/transport") ? "active" : ""}`}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              <span className="mobile-nav-icon">🚌</span> Transport
+            </Link>
+            <Link
               to="/hotels"
               className={`mobile-nav-link ${isActive("/hotels") ? "active" : ""}`}
               onClick={() => setIsMobileMenuOpen(false)}
@@ -294,7 +276,7 @@ const Navbar = () => {
             </Link>
 
             {/* Mobile Auth Buttons */}
-            {isLoggedIn && currentUser ? (
+            {isLoggedIn && user ? (
               <>
                 <Link
                   to="/profile"
