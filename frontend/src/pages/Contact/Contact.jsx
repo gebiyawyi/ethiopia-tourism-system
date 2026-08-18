@@ -56,14 +56,14 @@ const Contact = () => {
                   <span className="contact-icon">📞</span>
                   <div>
                     <h4>Phone</h4>
-                    <p>+251 911 234 567</p>
+                    <p>+251 918939724</p>
                   </div>
                 </div>
                 <div className="contact-item">
                   <span className="contact-icon">✉️</span>
                   <div>
                     <h4>Email</h4>
-                    <p>info@exploreethiopia.com</p>
+                    <p>gebiyaw2004@gmail.com</p>
                   </div>
                 </div>
               </div>
