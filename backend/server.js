@@ -23,6 +23,7 @@ app.use(
       process.env.FRONTEND_URL_PROD,
       "http://localhost:5173",
       "http://localhost:3000",
+      "https://gebiyawtourism.netlify.app",
     ],
     credentials: true,
     optionsSuccessStatus: 200,
@@ -56,6 +57,7 @@ app.use("/api/destinations", require("./routes/destinationRoutes"));
 
 // ✅ Hotel routes
 app.use("/api/hotels", require("./routes/hotelRoutes"));
+app.use("/api/contact", require("./routes/contactRoutes"));
 
 // ✅ Booking routes
 app.use("/api/bookings", require("./routes/bookingRoutes"));

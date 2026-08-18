@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./Contact.css";
+import api from "../../services/api";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -9,20 +10,41 @@ const Contact = () => {
     message: "",
   });
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
+    if (error) setError("");
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 5000);
-    setFormData({ name: "", email: "", subject: "", message: "" });
+    setLoading(true);
+    setError("");
+
+    try {
+      const response = await api.post("/contact", formData);
+
+      if (response.data.success) {
+        setSubmitted(true);
+        setFormData({ name: "", email: "", subject: "", message: "" });
+        setTimeout(() => setSubmitted(false), 5000);
+      } else {
+        setError(response.data.message || "Failed to send message");
+      }
+    } catch (err) {
+      console.error("❌ Contact form error:", err);
+      setError(
+        err.response?.data?.message ||
+          "Failed to send message. Please try again later.",
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -84,11 +106,15 @@ const Contact = () => {
             <div className="contact-form-wrapper">
               <div className="contact-form-card">
                 <h2>Send Us a Message</h2>
+
                 {submitted && (
                   <div className="success-message">
                     ✅ Thank you! We'll get back to you soon.
                   </div>
                 )}
+
+                {error && <div className="error-message">❌ {error}</div>}
+
                 <form onSubmit={handleSubmit} className="contact-form">
                   <div className="form-group">
                     <label htmlFor="name">Your Name</label>
@@ -102,6 +128,7 @@ const Contact = () => {
                       required
                     />
                   </div>
+
                   <div className="form-group">
                     <label htmlFor="email">Email Address</label>
                     <input
@@ -114,6 +141,7 @@ const Contact = () => {
                       required
                     />
                   </div>
+
                   <div className="form-group">
                     <label htmlFor="subject">Subject</label>
                     <input
@@ -126,6 +154,7 @@ const Contact = () => {
                       required
                     />
                   </div>
+
                   <div className="form-group">
                     <label htmlFor="message">Message</label>
                     <textarea
@@ -138,8 +167,13 @@ const Contact = () => {
                       required
                     />
                   </div>
-                  <button type="submit" className="submit-btn">
-                    Send Message ✉️
+
+                  <button
+                    type="submit"
+                    className="submit-btn"
+                    disabled={loading}
+                  >
+                    {loading ? "Sending..." : "Send Message ✉️"}
                   </button>
                 </form>
               </div>
