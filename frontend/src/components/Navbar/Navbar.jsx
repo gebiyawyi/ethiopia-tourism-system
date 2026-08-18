@@ -8,15 +8,12 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-
-  // ✅ Use AuthContext instead of localStorage directly
   const { user, isLoggedIn, logout, refreshUser } = useAuth();
 
   // ============================================
   // ✅ REFRESH USER ON LOCATION CHANGE
   // ============================================
   useEffect(() => {
-    console.log("🔄 Navbar - Location changed, refreshing user...");
     refreshUser();
   }, [location, refreshUser]);
 
@@ -82,11 +79,6 @@ const Navbar = () => {
   // ============================================
   const isActive = (path) => location.pathname === path;
 
-  // ✅ Debug logs
-  console.log("🔍 Navbar - User:", user);
-  console.log("🔍 Navbar - isLoggedIn:", isLoggedIn);
-  console.log("🔍 Navbar - Display Name:", getDisplayName());
-
   return (
     <header className={`navbar ${scrolled ? "scrolled" : ""}`}>
       <div className="navbar-container">
@@ -144,11 +136,11 @@ const Navbar = () => {
         </nav>
 
         {/* ============================================
-            ACTIONS - Login/Register OR Profile/Logout
+            ACTIONS - Desktop
         ============================================ */}
         <div className="navbar-actions">
           {isLoggedIn && user ? (
-            // ✅ LOGGED IN - Uses user state from AuthContext
+            // ✅ LOGGED IN - Desktop
             <>
               <Link to="/profile" className="profile-link">
                 {user?.profile_image ? (
@@ -177,7 +169,7 @@ const Navbar = () => {
               </button>
             </>
           ) : (
-            // ✅ LOGGED OUT - Show Login & Register
+            // ✅ LOGGED OUT - Desktop
             <>
               <Link to="/login" className="btn-login">
                 Sign In
@@ -188,7 +180,9 @@ const Navbar = () => {
             </>
           )}
 
-          {/* Hamburger Menu - Mobile Only */}
+          {/* ============================================
+              HAMBURGER - Mobile Only
+          ============================================ */}
           <button
             className={`hamburger ${isMobileMenuOpen ? "active" : ""}`}
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -212,6 +206,7 @@ const Navbar = () => {
             MOBILE MENU
         ============================================ */}
         <div className={`mobile-menu ${isMobileMenuOpen ? "active" : ""}`}>
+          {/* Mobile Menu Header */}
           <div className="mobile-menu-header">
             <Link
               to="/"
@@ -231,49 +226,59 @@ const Navbar = () => {
             </button>
           </div>
 
+          {/* Mobile Navigation Links */}
           <nav className="mobile-nav-links">
             <Link
               to="/"
               className={`mobile-nav-link ${isActive("/") ? "active" : ""}`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              <span className="mobile-nav-icon">🏠</span> Home
+              <span className="mobile-nav-icon">🏠</span>
+              Home
             </Link>
             <Link
               to="/destinations"
               className={`mobile-nav-link ${isActive("/destinations") ? "active" : ""}`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              <span className="mobile-nav-icon">📍</span> Destinations
+              <span className="mobile-nav-icon">📍</span>
+              Destinations
             </Link>
             <Link
               to="/transport"
               className={`mobile-nav-link ${isActive("/transport") ? "active" : ""}`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              <span className="mobile-nav-icon">🚌</span> Transport
+              <span className="mobile-nav-icon">🚌</span>
+              Transport
             </Link>
             <Link
               to="/hotels"
               className={`mobile-nav-link ${isActive("/hotels") ? "active" : ""}`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              <span className="mobile-nav-icon">🏨</span> Hotels
+              <span className="mobile-nav-icon">🏨</span>
+              Hotels
             </Link>
             <Link
               to="/about"
               className={`mobile-nav-link ${isActive("/about") ? "active" : ""}`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              <span className="mobile-nav-icon">ℹ️</span> About
+              <span className="mobile-nav-icon">ℹ️</span>
+              About
             </Link>
             <Link
               to="/contact"
               className={`mobile-nav-link ${isActive("/contact") ? "active" : ""}`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              <span className="mobile-nav-icon">📧</span> Contact
+              <span className="mobile-nav-icon">📧</span>
+              Contact
             </Link>
+
+            {/* Mobile Divider */}
+            <div className="mobile-divider"></div>
 
             {/* Mobile Auth Buttons */}
             {isLoggedIn && user ? (
@@ -285,6 +290,7 @@ const Navbar = () => {
                 >
                   <span className="mobile-nav-icon">👤</span>
                   {getDisplayName()}
+                  <span className="mobile-badge">Profile</span>
                 </Link>
                 <button
                   onClick={() => {
@@ -293,31 +299,49 @@ const Navbar = () => {
                   }}
                   className="mobile-nav-link logout-btn-mobile"
                 >
-                  <span className="mobile-nav-icon">🚪</span> Logout
+                  <span className="mobile-nav-icon">🚪</span>
+                  Logout
                 </button>
               </>
             ) : (
               <>
                 <Link
                   to="/login"
-                  className="mobile-nav-link"
+                  className="mobile-nav-link auth-btn-login"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  <span className="mobile-nav-icon">🔑</span> Sign In
+                  <span className="mobile-nav-icon">🔑</span>
+                  Sign In
                 </Link>
                 <Link
                   to="/register"
-                  className="mobile-nav-link"
+                  className="mobile-nav-link auth-btn-signup"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  <span className="mobile-nav-icon">📝</span> Sign Up
+                  <span className="mobile-nav-icon">📝</span>
+                  Sign Up
                 </Link>
               </>
             )}
           </nav>
 
+          {/* Mobile Footer */}
           <div className="mobile-footer">
             <p>© 2026 Explore Ethiopia</p>
+            <div className="mobile-social">
+              <a href="#" className="mobile-social-icon">
+                📘
+              </a>
+              <a href="#" className="mobile-social-icon">
+                📸
+              </a>
+              <a href="#" className="mobile-social-icon">
+                🐦
+              </a>
+              <a href="#" className="mobile-social-icon">
+                ▶️
+              </a>
+            </div>
           </div>
         </div>
       </div>

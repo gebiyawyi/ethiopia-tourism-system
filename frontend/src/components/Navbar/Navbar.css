@@ -168,7 +168,7 @@
   box-shadow: 0 6px 30px rgba(217,119,6,0.5);
 }
 
-/* ✅ Profile Link */
+/* Profile Link */
 .profile-link {
   display: flex;
   align-items: center;
@@ -208,7 +208,7 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  background: linear-gradient(135deg, #d97706, #b45309);
   color: #ffffff;
   font-size: 0.8rem;
   font-weight: 700;
@@ -432,12 +432,74 @@
   background: rgba(220,38,38,0.2);
 }
 
+.mobile-divider {
+  height: 1px;
+  background: rgba(255,255,255,0.08);
+  margin: 0.5rem 0;
+}
+
+.mobile-badge {
+  margin-left: auto;
+  background: rgba(217,119,6,0.2);
+  color: #fbbf24;
+  padding: 0.1rem 0.6rem;
+  border-radius: 50px;
+  font-size: 0.6rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.auth-btn-login {
+  border: 1.5px solid rgba(255,255,255,0.15);
+  border-radius: 50px;
+  justify-content: center;
+  margin-top: 0.3rem;
+}
+
+.auth-btn-login:hover {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.3);
+}
+
+.auth-btn-signup {
+  background: linear-gradient(135deg, #d97706, #f59e0b);
+  color: #ffffff;
+  border-radius: 50px;
+  justify-content: center;
+  padding: 0.8rem 1.5rem;
+  margin-top: 0.3rem;
+}
+
+.auth-btn-signup:hover {
+  transform: translateX(5px);
+  box-shadow: 0 4px 20px rgba(217,119,6,0.3);
+}
+
 .mobile-footer {
   padding: 1.5rem;
   text-align: center;
   color: rgba(255,255,255,0.3);
   font-size: 0.8rem;
   border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.mobile-social {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 0.8rem;
+}
+
+.mobile-social-icon {
+  color: rgba(255,255,255,0.3);
+  text-decoration: none;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+}
+
+.mobile-social-icon:hover {
+  color: #ffffff;
+  transform: translateY(-2px);
 }
 
 /* ============================================
@@ -549,6 +611,13 @@
 
   .profile-name {
     max-width: 70px;
+  }
+
+  /* Mobile auth buttons show in menu */
+  .navbar-actions .btn-login,
+  .navbar-actions .btn-signup,
+  .navbar-actions .logout-btn {
+    display: none;
   }
 }
 
