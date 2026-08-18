@@ -7,7 +7,7 @@ import danikilhotel from "../../assets/images/danikilhotel.png";
 import ommoresort from "../../assets/images/OmoResort.png";
 import axumhotel from "../../assets/images/axumhotel.png";
 import hararguest from "../../assets/images/HararGuest.png";
-import balelodge from "../../assets/images/baleLodge.png";
+import balelodge from "../../assets/images/BaleLodge.png";
 import BahirDarResort from "../../assets/images/BahirDarResort.png";
 
 // ============================================

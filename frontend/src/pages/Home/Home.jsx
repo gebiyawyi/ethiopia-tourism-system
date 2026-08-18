@@ -864,7 +864,7 @@ const Home = () => {
       </section>
 
       {/* ============================================ */}
-      {/* CALL TO ACTION */}
+      {/* CAgLL TO ACTION */}
       {/* ============================================ */}
       <section className="cta-section">
         <div className="container">
