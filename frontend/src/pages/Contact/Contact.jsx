@@ -27,7 +27,10 @@ const Contact = () => {
     setError("");
 
     try {
+      console.log("📤 Sending contact form:", formData);
+
       const response = await api.post("/contact", formData);
+      console.log("📥 Response:", response.data);
 
       if (response.data.success) {
         setSubmitted(true);
@@ -38,6 +41,7 @@ const Contact = () => {
       }
     } catch (err) {
       console.error("❌ Contact form error:", err);
+      console.error("❌ Error response:", err.response?.data);
       setError(
         err.response?.data?.message ||
           "Failed to send message. Please try again later.",
@@ -49,6 +53,7 @@ const Contact = () => {
 
   return (
     <div className="contact-page">
+      {/* Hero Section */}
       <section className="contact-hero">
         <div className="contact-hero-content">
           <h1>📧 Contact Us</h1>
@@ -56,9 +61,11 @@ const Contact = () => {
         </div>
       </section>
 
+      {/* Contact Content */}
       <section className="section contact-content">
         <div className="container">
           <div className="contact-grid">
+            {/* Left Column - Info */}
             <div className="contact-info">
               <h2>Get in Touch</h2>
               <p>
@@ -103,6 +110,7 @@ const Contact = () => {
               </div>
             </div>
 
+            {/* Right Column - Form */}
             <div className="contact-form-wrapper">
               <div className="contact-form-card">
                 <h2>Send Us a Message</h2>

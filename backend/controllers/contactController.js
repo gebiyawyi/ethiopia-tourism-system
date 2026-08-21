@@ -1,16 +1,12 @@
 const nodemailer = require("nodemailer");
+const axios = require("axios");
 
 // ============================================
-// ✅ SEND CONTACT EMAIL
+// ✅ METHOD 1: SEND EMAIL USING GMAIL SMTP
 // ============================================
 const sendContactEmail = async (req, res) => {
   try {
     const { name, email, subject, message } = req.body;
-
-    console.log("📧 Contact form received:");
-    console.log("📧 Name:", name);
-    console.log("📧 Email:", email);
-    console.log("📧 Subject:", subject);
 
     // ✅ Validate input
     if (!name || !email || !subject || !message) {
@@ -19,6 +15,11 @@ const sendContactEmail = async (req, res) => {
         message: "Please fill all fields",
       });
     }
+
+    console.log("📧 Contact form received:");
+    console.log("📧 Name:", name);
+    console.log("📧 Email:", email);
+    console.log("📧 Subject:", subject);
 
     // ✅ Check if credentials exist
     if (!process.env.EMAIL_USER || !process.env.EMAIL_PASSWORD) {
@@ -29,20 +30,12 @@ const sendContactEmail = async (req, res) => {
       });
     }
 
-    console.log("📧 EMAIL_USER:", process.env.EMAIL_USER);
-    console.log("📧 EMAIL_PASSWORD exists:", !!process.env.EMAIL_PASSWORD);
-
-    // ✅ Create transporter
+    // ✅ Create transporter with Gmail
     const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 587,
-      secure: false,
+      service: "gmail",
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASSWORD,
-      },
-      tls: {
-        rejectUnauthorized: false,
       },
     });
 
@@ -105,7 +98,7 @@ const sendContactEmail = async (req, res) => {
 };
 
 // ============================================
-// ✅ TEST EMAIL ENDPOINT - FULL FUNCTION
+// ✅ TEST EMAIL ENDPOINT
 // ============================================
 const testEmail = async (req, res) => {
   try {
@@ -113,7 +106,6 @@ const testEmail = async (req, res) => {
     console.log("📧 EMAIL_USER:", process.env.EMAIL_USER);
     console.log("📧 EMAIL_PASSWORD exists:", !!process.env.EMAIL_PASSWORD);
 
-    // ✅ Check if credentials exist
     if (!process.env.EMAIL_USER || !process.env.EMAIL_PASSWORD) {
       return res.status(500).json({
         success: false,
@@ -121,25 +113,17 @@ const testEmail = async (req, res) => {
       });
     }
 
-    // ✅ Create transporter
     const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 587,
-      secure: false,
+      service: "gmail",
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASSWORD,
       },
-      tls: {
-        rejectUnauthorized: false,
-      },
     });
 
-    // ✅ Verify connection
     await transporter.verify();
     console.log("✅ Email transporter verified!");
 
-    // ✅ Send test email
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: process.env.EMAIL_USER,
@@ -151,7 +135,6 @@ const testEmail = async (req, res) => {
           </div>
           <div style="padding: 20px; background: #ffffff; border-radius: 0 0 10px 10px;">
             <p style="font-size: 16px; color: #374151;">Your email configuration is working correctly!</p>
-            <p style="font-size: 16px; color: #374151;">You can now send emails from your contact form.</p>
             <hr />
             <p style="font-size: 12px; color: #6b7280; text-align: center;">
               This is a test email from your Ethiopia Tourism website.
@@ -166,28 +149,17 @@ const testEmail = async (req, res) => {
     res.status(200).json({
       success: true,
       message: "Test email sent successfully! Check your inbox.",
-      details: {
-        emailUser: process.env.EMAIL_USER,
-        sentTo: process.env.EMAIL_USER,
-      },
     });
   } catch (error) {
-    console.error("❌ Test email error:", error);
-    console.error("❌ Error message:", error.message);
-    console.error("❌ Error code:", error.code);
-
+    console.error("❌ Test email error:", error.message);
     res.status(500).json({
       success: false,
       message: "Test failed: " + error.message,
-      error: error.message,
     });
   }
 };
 
 // ============================================
-// ✅ EXPORT BOTH FUNCTIONS
+// ✅ EXPORT
 // ============================================
-module.exports = {
-  sendContactEmail,
-  testEmail,
-};
+module.exports = { sendContactEmail, testEmail };
