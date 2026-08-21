@@ -5,10 +5,10 @@ const {
   testEmail,
 } = require("../controllers/contactController");
 
-// 👇 Your POST route for sending emails
+// ✅ POST /api/contact - Send contact message
 router.post("/", sendContactEmail);
 
-// 👇 ADD THIS GET ROUTE FOR TESTING
+// ✅ GET /api/contact/test - Test email configuration
 router.get("/test", testEmail);
 
 module.exports = router;

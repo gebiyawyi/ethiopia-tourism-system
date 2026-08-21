@@ -32,24 +32,34 @@ const sendContactEmail = async (req, res) => {
     console.log("📧 EMAIL_USER:", process.env.EMAIL_USER);
     console.log("📧 EMAIL_PASSWORD exists:", !!process.env.EMAIL_PASSWORD);
 
-    // ✅ Create transporter with more options
+    // ✅ Create transporter with correct config
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
       port: 587,
-      secure: false,
+      secure: false, // Use STARTTLS
       auth: {
         user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASSWORD,
+        pass: process.env.EMAIL_PASSWORD, // App Password
       },
       tls: {
         rejectUnauthorized: false,
       },
+      debug: true, // Enable debug logs
     });
 
-    // ✅ Verify connection
-    await transporter.verify();
-    console.log("✅ Email transporter verified successfully!");
+    // ✅ Verify connection before sending
+    try {
+      await transporter.verify();
+      console.log("✅ Email transporter verified successfully!");
+    } catch (verifyError) {
+      console.error("❌ Transporter verification failed:", verifyError.message);
+      return res.status(500).json({
+        success: false,
+        message: "Email server connection failed. Please try again later.",
+      });
+    }
 
+    // ✅ Email options
     const mailOptions = {
       from: `"${name}" <${process.env.EMAIL_USER}>`,
       to: process.env.EMAIL_USER,
@@ -76,6 +86,7 @@ const sendContactEmail = async (req, res) => {
       `,
     };
 
+    // ✅ Send email
     await transporter.sendMail(mailOptions);
     console.log("✅ Email sent successfully!");
 
@@ -87,10 +98,22 @@ const sendContactEmail = async (req, res) => {
     console.error("❌ Contact email error:", error);
     console.error("❌ Error message:", error.message);
     console.error("❌ Error code:", error.code);
+    console.error("❌ Error stack:", error.stack);
+
+    // ✅ Send user-friendly error message
+    let userMessage = "Failed to send message. Please try again later.";
+    if (error.code === "EAUTH") {
+      userMessage = "Email authentication failed. Please contact support.";
+    } else if (error.code === "ECONNECTION") {
+      userMessage = "Cannot connect to email server. Please try again later.";
+    } else if (error.code === "ETIMEDOUT") {
+      userMessage = "Connection timed out. Please try again later.";
+    }
 
     res.status(500).json({
       success: false,
-      message: "Failed to send message. Please try again later.",
+      message: userMessage,
+      error: error.message, // Only for debugging
     });
   }
 };
@@ -104,7 +127,6 @@ const testEmail = async (req, res) => {
     console.log("📧 EMAIL_USER:", process.env.EMAIL_USER);
     console.log("📧 EMAIL_PASSWORD exists:", !!process.env.EMAIL_PASSWORD);
 
-    // ✅ Check if credentials exist
     if (!process.env.EMAIL_USER || !process.env.EMAIL_PASSWORD) {
       return res.status(500).json({
         success: false,
@@ -112,7 +134,6 @@ const testEmail = async (req, res) => {
       });
     }
 
-    // ✅ Create transporter
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
       port: 587,
@@ -126,16 +147,13 @@ const testEmail = async (req, res) => {
       },
     });
 
-    // ✅ Verify connection
     await transporter.verify();
     console.log("✅ Email transporter verified!");
 
-    // ✅ Send test email
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: process.env.EMAIL_USER,
       subject: "✅ Test Email - Ethiopia Tourism",
-      text: "Your email configuration is working correctly!",
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e5e7eb; border-radius: 10px;">
           <div style="background: linear-gradient(135deg, #1e3a5f, #b45309); padding: 20px; border-radius: 10px 10px 0 0; text-align: center;">
@@ -143,7 +161,6 @@ const testEmail = async (req, res) => {
           </div>
           <div style="padding: 20px; background: #ffffff; border-radius: 0 0 10px 10px;">
             <p style="font-size: 16px; color: #374151;">Your email configuration is working correctly!</p>
-            <p style="font-size: 16px; color: #374151;">You can now send emails from your contact form.</p>
             <hr />
             <p style="font-size: 12px; color: #6b7280; text-align: center;">
               This is a test email from your Ethiopia Tourism website.
@@ -158,28 +175,14 @@ const testEmail = async (req, res) => {
     res.status(200).json({
       success: true,
       message: "Test email sent successfully! Check your inbox.",
-      details: {
-        emailUser: process.env.EMAIL_USER,
-        sentTo: process.env.EMAIL_USER,
-      },
     });
   } catch (error) {
-    console.error("❌ Test email error:", error);
-    console.error("❌ Error message:", error.message);
-    console.error("❌ Error code:", error.code);
-
+    console.error("❌ Test email error:", error.message);
     res.status(500).json({
       success: false,
       message: "Test failed: " + error.message,
-      error: error.message,
     });
   }
 };
 
-// ============================================
-// ✅ EXPORT BOTH FUNCTIONS
-// ============================================
-module.exports = {
-  sendContactEmail,
-  testEmail,
-};
+module.exports = { sendContactEmail, testEmail };
