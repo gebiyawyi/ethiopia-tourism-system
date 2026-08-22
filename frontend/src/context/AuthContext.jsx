@@ -1,120 +1,100 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
-import authService from "../services/authService";
+import api from "../services/api";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const checkAuth = () => {
-      const currentUser = authService.getCurrentUser();
-      const token = authService.getToken();
+  // ✅ REGISTER FUNCTION
+  const register = async (userData) => {
+    try {
+      setError(null);
+      const response = await api.post("/auth/register", userData);
 
-      console.log("🔐 AuthContext - Token:", !!token);
-      console.log("👤 AuthContext - User:", currentUser);
+      if (response.data.success) {
+        // Auto-login after registration
+        const loginResponse = await api.post("/auth/login", {
+          email: userData.email,
+          password: userData.password,
+        });
 
-      if (currentUser && token) {
-        setUser(currentUser);
-        setIsLoggedIn(true);
-        console.log("✅ AuthContext - User set:", currentUser);
-      } else {
-        setUser(null);
-        setIsLoggedIn(false);
-        console.log("❌ AuthContext - No user found");
+        if (loginResponse.data.success) {
+          const { token, user } = loginResponse.data.data;
+          localStorage.setItem("token", token);
+          localStorage.setItem("user", JSON.stringify(user));
+          setUser(user);
+          return { success: true };
+        }
       }
-      setLoading(false);
-    };
-
-    checkAuth();
-  }, []);
-
-  // ✅ LOGIN - Saves user data and updates state
-  const login = (token, userData) => {
-    console.log("🔐 AuthContext - Login called with:", userData);
-
-    // ✅ Save to localStorage
-    localStorage.setItem("token", token);
-    localStorage.setItem("user", JSON.stringify(userData));
-
-    // ✅ Update state
-    setUser(userData);
-    setIsLoggedIn(true);
-
-    console.log("✅ AuthContext - User logged in:", userData);
-    return { user: userData, token };
+      return { success: false, message: response.data.message };
+    } catch (err) {
+      console.error("❌ Registration error:", err);
+      setError(err.response?.data?.message || "Registration failed");
+      return {
+        success: false,
+        message: err.response?.data?.message || "Registration failed",
+      };
+    }
   };
 
-  // ✅ REGISTER - Saves user data and updates state
-  const register = (token, userData) => {
-    console.log("🔐 AuthContext - Register called with:", userData);
+  // ✅ LOGIN FUNCTION
+  const login = async (email, password) => {
+    try {
+      setError(null);
+      const response = await api.post("/auth/login", { email, password });
 
-    // ✅ Save to localStorage
-    localStorage.setItem("token", token);
-    localStorage.setItem("user", JSON.stringify(userData));
-
-    // ✅ Update state
-    setUser(userData);
-    setIsLoggedIn(true);
-
-    console.log("✅ AuthContext - User registered:", userData);
-    return { user: userData, token };
+      if (response.data.success) {
+        const { token, user } = response.data.data;
+        localStorage.setItem("token", token);
+        localStorage.setItem("user", JSON.stringify(user));
+        setUser(user);
+        return { success: true };
+      }
+      return { success: false, message: response.data.message };
+    } catch (err) {
+      console.error("❌ Login error:", err);
+      setError(err.response?.data?.message || "Login failed");
+      return {
+        success: false,
+        message: err.response?.data?.message || "Login failed",
+      };
+    }
   };
 
-  // ✅ LOGOUT
+  // ✅ LOGOUT FUNCTION
   const logout = () => {
-    console.log("🔐 AuthContext - Logout called");
-    authService.logout();
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
     setUser(null);
-    setIsLoggedIn(false);
   };
 
-  // ✅ UPDATE USER - For profile updates
-  const updateUser = (updatedUser) => {
-    localStorage.setItem("user", JSON.stringify(updatedUser));
-    setUser(updatedUser);
-  };
-
-  // ✅ REFRESH USER - Re-read from localStorage
-  const refreshUser = () => {
+  // ✅ CHECK AUTH ON LOAD
+  useEffect(() => {
+    const token = localStorage.getItem("token");
     const userData = localStorage.getItem("user");
-    if (userData) {
+
+    if (token && userData) {
       try {
-        const parsedUser = JSON.parse(userData);
-        setUser(parsedUser);
-        setIsLoggedIn(true);
-        console.log("✅ AuthContext - User refreshed:", parsedUser);
-        return parsedUser;
+        setUser(JSON.parse(userData));
       } catch (e) {
-        console.error("❌ AuthContext - Error refreshing user:", e);
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
       }
     }
-    return null;
-  };
+    setLoading(false);
+  }, []);
 
-  const value = {
-    user,
-    loading,
-    login,
-    register,
-    logout,
-    updateUser,
-    refreshUser,
-    isLoggedIn,
-    isAuthenticated: !!user,
-  };
-
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider
+      value={{ user, loading, error, register, login, logout }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error("useAuth must be used within an AuthProvider");
-  }
-  return context;
-};
-
+export const useAuth = () => useContext(AuthContext);
 export default AuthContext;
