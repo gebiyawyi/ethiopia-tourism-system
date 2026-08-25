@@ -116,7 +116,7 @@ const Footer = () => {
 
           {/* ✅ Developer Credit */}
           <p className="developer-credit">
-            Developed by <strong>Gebiyaw Yigermal</strong> 🚀
+            Developed by <strong>Gebiyaw Yigermal asiresie</strong> 🚀
           </p>
 
           <div className="footer-bottom-links">
