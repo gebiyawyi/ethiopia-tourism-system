@@ -1,3 +1,4 @@
+// backend/controllers/authController.js
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { promisePool } = require("../config/database");
@@ -13,39 +14,47 @@ const generateToken = (userId) => {
 };
 
 // ============================================
-// ✅ REGISTER USER
+// ✅ REGISTER USER - COMPLETE WORKING VERSION
 // ============================================
 const register = async (req, res) => {
   console.log("📝 ============ REGISTRATION STARTED ============");
+  console.log("📝 Request body:", req.body);
+  console.log("📝 File received:", req.file ? "✅ YES" : "❌ NO");
 
   try {
     const { username, email, password, full_name } = req.body;
 
+    // ✅ Validate required fields
     if (!username || !email || !password) {
+      console.log("❌ Missing required fields");
       return res.status(400).json({
         success: false,
         message: "Please provide username, email and password",
       });
     }
 
+    // ✅ Check if user already exists
+    console.log("🔍 Checking if user exists...");
     const [existingUsers] = await promisePool.query(
       "SELECT id FROM users WHERE username = ? OR email = ?",
       [username, email],
     );
 
     if (existingUsers.length > 0) {
+      console.log("❌ User already exists");
       return res.status(400).json({
         success: false,
         message: "Username or email already exists",
       });
     }
 
+    // ✅ Hash password
+    console.log("🔐 Hashing password...");
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
+    // ✅ Upload profile image if provided
     let profileImageUrl = null;
-    console.log("📸 File received:", req.file ? "✅ YES" : "❌ NO");
-
     if (req.file) {
       try {
         console.log("📸 Uploading image to Cloudinary...");
@@ -56,13 +65,23 @@ const register = async (req, res) => {
         profileImageUrl = uploadResult.url;
         console.log("✅ Image uploaded:", profileImageUrl);
       } catch (uploadError) {
-        console.error("❌ Image upload failed:", uploadError);
+        console.error("❌ Image upload failed:", uploadError.message);
+        // Continue registration even if image upload fails
       }
     }
 
+    // ✅ Insert user into database
+    console.log("💾 Inserting user into database...");
     const [result] = await promisePool.query(
-      `INSERT INTO users (username, email, password_hash, full_name, profile_image, role) 
-       VALUES (?, ?, ?, ?, ?, ?)`,
+      `INSERT INTO users (
+        username, 
+        email, 
+        password_hash, 
+        full_name, 
+        profile_image, 
+        role
+      ) 
+      VALUES (?, ?, ?, ?, ?, ?)`,
       [
         username,
         email,
@@ -76,14 +95,25 @@ const register = async (req, res) => {
     const userId = result.insertId;
     console.log(`✅ User registered with ID: ${userId}`);
 
+    // ✅ Fetch the newly created user
     const [users] = await promisePool.query(
-      "SELECT id, username, email, full_name, profile_image, role, created_at FROM users WHERE id = ?",
+      `SELECT id, username, email, full_name, profile_image, role, created_at 
+       FROM users WHERE id = ?`,
       [userId],
     );
+
+    if (users.length === 0) {
+      console.error("❌ User not found after insertion");
+      return res.status(500).json({
+        success: false,
+        message: "Registration failed - user not found",
+      });
+    }
 
     const user = users[0];
     const token = generateToken(user.id);
 
+    // ✅ Prepare response data
     const userData = {
       id: user.id,
       username: user.username,
@@ -104,15 +134,27 @@ const register = async (req, res) => {
     });
   } catch (error) {
     console.error("❌ Registration error:", error);
+    console.error("❌ Error code:", error.code);
+    console.error("❌ Error message:", error.message);
+
+    // ✅ Handle specific MySQL errors
+    if (error.code === "ER_DUP_ENTRY") {
+      return res.status(400).json({
+        success: false,
+        message: "Username or email already exists",
+      });
+    }
+
     res.status(500).json({
       success: false,
       message: "Server error during registration",
+      error: process.env.NODE_ENV === "development" ? error.message : undefined,
     });
   }
 };
 
 // ============================================
-// ✅ LOGIN USER
+// ✅ LOGIN USER - COMPLETE WORKING VERSION
 // ============================================
 const login = async (req, res) => {
   console.log("📝 ============ LOGIN STARTED ============");
@@ -128,6 +170,7 @@ const login = async (req, res) => {
       });
     }
 
+    // ✅ Find user by username or email
     const [users] = await promisePool.query(
       "SELECT * FROM users WHERE username = ? OR email = ?",
       [identifier, identifier],
@@ -144,6 +187,7 @@ const login = async (req, res) => {
     const user = users[0];
     console.log("✅ User found:", user.username);
 
+    // ✅ Compare password
     const isMatch = await bcrypt.compare(password, user.password_hash);
     if (!isMatch) {
       console.log("❌ Password mismatch for:", user.username);
@@ -157,11 +201,18 @@ const login = async (req, res) => {
 
     const token = generateToken(user.id);
 
-    await promisePool.query(
-      "UPDATE users SET last_login = NOW() WHERE id = ?",
-      [user.id],
-    );
+    // ✅ Update last_login - skip if column doesn't exist
+    try {
+      await promisePool.query(
+        "UPDATE users SET last_login = NOW() WHERE id = ?",
+        [user.id],
+      );
+      console.log("✅ Updated last_login");
+    } catch (err) {
+      console.log("⚠️ Could not update last_login (column may not exist)");
+    }
 
+    // ✅ Get user data (without password)
     const userData = {
       id: user.id,
       username: user.username,
@@ -197,7 +248,8 @@ const getCurrentUser = async (req, res) => {
     const userId = req.user.id;
 
     const [users] = await promisePool.query(
-      "SELECT id, username, email, full_name, profile_image, role, created_at, last_login, phone, bio FROM users WHERE id = ?",
+      `SELECT id, username, email, full_name, profile_image, role, created_at 
+       FROM users WHERE id = ?`,
       [userId],
     );
 
@@ -242,7 +294,6 @@ const updateProfile = async (req, res) => {
       }
     }
 
-    // Build update query
     let updateFields = [];
     let updateValues = [];
 
@@ -275,9 +326,9 @@ const updateProfile = async (req, res) => {
 
     await promisePool.query(query, updateValues);
 
-    // Get updated user
     const [users] = await promisePool.query(
-      "SELECT id, username, email, full_name, profile_image, role, phone, bio FROM users WHERE id = ?",
+      `SELECT id, username, email, full_name, profile_image, role, phone, bio 
+       FROM users WHERE id = ?`,
       [userId],
     );
 
@@ -317,7 +368,6 @@ const changePassword = async (req, res) => {
       });
     }
 
-    // Get user with password
     const [users] = await promisePool.query(
       "SELECT * FROM users WHERE id = ?",
       [userId],
@@ -331,9 +381,8 @@ const changePassword = async (req, res) => {
     }
 
     const user = users[0];
-
-    // Verify current password
     const isMatch = await bcrypt.compare(currentPassword, user.password_hash);
+
     if (!isMatch) {
       return res.status(401).json({
         success: false,
@@ -341,7 +390,6 @@ const changePassword = async (req, res) => {
       });
     }
 
-    // Hash new password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(newPassword, salt);
 

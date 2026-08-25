@@ -1,8 +1,14 @@
+// backend/routes/authRoutes.js
 const express = require("express");
 const router = express.Router();
-const { protect } = require("../middleware/auth");
 const multer = require("multer");
-const upload = multer({ storage: multer.memoryStorage() });
+const { protect } = require("../middleware/auth");
+
+// ✅ Configure multer for memory storage
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
+});
 
 // ✅ Import controllers
 const {
@@ -36,7 +42,7 @@ router.put("/profile", protect, upload.single("profile_image"), updateProfile);
 // ✅ Change password - PUT /api/auth/password
 router.put("/password", protect, changePassword);
 
-// ✅ Logout - POST /api/auth/logout (optional)
+// ✅ Logout - POST /api/auth/logout
 router.post("/logout", protect, (req, res) => {
   res.status(200).json({
     success: true,
@@ -44,4 +50,4 @@ router.post("/logout", protect, (req, res) => {
   });
 });
 
-module.exports = router; // ✅ IMPORTANT: Export router, not an object
+module.exports = router;

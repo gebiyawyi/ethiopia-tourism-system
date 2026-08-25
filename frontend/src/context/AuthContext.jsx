@@ -1,3 +1,4 @@
+// frontend/src/context/AuthContext.jsx
 import React, { createContext, useState, useContext, useEffect } from "react";
 import api from "../services/api";
 
@@ -6,80 +7,23 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
-  // ✅ REGISTER FUNCTION
-  const register = async (userData) => {
-    try {
-      setError(null);
-      const response = await api.post("/auth/register", userData);
-
-      if (response.data.success) {
-        // Auto-login after registration
-        const loginResponse = await api.post("/auth/login", {
-          email: userData.email,
-          password: userData.password,
-        });
-
-        if (loginResponse.data.success) {
-          const { token, user } = loginResponse.data.data;
-          localStorage.setItem("token", token);
-          localStorage.setItem("user", JSON.stringify(user));
-          setUser(user);
-          return { success: true };
-        }
-      }
-      return { success: false, message: response.data.message };
-    } catch (err) {
-      console.error("❌ Registration error:", err);
-      setError(err.response?.data?.message || "Registration failed");
-      return {
-        success: false,
-        message: err.response?.data?.message || "Registration failed",
-      };
-    }
-  };
-
-  // ✅ LOGIN FUNCTION
-  const login = async (email, password) => {
-    try {
-      setError(null);
-      const response = await api.post("/auth/login", { email, password });
-
-      if (response.data.success) {
-        const { token, user } = response.data.data;
-        localStorage.setItem("token", token);
-        localStorage.setItem("user", JSON.stringify(user));
-        setUser(user);
-        return { success: true };
-      }
-      return { success: false, message: response.data.message };
-    } catch (err) {
-      console.error("❌ Login error:", err);
-      setError(err.response?.data?.message || "Login failed");
-      return {
-        success: false,
-        message: err.response?.data?.message || "Login failed",
-      };
-    }
-  };
-
-  // ✅ LOGOUT FUNCTION
-  const logout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    setUser(null);
-  };
-
-  // ✅ CHECK AUTH ON LOAD
+  // ✅ Load user from localStorage on startup
   useEffect(() => {
     const token = localStorage.getItem("token");
     const userData = localStorage.getItem("user");
 
+    console.log("🔍 Checking auth on load...");
+    console.log("📝 Token exists:", !!token);
+    console.log("📝 User data exists:", !!userData);
+
     if (token && userData) {
       try {
-        setUser(JSON.parse(userData));
+        const parsedUser = JSON.parse(userData);
+        setUser(parsedUser);
+        console.log("✅ User loaded from localStorage:", parsedUser.username);
       } catch (e) {
+        console.error("❌ Error parsing user data:", e);
         localStorage.removeItem("token");
         localStorage.removeItem("user");
       }
@@ -87,14 +31,72 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
   }, []);
 
+  // ✅ Login function
+  const login = (token, userData) => {
+    console.log("🔐 Login called with:", { token, userData });
+    localStorage.setItem("token", token);
+    localStorage.setItem("user", JSON.stringify(userData));
+    setUser(userData);
+    console.log("✅ User logged in:", userData.username);
+  };
+
+  // ✅ Register function
+  const register = (token, userData) => {
+    console.log("📝 Register called with:", { token, userData });
+    localStorage.setItem("token", token);
+    localStorage.setItem("user", JSON.stringify(userData));
+    setUser(userData);
+    console.log("✅ User registered:", userData.username);
+  };
+
+  // ✅ Logout function
+  const logout = () => {
+    console.log("🚪 Logging out...");
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    setUser(null);
+    console.log("✅ User logged out");
+  };
+
+  // ✅ Refresh user data
+  const refreshUser = () => {
+    const userData = localStorage.getItem("user");
+    if (userData) {
+      try {
+        setUser(JSON.parse(userData));
+      } catch (e) {
+        setUser(null);
+      }
+    }
+  };
+
+  const isLoggedIn = !!user && !!localStorage.getItem("token");
+
+  console.log("📊 Auth state:", { isLoggedIn, user: user?.username });
+
   return (
     <AuthContext.Provider
-      value={{ user, loading, error, register, login, logout }}
+      value={{
+        user,
+        loading,
+        isLoggedIn,
+        login,
+        register,
+        logout,
+        refreshUser,
+      }}
     >
       {children}
     </AuthContext.Provider>
   );
 };
 
-export const useAuth = () => useContext(AuthContext);
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
+};
+
 export default AuthContext;

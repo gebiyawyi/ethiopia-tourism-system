@@ -1,3 +1,4 @@
+// server.js
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
@@ -19,7 +20,7 @@ app.use(helmet());
 app.use(compression());
 
 // ============================================
-// ✅ CORS CONFIGURATION (UPDATED)
+// ✅ CORS CONFIGURATION
 // ============================================
 app.use(
   cors({
@@ -28,8 +29,7 @@ app.use(
       "http://localhost:3000",
       "https://gebiyawtourism.netlify.app",
       process.env.FRONTEND_URL,
-      process.env.FRONTEND_URL_PROD,
-    ],
+    ].filter(Boolean),
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
@@ -41,8 +41,8 @@ app.use(
 // ✅ RATE LIMITING
 // ============================================
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // limit each IP to 100 requests per windowMs
+  windowMs: 15 * 60 * 1000,
+  max: 100,
 });
 app.use("/api/", limiter);
 
@@ -56,65 +56,40 @@ app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 // ✅ DATABASE CONNECTION
 // ============================================
 (async () => {
-  await testConnection();
+  const connected = await testConnection();
+  if (!connected) {
+    console.error("❌ Database connection failed - exiting...");
+    process.exit(1);
+  }
 })();
 
 // ============================================
-// ✅ LOG ROUTES LOADING
+// ✅ ROUTES - CHECK IF FILES EXIST
 // ============================================
-console.log("📂 Loading routes...");
+const fs = require("fs");
+const path = require("path");
 
-// ============================================
-// ✅ ROUTES
-// ============================================
+const routeFiles = [
+  { path: "./routes/authRoutes", name: "auth" },
+  { path: "./routes/destinationRoutes", name: "destinations" },
+  { path: "./routes/hotelRoutes", name: "hotels" },
+  { path: "./routes/contactRoutes", name: "contact" },
+  { path: "./routes/bookingRoutes", name: "bookings" },
+];
 
-// ✅ Auth routes - REGISTRATION & LOGIN
-app.use("/api/auth", require("./routes/authRoutes"));
-
-// ✅ Destination routes
-app.use("/api/destinations", require("./routes/destinationRoutes"));
-
-// ✅ Hotel routes
-app.use("/api/hotels", require("./routes/hotelRoutes"));
-
-// ✅ Contact routes
-app.use("/api/contact", require("./routes/contactRoutes"));
-
-// ✅ Booking routes
-app.use("/api/bookings", require("./routes/bookingRoutes"));
-
-// ✅ Optional routes - with error handling (prevents crashes if files don't exist)
-try {
-  app.use("/api/reviews", require("./routes/reviewRoutes"));
-} catch (err) {
-  console.log("⚠️ reviewRoutes not found, skipping...");
-}
-
-try {
-  app.use("/api/transport", require("./routes/transportRoutes"));
-} catch (err) {
-  console.log("⚠️ transportRoutes not found, skipping...");
-}
-
-try {
-  app.use("/api/users", require("./routes/userRoutes"));
-} catch (err) {
-  console.log("⚠️ userRoutes not found, skipping...");
-}
-
-try {
-  app.use("/api/upload", require("./routes/uploadRoutes"));
-} catch (err) {
-  console.log("⚠️ uploadRoutes not found, skipping...");
-}
-
-try {
-  app.use("/api/admin", require("./routes/adminRoutes"));
-} catch (err) {
-  console.log("⚠️ adminRoutes not found, skipping...");
-}
-
-console.log("✅ All routes loaded");
+routeFiles.forEach((route) => {
+  try {
+    const fullPath = path.join(__dirname, route.path + ".js");
+    if (fs.existsSync(fullPath)) {
+      app.use(`/api/${route.name}`, require(fullPath));
+      console.log(`✅ Loaded /api/${route.name} routes`);
+    } else {
+      console.log(`⚠️ Route file not found: ${route.path}`);
+    }
+  } catch (err) {
+    console.log(`⚠️ Error loading ${route.name} routes:`, err.message);
+  }
+});
 
 // ============================================
 // ✅ HEALTH CHECK

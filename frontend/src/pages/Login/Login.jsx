@@ -1,3 +1,4 @@
+// frontend/src/pages/Login/Login.jsx
 import React, { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import "./Login.css";
@@ -43,8 +44,12 @@ const Login = () => {
     }
 
     setLoading(true);
+    setError("");
 
     try {
+      console.log("📤 Sending login request...");
+      console.log("📤 Identifier:", identifier);
+
       const response = await api.post("/auth/login", {
         identifier: identifier.trim(),
         password: password.trim(),
@@ -54,9 +59,6 @@ const Login = () => {
 
       if (response.data.success) {
         const { token, user } = response.data;
-
-        setError("");
-        setFieldErrors({});
 
         // ✅ Use AuthContext login
         login(token, user);
@@ -68,26 +70,14 @@ const Login = () => {
         setAttemptCount(attemptCount + 1);
       }
     } catch (err) {
-      console.error("❌ Login error:", err.response?.data);
-      const errorMessage = err.response?.data?.message;
+      console.error("❌ Login error:", err);
+      console.error("❌ Response:", err.response?.data);
 
-      if (errorMessage === "Invalid username/email or password") {
-        setError(
-          "❌ Invalid username/email or password. Please check your credentials.",
-        );
-      } else if (errorMessage === "User not found") {
-        setError(
-          "❌ No account found with this username or email. Please sign up.",
-        );
-      } else if (err.response?.status === 401) {
-        setError("❌ Authentication failed. Please check your credentials.");
-      } else if (err.response?.status === 500) {
-        setError("❌ Server error. Please try again later.");
-      } else if (err.code === "ERR_NETWORK") {
-        setError("❌ Network error. Please check your connection.");
-      } else {
-        setError(errorMessage || "❌ Login failed. Please try again.");
-      }
+      const errorMessage =
+        err.response?.data?.message ||
+        err.response?.data?.error ||
+        "❌ Login failed. Please try again.";
+      setError(errorMessage);
       setAttemptCount(attemptCount + 1);
     } finally {
       setLoading(false);

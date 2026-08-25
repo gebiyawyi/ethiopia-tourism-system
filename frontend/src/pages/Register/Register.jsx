@@ -1,3 +1,4 @@
+// frontend/src/pages/Register/Register.jsx
 import React, { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import "./Register.css";
@@ -20,7 +21,7 @@ const Register = () => {
   const [fieldErrors, setFieldErrors] = useState({});
   const navigate = useNavigate();
   const location = useLocation();
-  const { register } = useAuth();
+  const { login } = useAuth();
 
   const getReturnUrl = () => {
     const params = new URLSearchParams(location.search);
@@ -117,6 +118,12 @@ const Register = () => {
         formDataToSend.append("profile_image", profileImage);
       }
 
+      console.log("📤 Sending registration data...");
+      console.log("📤 Username:", formData.username);
+      console.log("📤 Email:", formData.email);
+      console.log("📤 Full Name:", formData.full_name);
+      console.log("📤 Has Image:", !!profileImage);
+
       const response = await api.post("/auth/register", formDataToSend, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -128,20 +135,27 @@ const Register = () => {
       if (response.data.success) {
         const { token, user } = response.data;
 
-        // ✅ Use AuthContext register
-        register(token, user);
+        // ✅ Use AuthContext login (auto-login after registration)
+        login(token, user);
 
         setSuccess(true);
         setTimeout(() => {
           const returnUrl = getReturnUrl();
           navigate(returnUrl);
         }, 1500);
+      } else {
+        setError(response.data.message || "Registration failed");
       }
     } catch (err) {
-      console.error("❌ Registration error:", err.response?.data);
-      setError(
-        err.response?.data?.message || "Registration failed. Please try again.",
-      );
+      console.error("❌ Registration error:", err);
+      console.error("❌ Response:", err.response?.data);
+
+      // ✅ Show the actual error from backend
+      const errorMessage =
+        err.response?.data?.message ||
+        err.response?.data?.error ||
+        "Registration failed. Please try again.";
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
