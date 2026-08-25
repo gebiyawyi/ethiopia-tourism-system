@@ -1,3 +1,4 @@
+// frontend/src/components/Navbar/Navbar.jsx
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./Navbar.css";
@@ -79,6 +80,9 @@ const Navbar = () => {
   // ============================================
   const isActive = (path) => location.pathname === path;
 
+  // ============================================
+  // ✅ RENDER
+  // ============================================
   return (
     <header className={`navbar ${scrolled ? "scrolled" : ""}`}>
       <div className="navbar-container">
@@ -233,7 +237,7 @@ const Navbar = () => {
               className={`mobile-nav-link ${isActive("/") ? "active" : ""}`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              <span className="mobile-nav-icon"></span>
+              <span className="mobile-nav-icon">🏠</span>
               Home
             </Link>
             <Link
@@ -241,7 +245,7 @@ const Navbar = () => {
               className={`mobile-nav-link ${isActive("/destinations") ? "active" : ""}`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              <span className="mobile-nav-icon"></span>
+              <span className="mobile-nav-icon">📍</span>
               Destinations
             </Link>
             <Link
@@ -249,7 +253,7 @@ const Navbar = () => {
               className={`mobile-nav-link ${isActive("/transport") ? "active" : ""}`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              <span className="mobile-nav-icon"></span>
+              <span className="mobile-nav-icon">🚌</span>
               Transport
             </Link>
             <Link
@@ -257,7 +261,7 @@ const Navbar = () => {
               className={`mobile-nav-link ${isActive("/hotels") ? "active" : ""}`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              <span className="mobile-nav-icon"></span>
+              <span className="mobile-nav-icon">🏨</span>
               Hotels
             </Link>
             <Link
@@ -265,7 +269,7 @@ const Navbar = () => {
               className={`mobile-nav-link ${isActive("/about") ? "active" : ""}`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              <span className="mobile-nav-icon"></span>
+              <span className="mobile-nav-icon">ℹ️</span>
               About
             </Link>
             <Link
@@ -273,7 +277,7 @@ const Navbar = () => {
               className={`mobile-nav-link ${isActive("/contact") ? "active" : ""}`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              <span className="mobile-nav-icon"></span>
+              <span className="mobile-nav-icon">📧</span>
               Contact
             </Link>
 

@@ -1,17 +1,20 @@
+// frontend/src/pages/Profile/Profile.jsx
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Profile.css";
 import api from "../../services/api";
+import { useAuth } from "../../context/AuthContext";
 
 const Profile = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("profile");
   const [formData, setFormData] = useState({
-    full_name: "",
-    email: "",
-    phone: "",
     username: "",
+    email: "",
+    full_name: "",
+    phone: "",
+    bio: "",
     profile_image: "",
   });
   const [passwordData, setPasswordData] = useState({
@@ -23,6 +26,7 @@ const Profile = () => {
   const [newProfileImage, setNewProfileImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const navigate = useNavigate();
+  const { refreshUser } = useAuth();
 
   // ============================================
   // ✅ GET DISPLAY NAME
@@ -59,22 +63,25 @@ const Profile = () => {
           return;
         }
 
+        console.log("📤 Loading user profile...");
         const response = await api.get("/auth/me");
+        console.log("✅ User data:", response.data);
+
         if (response.data.success) {
           const userData = response.data.user;
           setUser(userData);
           setFormData({
-            full_name: userData.full_name || userData.username || "",
-            email: userData.email || "",
-            phone: userData.phone || "",
             username: userData.username || "",
+            email: userData.email || "",
+            full_name: userData.full_name || "",
+            phone: userData.phone || "",
+            bio: userData.bio || "",
             profile_image: userData.profile_image || "",
           });
-          // Update localStorage with fresh data
           localStorage.setItem("user", JSON.stringify(userData));
         }
       } catch (error) {
-        console.error("Error loading user:", error);
+        console.error("❌ Error loading user:", error);
         if (error.response?.status === 401) {
           localStorage.removeItem("token");
           localStorage.removeItem("user");
@@ -149,7 +156,7 @@ const Profile = () => {
   };
 
   // ============================================
-  // ✅ SAVE PROFILE
+  // ✅ SAVE PROFILE - WITH USERNAME & EMAIL
   // ============================================
   const handleSaveProfile = async (e) => {
     e.preventDefault();
@@ -157,48 +164,87 @@ const Profile = () => {
     setMessage({ text: "", type: "" });
 
     try {
+      // ✅ Validate username (at least 3 characters)
+      if (formData.username && formData.username.length < 3) {
+        setMessage({
+          text: "Username must be at least 3 characters",
+          type: "error",
+        });
+        setLoading(false);
+        return;
+      }
+
+      // ✅ Validate email
+      if (formData.email && !/\S+@\S+\.\S+/.test(formData.email)) {
+        setMessage({
+          text: "Please enter a valid email address",
+          type: "error",
+        });
+        setLoading(false);
+        return;
+      }
+
       const formDataToSend = new FormData();
-      formDataToSend.append("full_name", formData.full_name);
-      formDataToSend.append("phone", formData.phone);
-      formDataToSend.append("email", formData.email);
-      formDataToSend.append("username", formData.username);
+      formDataToSend.append("username", formData.username.trim());
+      formDataToSend.append("email", formData.email.trim());
+      formDataToSend.append("full_name", formData.full_name.trim());
+      formDataToSend.append("phone", formData.phone.trim());
+      formDataToSend.append("bio", formData.bio.trim());
 
       if (newProfileImage) {
         formDataToSend.append("profile_image", newProfileImage);
       }
 
-      const response = await api.put("/users/profile", formDataToSend, {
+      console.log("📤 Sending profile update...");
+      console.log("📤 Data:", {
+        username: formData.username,
+        email: formData.email,
+        full_name: formData.full_name,
+        phone: formData.phone,
+        hasImage: !!newProfileImage,
+      });
+
+      const response = await api.put("/auth/profile", formDataToSend, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
 
+      console.log("✅ Profile update response:", response.data);
+
       if (response.data.success) {
         const updatedUser = response.data.user;
-        // ✅ Update localStorage with new user data
+
+        // ✅ Update localStorage
         localStorage.setItem("user", JSON.stringify(updatedUser));
         setUser(updatedUser);
         setFormData({
-          ...formData,
+          username: updatedUser.username || "",
+          email: updatedUser.email || "",
+          full_name: updatedUser.full_name || "",
+          phone: updatedUser.phone || "",
+          bio: updatedUser.bio || "",
           profile_image: updatedUser.profile_image || "",
         });
+
         setImagePreview(null);
         setNewProfileImage(null);
 
+        // ✅ Refresh auth context
+        refreshUser();
+
         setMessage({ text: "Profile updated successfully!", type: "success" });
         setTimeout(() => setMessage({ text: "", type: "" }), 3000);
-
-        // ✅ Refresh to update Navbar
-        setTimeout(() => {
-          window.location.reload();
-        }, 1000);
       }
     } catch (error) {
       console.error("❌ Profile update error:", error.response?.data);
+
+      // ✅ Show specific error message
+      const errorMessage =
+        error.response?.data?.message ||
+        "Error updating profile. Please try again.";
       setMessage({
-        text:
-          error.response?.data?.message ||
-          "Error updating profile. Please try again.",
+        text: errorMessage,
         type: "error",
       });
     } finally {
@@ -230,7 +276,7 @@ const Profile = () => {
     }
 
     try {
-      const response = await api.put("/users/password", {
+      const response = await api.put("/auth/password", {
         currentPassword: passwordData.currentPassword,
         newPassword: passwordData.newPassword,
       });
@@ -294,7 +340,6 @@ const Profile = () => {
           ============================================ */}
           <div className="profile-sidebar">
             <div className="profile-avatar">
-              {/* ✅ Show profile image if exists */}
               {user?.profile_image ? (
                 <img
                   src={user.profile_image}
@@ -366,7 +411,9 @@ const Profile = () => {
                 >
                   {/* Profile Photo Upload */}
                   <div className="form-group full-width">
-                    <label>Profile Photo</label>
+                    <label>
+                      Profile Photo <span className="optional">(Optional)</span>
+                    </label>
                     <div className="photo-upload-container">
                       <div className="photo-preview-wrapper">
                         {imagePreview ? (
@@ -389,7 +436,6 @@ const Profile = () => {
                               onClick={() => {
                                 setNewProfileImage(null);
                                 setImagePreview(null);
-                                setFormData({ ...formData, profile_image: "" });
                               }}
                             >
                               ✕
@@ -432,6 +478,25 @@ const Profile = () => {
                     </div>
                   </div>
 
+                  {/* Username */}
+                  <div className="form-group">
+                    <label>
+                      Username <span className="required">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      name="username"
+                      value={formData.username}
+                      onChange={handleChange}
+                      placeholder="Enter your username"
+                      required
+                    />
+                    <span className="input-hint">
+                      Username must be at least 3 characters
+                    </span>
+                  </div>
+
+                  {/* Full Name */}
                   <div className="form-group">
                     <label>Full Name</label>
                     <input
@@ -443,41 +508,46 @@ const Profile = () => {
                     />
                   </div>
 
+                  {/* Email */}
                   <div className="form-group">
-                    <label>Username</label>
-                    <input
-                      type="text"
-                      name="username"
-                      value={formData.username}
-                      onChange={handleChange}
-                      placeholder="Enter your username"
-                      className="disabled-input"
-                      disabled
-                    />
-                    <span className="input-hint">
-                      Username cannot be changed
-                    </span>
-                  </div>
-
-                  <div className="form-group">
-                    <label>Email</label>
+                    <label>
+                      Email <span className="required">*</span>
+                    </label>
                     <input
                       type="email"
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
                       placeholder="Enter your email"
+                      required
                     />
                   </div>
 
+                  {/* Phone */}
                   <div className="form-group">
-                    <label>Phone</label>
+                    <label>
+                      Phone <span className="optional">(Optional)</span>
+                    </label>
                     <input
                       type="tel"
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
                       placeholder="Enter your phone number"
+                    />
+                  </div>
+
+                  {/* Bio */}
+                  <div className="form-group">
+                    <label>
+                      Bio <span className="optional">(Optional)</span>
+                    </label>
+                    <textarea
+                      name="bio"
+                      value={formData.bio || ""}
+                      onChange={handleChange}
+                      placeholder="Tell us about yourself"
+                      rows="3"
                     />
                   </div>
 

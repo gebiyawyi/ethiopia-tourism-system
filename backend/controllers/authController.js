@@ -14,74 +14,52 @@ const generateToken = (userId) => {
 };
 
 // ============================================
-// ✅ REGISTER USER - COMPLETE WORKING VERSION
+// ✅ REGISTER USER
 // ============================================
 const register = async (req, res) => {
   console.log("📝 ============ REGISTRATION STARTED ============");
-  console.log("📝 Request body:", req.body);
-  console.log("📝 File received:", req.file ? "✅ YES" : "❌ NO");
 
   try {
     const { username, email, password, full_name } = req.body;
 
-    // ✅ Validate required fields
     if (!username || !email || !password) {
-      console.log("❌ Missing required fields");
       return res.status(400).json({
         success: false,
         message: "Please provide username, email and password",
       });
     }
 
-    // ✅ Check if user already exists
-    console.log("🔍 Checking if user exists...");
     const [existingUsers] = await promisePool.query(
       "SELECT id FROM users WHERE username = ? OR email = ?",
       [username, email],
     );
 
     if (existingUsers.length > 0) {
-      console.log("❌ User already exists");
       return res.status(400).json({
         success: false,
         message: "Username or email already exists",
       });
     }
 
-    // ✅ Hash password
-    console.log("🔐 Hashing password...");
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    // ✅ Upload profile image if provided
     let profileImageUrl = null;
     if (req.file) {
       try {
-        console.log("📸 Uploading image to Cloudinary...");
         const uploadResult = await uploadImage(
           req.file.buffer,
           "ethiopia_tourism/profiles",
         );
         profileImageUrl = uploadResult.url;
-        console.log("✅ Image uploaded:", profileImageUrl);
       } catch (uploadError) {
         console.error("❌ Image upload failed:", uploadError.message);
-        // Continue registration even if image upload fails
       }
     }
 
-    // ✅ Insert user into database
-    console.log("💾 Inserting user into database...");
     const [result] = await promisePool.query(
-      `INSERT INTO users (
-        username, 
-        email, 
-        password_hash, 
-        full_name, 
-        profile_image, 
-        role
-      ) 
-      VALUES (?, ?, ?, ?, ?, ?)`,
+      `INSERT INTO users (username, email, password_hash, full_name, profile_image, role) 
+       VALUES (?, ?, ?, ?, ?, ?)`,
       [
         username,
         email,
@@ -93,27 +71,16 @@ const register = async (req, res) => {
     );
 
     const userId = result.insertId;
-    console.log(`✅ User registered with ID: ${userId}`);
 
-    // ✅ Fetch the newly created user
     const [users] = await promisePool.query(
       `SELECT id, username, email, full_name, profile_image, role, created_at 
        FROM users WHERE id = ?`,
       [userId],
     );
 
-    if (users.length === 0) {
-      console.error("❌ User not found after insertion");
-      return res.status(500).json({
-        success: false,
-        message: "Registration failed - user not found",
-      });
-    }
-
     const user = users[0];
     const token = generateToken(user.id);
 
-    // ✅ Prepare response data
     const userData = {
       id: user.id,
       username: user.username,
@@ -124,7 +91,7 @@ const register = async (req, res) => {
       created_at: user.created_at,
     };
 
-    console.log("📤 Returning user data:", userData);
+    console.log("✅ User registered with ID:", userId);
     console.log("📝 ============ REGISTRATION COMPLETED ============");
 
     res.status(201).json({
@@ -134,17 +101,6 @@ const register = async (req, res) => {
     });
   } catch (error) {
     console.error("❌ Registration error:", error);
-    console.error("❌ Error code:", error.code);
-    console.error("❌ Error message:", error.message);
-
-    // ✅ Handle specific MySQL errors
-    if (error.code === "ER_DUP_ENTRY") {
-      return res.status(400).json({
-        success: false,
-        message: "Username or email already exists",
-      });
-    }
-
     res.status(500).json({
       success: false,
       message: "Server error during registration",
@@ -154,14 +110,13 @@ const register = async (req, res) => {
 };
 
 // ============================================
-// ✅ LOGIN USER - COMPLETE WORKING VERSION
+// ✅ LOGIN USER
 // ============================================
 const login = async (req, res) => {
   console.log("📝 ============ LOGIN STARTED ============");
 
   try {
     const { identifier, password } = req.body;
-    console.log("🔑 Login attempt for:", identifier);
 
     if (!identifier || !password) {
       return res.status(400).json({
@@ -170,14 +125,12 @@ const login = async (req, res) => {
       });
     }
 
-    // ✅ Find user by username or email
     const [users] = await promisePool.query(
       "SELECT * FROM users WHERE username = ? OR email = ?",
       [identifier, identifier],
     );
 
     if (users.length === 0) {
-      console.log("❌ User not found:", identifier);
       return res.status(401).json({
         success: false,
         message: "Invalid username/email or password",
@@ -185,34 +138,26 @@ const login = async (req, res) => {
     }
 
     const user = users[0];
-    console.log("✅ User found:", user.username);
-
-    // ✅ Compare password
     const isMatch = await bcrypt.compare(password, user.password_hash);
+
     if (!isMatch) {
-      console.log("❌ Password mismatch for:", user.username);
       return res.status(401).json({
         success: false,
         message: "Invalid username/email or password",
       });
     }
 
-    console.log("✅ Password matched for:", user.username);
-
-    const token = generateToken(user.id);
-
-    // ✅ Update last_login - skip if column doesn't exist
     try {
       await promisePool.query(
         "UPDATE users SET last_login = NOW() WHERE id = ?",
         [user.id],
       );
-      console.log("✅ Updated last_login");
     } catch (err) {
-      console.log("⚠️ Could not update last_login (column may not exist)");
+      console.log("⚠️ Could not update last_login:", err.message);
     }
 
-    // ✅ Get user data (without password)
+    const token = generateToken(user.id);
+
     const userData = {
       id: user.id,
       username: user.username,
@@ -221,9 +166,11 @@ const login = async (req, res) => {
       role: user.role,
       profile_image: user.profile_image,
       created_at: user.created_at,
+      phone: user.phone || "",
+      bio: user.bio || "",
     };
 
-    console.log("📤 Returning user data:", userData);
+    console.log("✅ User logged in:", user.username);
     console.log("📝 ============ LOGIN COMPLETED ============");
 
     res.status(200).json({
@@ -248,7 +195,7 @@ const getCurrentUser = async (req, res) => {
     const userId = req.user.id;
 
     const [users] = await promisePool.query(
-      `SELECT id, username, email, full_name, profile_image, role, created_at 
+      `SELECT id, username, email, full_name, profile_image, role, created_at, phone, bio 
        FROM users WHERE id = ?`,
       [userId],
     );
@@ -274,46 +221,110 @@ const getCurrentUser = async (req, res) => {
 };
 
 // ============================================
-// ✅ UPDATE PROFILE
+// ✅ UPDATE PROFILE - WITH USERNAME & EMAIL
 // ============================================
 const updateProfile = async (req, res) => {
+  console.log("📝 ============ UPDATE PROFILE STARTED ============");
+  console.log("📝 User ID:", req.user?.id);
+  console.log("📝 Request body:", req.body);
+  console.log("📝 File received:", req.file ? "✅ YES" : "❌ NO");
+
   try {
     const userId = req.user.id;
-    const { full_name, phone, bio } = req.body;
+    const { username, email, full_name, phone, bio } = req.body;
 
+    // ✅ Validate user exists
+    const [userCheck] = await promisePool.query(
+      "SELECT id FROM users WHERE id = ?",
+      [userId],
+    );
+
+    if (userCheck.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    // ✅ Check if username is taken by another user
+    if (username) {
+      const [existingUsername] = await promisePool.query(
+        "SELECT id FROM users WHERE username = ? AND id != ?",
+        [username, userId],
+      );
+      if (existingUsername.length > 0) {
+        return res.status(400).json({
+          success: false,
+          message: "Username is already taken by another user",
+        });
+      }
+    }
+
+    // ✅ Check if email is taken by another user
+    if (email) {
+      const [existingEmail] = await promisePool.query(
+        "SELECT id FROM users WHERE email = ? AND id != ?",
+        [email, userId],
+      );
+      if (existingEmail.length > 0) {
+        return res.status(400).json({
+          success: false,
+          message: "Email is already taken by another user",
+        });
+      }
+    }
+
+    // ✅ Upload image if provided
     let profileImageUrl = null;
     if (req.file) {
       try {
+        console.log("📸 Uploading profile image...");
         const uploadResult = await uploadImage(
           req.file.buffer,
           "ethiopia_tourism/profiles",
         );
         profileImageUrl = uploadResult.url;
+        console.log("✅ Image uploaded:", profileImageUrl);
       } catch (uploadError) {
-        console.error("❌ Image upload failed:", uploadError);
+        console.error("❌ Image upload failed:", uploadError.message);
       }
     }
 
+    // ✅ Build update query dynamically
     let updateFields = [];
     let updateValues = [];
 
-    if (full_name !== undefined) {
+    if (username !== undefined && username !== null) {
+      updateFields.push("username = ?");
+      updateValues.push(username);
+    }
+
+    if (email !== undefined && email !== null) {
+      updateFields.push("email = ?");
+      updateValues.push(email);
+    }
+
+    if (full_name !== undefined && full_name !== null) {
       updateFields.push("full_name = ?");
       updateValues.push(full_name);
     }
-    if (phone !== undefined) {
+
+    if (phone !== undefined && phone !== null) {
       updateFields.push("phone = ?");
       updateValues.push(phone);
     }
-    if (bio !== undefined) {
+
+    if (bio !== undefined && bio !== null) {
       updateFields.push("bio = ?");
       updateValues.push(bio);
     }
+
     if (profileImageUrl) {
       updateFields.push("profile_image = ?");
       updateValues.push(profileImageUrl);
     }
 
+    // ✅ If no fields to update
     if (updateFields.length === 0) {
       return res.status(400).json({
         success: false,
@@ -321,16 +332,25 @@ const updateProfile = async (req, res) => {
       });
     }
 
+    // ✅ Add updated_at
+    updateFields.push("updated_at = NOW()");
     updateValues.push(userId);
-    const query = `UPDATE users SET ${updateFields.join(", ")} WHERE id = ?`;
 
+    const query = `UPDATE users SET ${updateFields.join(", ")} WHERE id = ?`;
+    console.log("📝 Update query:", query);
+
+    // ✅ Execute update
     await promisePool.query(query, updateValues);
 
+    // ✅ Get updated user data
     const [users] = await promisePool.query(
-      `SELECT id, username, email, full_name, profile_image, role, phone, bio 
+      `SELECT id, username, email, full_name, profile_image, role, phone, bio, created_at 
        FROM users WHERE id = ?`,
       [userId],
     );
+
+    console.log("✅ User updated:", users[0]);
+    console.log("📝 ============ UPDATE PROFILE COMPLETED ============");
 
     res.status(200).json({
       success: true,
@@ -339,9 +359,20 @@ const updateProfile = async (req, res) => {
     });
   } catch (error) {
     console.error("❌ Update profile error:", error);
+    console.error("❌ Error code:", error.code);
+    console.error("❌ Error message:", error.message);
+
+    if (error.code === "ER_DUP_ENTRY") {
+      return res.status(400).json({
+        success: false,
+        message: "Username or email already exists",
+      });
+    }
+
     res.status(500).json({
       success: false,
       message: "Server error updating profile",
+      error: process.env.NODE_ENV === "development" ? error.message : undefined,
     });
   }
 };
@@ -350,6 +381,8 @@ const updateProfile = async (req, res) => {
 // ✅ CHANGE PASSWORD
 // ============================================
 const changePassword = async (req, res) => {
+  console.log("📝 ============ CHANGE PASSWORD STARTED ============");
+
   try {
     const userId = req.user.id;
     const { currentPassword, newPassword } = req.body;
@@ -397,6 +430,9 @@ const changePassword = async (req, res) => {
       hashedPassword,
       userId,
     ]);
+
+    console.log("✅ Password changed for user:", userId);
+    console.log("📝 ============ CHANGE PASSWORD COMPLETED ============");
 
     res.status(200).json({
       success: true,

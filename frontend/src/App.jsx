@@ -1,3 +1,4 @@
+// frontend/src/App.jsx
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
@@ -25,7 +26,7 @@ import Transport from "./pages/Transport/Transport";
 import Hotels from "./pages/Hotels/Hotels";
 import HotelDetail from "./pages/HotelDetail/HotelDetail";
 import About from "./pages/About/About";
-import Contact from "./pages/Contact/Contact"; // ✅ Contact Page
+import Contact from "./pages/Contact/Contact";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Profile from "./pages/Profile/Profile";
@@ -54,6 +55,8 @@ import "./App.css";
 import "./index.css";
 
 function App() {
+  console.log("🚀 App is rendering");
+
   return (
     <AuthProvider>
       <Router>
@@ -75,34 +78,81 @@ function App() {
               <Route path="/hotels" element={<Hotels />} />
               <Route path="/hotels/:id" element={<HotelDetail />} />
               <Route path="/about" element={<About />} />
-              <Route path="/contact" element={<Contact />} />{" "}
-              {/* ✅ Contact Route */}
+              <Route path="/contact" element={<Contact />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+
               {/* ============================================
                   PROTECTED ROUTES (Login Required)
               ============================================ */}
-              <Route element={<ProtectedRoute />}>
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/bookings" element={<Bookings />} />
-                <Route path="/bookings/:id" element={<BookingDetail />} />
-              </Route>
+              <Route
+                path="/profile"
+                element={
+                  <ProtectedRoute>
+                    <Profile />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/bookings"
+                element={
+                  <ProtectedRoute>
+                    <Bookings />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/bookings/:id"
+                element={
+                  <ProtectedRoute>
+                    <BookingDetail />
+                  </ProtectedRoute>
+                }
+              />
+
               {/* ============================================
                   ADMIN ROUTES (Admin Only)
               ============================================ */}
-              <Route element={<AdminRoute />}>
-                <Route path="/admin/dashboard" element={<AdminDashboard />} />
-                <Route
-                  path="/admin/destinations"
-                  element={<DestinationsManagement />}
-                />
-                <Route path="/admin/hotels" element={<HotelsManagement />} />
-                <Route
-                  path="/admin/bookings"
-                  element={<BookingsManagement />}
-                />
-                <Route path="/admin/users" element={<UsersManagement />} />
-              </Route>
+              <Route
+                path="/admin/dashboard"
+                element={
+                  <AdminRoute>
+                    <AdminDashboard />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="/admin/destinations"
+                element={
+                  <AdminRoute>
+                    <DestinationsManagement />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="/admin/hotels"
+                element={
+                  <AdminRoute>
+                    <HotelsManagement />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="/admin/bookings"
+                element={
+                  <AdminRoute>
+                    <BookingsManagement />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="/admin/users"
+                element={
+                  <AdminRoute>
+                    <UsersManagement />
+                  </AdminRoute>
+                }
+              />
             </Routes>
           </main>
 
