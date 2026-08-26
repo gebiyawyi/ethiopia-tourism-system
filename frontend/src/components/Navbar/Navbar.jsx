@@ -1,8 +1,8 @@
-// frontend/src/components/Navbar/Navbar.jsx
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 import { useAuth } from "../../context/AuthContext";
+import ThemeToggle from "../ThemeToggle/ThemeToggle";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -11,33 +11,21 @@ const Navbar = () => {
   const navigate = useNavigate();
   const { user, isLoggedIn, logout, refreshUser } = useAuth();
 
-  // ============================================
-  // ✅ REFRESH USER ON LOCATION CHANGE
-  // ============================================
   useEffect(() => {
     refreshUser();
   }, [location, refreshUser]);
 
-  // ============================================
-  // ✅ GET DISPLAY NAME
-  // ============================================
   const getDisplayName = () => {
     if (!user) return "User";
     return user.full_name || user.username || "User";
   };
 
-  // ============================================
-  // ✅ GET AVATAR LETTER
-  // ============================================
   const getAvatarLetter = () => {
     if (!user) return "U";
     const name = user.full_name || user.username || "User";
     return name.charAt(0).toUpperCase();
   };
 
-  // ============================================
-  // ✅ SCROLL EFFECT
-  // ============================================
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
@@ -46,16 +34,10 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // ============================================
-  // ✅ CLOSE MOBILE MENU ON ROUTE CHANGE
-  // ============================================
   useEffect(() => {
     setIsMobileMenuOpen(false);
   }, [location]);
 
-  // ============================================
-  // ✅ PREVENT BODY SCROLL WHEN MOBILE MENU OPEN
-  // ============================================
   useEffect(() => {
     if (isMobileMenuOpen) {
       document.body.style.overflow = "hidden";
@@ -67,28 +49,16 @@ const Navbar = () => {
     };
   }, [isMobileMenuOpen]);
 
-  // ============================================
-  // ✅ LOGOUT HANDLER
-  // ============================================
   const handleLogout = () => {
     logout();
     navigate("/");
   };
 
-  // ============================================
-  // ✅ CHECK ACTIVE LINK
-  // ============================================
   const isActive = (path) => location.pathname === path;
 
-  // ============================================
-  // ✅ RENDER
-  // ============================================
   return (
     <header className={`navbar ${scrolled ? "scrolled" : ""}`}>
       <div className="navbar-container">
-        {/* ============================================
-            LOGO
-        ============================================ */}
         <Link
           to="/"
           className="navbar-logo"
@@ -100,9 +70,6 @@ const Navbar = () => {
           </h2>
         </Link>
 
-        {/* ============================================
-            DESKTOP NAVIGATION
-        ============================================ */}
         <nav className="navbar-links-desktop">
           <Link to="/" className={`nav-link ${isActive("/") ? "active" : ""}`}>
             Home
@@ -139,12 +106,8 @@ const Navbar = () => {
           </Link>
         </nav>
 
-        {/* ============================================
-            ACTIONS - Desktop
-        ============================================ */}
         <div className="navbar-actions">
           {isLoggedIn && user ? (
-            // ✅ LOGGED IN - Desktop
             <>
               <Link to="/profile" className="profile-link">
                 {user?.profile_image ? (
@@ -173,7 +136,6 @@ const Navbar = () => {
               </button>
             </>
           ) : (
-            // ✅ LOGGED OUT - Desktop
             <>
               <Link to="/login" className="btn-login">
                 Sign In
@@ -184,9 +146,8 @@ const Navbar = () => {
             </>
           )}
 
-          {/* ============================================
-              HAMBURGER - Mobile Only
-          ============================================ */}
+          <ThemeToggle />
+
           <button
             className={`hamburger ${isMobileMenuOpen ? "active" : ""}`}
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -198,19 +159,12 @@ const Navbar = () => {
           </button>
         </div>
 
-        {/* ============================================
-            MOBILE OVERLAY
-        ============================================ */}
         <div
           className={`mobile-overlay ${isMobileMenuOpen ? "active" : ""}`}
           onClick={() => setIsMobileMenuOpen(false)}
         ></div>
 
-        {/* ============================================
-            MOBILE MENU
-        ============================================ */}
         <div className={`mobile-menu ${isMobileMenuOpen ? "active" : ""}`}>
-          {/* Mobile Menu Header */}
           <div className="mobile-menu-header">
             <Link
               to="/"
@@ -230,7 +184,6 @@ const Navbar = () => {
             </button>
           </div>
 
-          {/* Mobile Navigation Links */}
           <nav className="mobile-nav-links">
             <Link
               to="/"
@@ -281,10 +234,8 @@ const Navbar = () => {
               Contact
             </Link>
 
-            {/* Mobile Divider */}
             <div className="mobile-divider"></div>
 
-            {/* Mobile Auth Buttons */}
             {isLoggedIn && user ? (
               <>
                 <Link
@@ -329,7 +280,6 @@ const Navbar = () => {
             )}
           </nav>
 
-          {/* Mobile Footer */}
           <div className="mobile-footer">
             <p>© 2026 Explore Ethiopia</p>
             <div className="mobile-social">
