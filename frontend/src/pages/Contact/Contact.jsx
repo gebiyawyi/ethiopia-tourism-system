@@ -53,7 +53,6 @@ const Contact = () => {
 
   return (
     <div className="contact-page">
-      {/* Hero Section */}
       <section className="contact-hero">
         <div className="contact-hero-content">
           <h1>📧 Contact Us</h1>
@@ -61,11 +60,9 @@ const Contact = () => {
         </div>
       </section>
 
-      {/* Contact Content */}
       <section className="section contact-content">
         <div className="container">
           <div className="contact-grid">
-            {/* Left Column - Info */}
             <div className="contact-info">
               <h2>Get in Touch</h2>
               <p>
@@ -110,7 +107,6 @@ const Contact = () => {
               </div>
             </div>
 
-            {/* Right Column - Form */}
             <div className="contact-form-wrapper">
               <div className="contact-form-card">
                 <h2>Send Us a Message</h2>

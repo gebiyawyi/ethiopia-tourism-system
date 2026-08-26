@@ -1,14 +1,9 @@
 const nodemailer = require("nodemailer");
-const axios = require("axios");
 
-// ============================================
-// ✅ METHOD 1: SEND EMAIL USING GMAIL SMTP
-// ============================================
 const sendContactEmail = async (req, res) => {
   try {
     const { name, email, subject, message } = req.body;
 
-    // ✅ Validate input
     if (!name || !email || !subject || !message) {
       return res.status(400).json({
         success: false,
@@ -21,7 +16,6 @@ const sendContactEmail = async (req, res) => {
     console.log("📧 Email:", email);
     console.log("📧 Subject:", subject);
 
-    // ✅ Check if credentials exist
     if (!process.env.EMAIL_USER || !process.env.EMAIL_PASSWORD) {
       console.error("❌ Email credentials missing!");
       return res.status(500).json({
@@ -30,7 +24,6 @@ const sendContactEmail = async (req, res) => {
       });
     }
 
-    // ✅ Create transporter with Gmail
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -39,11 +32,9 @@ const sendContactEmail = async (req, res) => {
       },
     });
 
-    // ✅ Verify connection
     await transporter.verify();
     console.log("✅ Email transporter verified successfully!");
 
-    // ✅ Email options
     const mailOptions = {
       from: `"${name}" <${process.env.EMAIL_USER}>`,
       to: process.env.EMAIL_USER,
@@ -70,7 +61,6 @@ const sendContactEmail = async (req, res) => {
       `,
     };
 
-    // ✅ Send email
     await transporter.sendMail(mailOptions);
     console.log("✅ Email sent successfully!");
 
@@ -97,9 +87,6 @@ const sendContactEmail = async (req, res) => {
   }
 };
 
-// ============================================
-// ✅ TEST EMAIL ENDPOINT
-// ============================================
 const testEmail = async (req, res) => {
   try {
     console.log("🧪 Testing email configuration...");
@@ -159,7 +146,4 @@ const testEmail = async (req, res) => {
   }
 };
 
-// ============================================
-// ✅ EXPORT
-// ============================================
 module.exports = { sendContactEmail, testEmail };
