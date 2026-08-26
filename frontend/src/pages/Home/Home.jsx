@@ -95,13 +95,13 @@ const Home = () => {
 
     // ===== FEATURED DESTINATION IMAGES =====
     featured1:
-      "https://images.unsplash.com/photo-1589802829985-817e51171b92?w=600&h=400&fit=crop",
+     lalibela ,
     featured2:
-      "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=600&h=400&fit=crop",
+     semien,
     featured3:
-      "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=600&h=400&fit=crop",
+      gondar,
     featured4:
-      "https://images.unsplash.com/photo-1523805009344-8f45bb7a72e6?w=600&h=400&fit=crop",
+      tana,
 
     // ===== UNESCO IMAGES =====
     unesco1:
@@ -405,18 +405,18 @@ const Home = () => {
     {
       id: 3,
       image: images.featured3,
-      title: "Danakil Depression",
-      location: "Afar Region",
-      description: "One of the hottest places on Earth",
+      title: "Gondar Castles",
+      location: "Amhara Region",
+      description: "Capital of ethiopia during 17th and 18th centuries",
       price: "$1,800",
       rating: "5.0",
     },
     {
       id: 4,
       image: images.featured4,
-      title: "Omo Valley",
-      location: "Southern Ethiopia",
-      description: "Rich cultural heritage and traditions",
+      title: "Lake Tana Manasteries",
+      location: "Amhara Region",
+      description: "The source of blue nile",
       price: "$1,100",
       rating: "4.7",
     },
@@ -684,7 +684,7 @@ const Home = () => {
                 </div>
                 <div className="featured-content">
                   <h3>{dest.title}</h3>
-                  <p className="featured-location">📍 {dest.location}</p>
+                  <p className="featured-location"> {dest.location}</p>
                   <p className="featured-description">{dest.description}</p>
                   <div className="featured-footer">
                     <span className="featured-price">From {dest.price}</span>
@@ -739,9 +739,9 @@ const Home = () => {
                 <h3>Explore Ethiopia</h3>
                 <p>Discover the Land of Origins</p>
                 <div className="map-stats">
-                  <span>📍 15+ Regions</span>
-                  <span>🏛️ 9 UNESCO Sites</span>
-                  <span>🌋 50+ Attractions</span>
+                  <span>  15+ Regions</span>
+                  <span>  9 UNESCO Sites</span>
+                  <span>  50+ Attractions</span>
                 </div>
               </div>
             </div>
@@ -802,9 +802,9 @@ const Home = () => {
                 <h3>Explore Ethiopia</h3>
                 <p>Discover the Land of Origins</p>
                 <div className="map-stats">
-                  <span>📍 15+ Regions</span>
-                  <span>🏛️ 9 UNESCO Sites</span>
-                  <span>🌋 50+ Attractions</span>
+                  <span> 15+ Regions</span>
+                  <span> 9 UNESCO Sites</span>
+                  <span> 50+ Attractions</span>
                 </div>
               </div>
             </div>
@@ -839,7 +839,7 @@ const Home = () => {
       <section className="section unesco-section">
         <div className="container">
           <div className="section-header">
-            <span className="section-tag">🏛️ UNESCO</span>
+            <span className="section-tag"> UNESCO</span>
             <h2>UNESCO World Heritage Sites</h2>
             <p>
               Ethiopia is home to several UNESCO World Heritage Sites each
@@ -853,7 +853,7 @@ const Home = () => {
               <div key={site.id} className="unesco-item">
                 <img src={site.image} alt={site.title} />
                 <div className="unesco-overlay">
-                  <span className="unesco-badge">🏛️ UNESCO</span>
+                  <span className="unesco-badge"> UNESCO</span>
                   <h4>{site.title}</h4>
                   <p>{site.description}</p>
                 </div>
@@ -876,7 +876,7 @@ const Home = () => {
             </p>
             <div className="cta-buttons">
               <Link to="/destinations" className="btn-primary">
-                Plan Your Trip Now ✈️
+                Plan Your Trip Now 
               </Link>
               <Link to="/about" className="btn-secondary">
                 Learn More →
