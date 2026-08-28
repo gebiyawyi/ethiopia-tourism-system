@@ -9,17 +9,19 @@
   display: flex;
   align-items: center;
   transition: all 0.4s ease;
-  background: transparent;
+  background: #216647;
 }
 
 .navbar::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.1) 80%, transparent 100%);
+  background:
+    linear-gradient(green),
+    rgba(#00af87) transparent;
   pointer-events: none;
   z-index: -1;
   transition: opacity 0.4s ease;
@@ -47,6 +49,7 @@
   text-decoration: none;
   flex-shrink: 0;
   z-index: 1001;
+  color: yellow;
 }
 
 .logo-icon {
@@ -78,7 +81,7 @@
 
 .nav-link {
   font-weight: 500;
-  color: rgba(255,255,255,0.85);
+  color: rgba(255, 255, 255, 0.85);
   text-decoration: none;
   padding: 0.5rem 0;
   border-bottom: 2px solid transparent;
@@ -88,7 +91,7 @@
 }
 
 .nav-link::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0;
   left: 50%;
@@ -105,7 +108,7 @@
 }
 
 .nav-link.active::after {
-  background: #d97706;
+  background: hsl(0, 81%, 48%);
 }
 
 .navbar-actions {
@@ -117,9 +120,9 @@
 
 .btn-login {
   padding: 0.6rem 1.6rem;
-  background: rgba(255,255,255,0.1);
+  background: linear-gradient(135deg, #D2BB00, #D2BB00);
   color: #ffffff;
-  border: 1.5px solid rgba(255,255,255,0.4);
+  border: 1.5px solid #d2bb00;
   border-radius: 50px;
   font-weight: 600;
   font-size: 0.9rem;
@@ -129,14 +132,14 @@
 }
 
 .btn-login:hover {
-  background: rgba(255,255,255,0.2);
-  border-color: rgba(255,255,255,0.8);
+  background: rgba(blue);
+  border-color: rgba(blue);
   transform: translateY(-2px);
 }
 
 .btn-signup {
   padding: 0.6rem 1.8rem;
-  background: linear-gradient(135deg, #d97706, #f59e0b);
+  background: linear-gradient(135deg, #3d7bec, rgb(0, 123, 255));
   color: #ffffff;
   border: none;
   border-radius: 50px;
@@ -144,12 +147,12 @@
   font-size: 0.9rem;
   text-decoration: none;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 20px rgba(217,119,6,0.35);
+  box-shadow: 0 4px 20px rgba(217, 119, 6, 0.35);
 }
 
 .btn-signup:hover {
   transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 6px 30px rgba(217,119,6,0.5);
+  box-shadow: 0 6px 30px rgba(217, 119, 6, 0.5);
 }
 
 .profile-link {
@@ -157,9 +160,9 @@
   align-items: center;
   gap: 0.6rem;
   padding: 0.3rem 1.2rem 0.3rem 0.3rem;
-  background: rgba(255,255,255,0.1);
+  background: rgba(255, 255, 255, 0.1);
   color: #ffffff;
-  border: 1.5px solid rgba(255,255,255,0.3);
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
   border-radius: 50px;
   font-weight: 600;
   font-size: 0.9rem;
@@ -169,8 +172,8 @@
 }
 
 .profile-link:hover {
-  background: rgba(255,255,255,0.2);
-  border-color: rgba(255,255,255,0.6);
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.6);
   transform: translateY(-2px);
 }
 
@@ -179,7 +182,7 @@
   height: 32px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid rgba(255,255,255,0.3);
+  border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
 .avatar-circle-small {
@@ -205,9 +208,9 @@
 
 .logout-btn {
   padding: 0.5rem 1.2rem;
-  background: rgba(220,38,38,0.15);
+  background: rgba(220, 38, 38, 0.15);
   color: #ffffff;
-  border: 1.5px solid rgba(220,38,38,0.3);
+  border: 1.5px solid rgba(220, 38, 38, 0.3);
   border-radius: 50px;
   font-weight: 600;
   font-size: 0.9rem;
@@ -217,8 +220,8 @@
 }
 
 .logout-btn:hover {
-  background: rgba(220,38,38,0.25);
-  border-color: rgba(220,38,38,0.6);
+  background: rgba(220, 38, 38, 0.25);
+  border-color: rgba(220, 38, 38, 0.6);
   transform: translateY(-2px);
 }
 
@@ -265,7 +268,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(4px);
   z-index: 999;
   opacity: 0;
@@ -289,7 +292,7 @@
   z-index: 1000;
   padding: 0;
   transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  box-shadow: -10px 0 40px rgba(0,0,0,0.3);
+  box-shadow: -10px 0 40px rgba(0, 0, 0, 0.3);
   overflow-y: auto;
 }
 
@@ -304,7 +307,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 1.5rem 1.5rem 1rem;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .mobile-logo {
@@ -326,8 +329,8 @@
 .mobile-close {
   width: 40px;
   height: 40px;
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 50%;
   color: #ffffff;
   font-size: 1.4rem;
@@ -339,7 +342,7 @@
 }
 
 .mobile-close:hover {
-  background: rgba(255,255,255,0.2);
+  background: rgba(255, 255, 255, 0.2);
   transform: rotate(90deg);
 }
 
@@ -356,7 +359,7 @@
   align-items: center;
   gap: 1rem;
   padding: 0.8rem 1rem;
-  color: rgba(255,255,255,0.7);
+  color: rgba(255, 255, 255, 0.7);
   text-decoration: none;
   border-radius: 12px;
   transition: all 0.3s ease;
@@ -370,15 +373,15 @@
 }
 
 .mobile-nav-link:hover {
-  background: rgba(255,255,255,0.1);
+  background: rgba(255, 255, 255, 0.1);
   color: #ffffff;
   transform: translateX(5px);
 }
 
 .mobile-nav-link.active {
-  background: rgba(217,119,6,0.2);
+  background: rgba(217, 119, 6, 0.2);
   color: #fbbf24;
-  border: 1px solid rgba(217,119,6,0.3);
+  border: 1px solid rgba(217, 119, 6, 0.3);
 }
 
 .mobile-nav-icon {
@@ -389,24 +392,24 @@
 .mobile-nav-link.logout-btn-mobile {
   color: #dc2626;
   justify-content: center;
-  border: 1.5px solid rgba(220,38,38,0.3);
+  border: 1.5px solid rgba(220, 38, 38, 0.3);
   border-radius: 50px;
-  background: rgba(220,38,38,0.1);
+  background: rgba(220, 38, 38, 0.1);
 }
 
 .mobile-nav-link.logout-btn-mobile:hover {
-  background: rgba(220,38,38,0.2);
+  background: rgba(220, 38, 38, 0.2);
 }
 
 .mobile-divider {
   height: 1px;
-  background: rgba(255,255,255,0.08);
+  background: rgba(255, 255, 255, 0.08);
   margin: 0.5rem 0;
 }
 
 .mobile-badge {
   margin-left: auto;
-  background: rgba(217,119,6,0.2);
+  background: rgba(217, 119, 6, 0.2);
   color: #fbbf24;
   padding: 0.1rem 0.6rem;
   border-radius: 50px;
@@ -416,15 +419,15 @@
 }
 
 .auth-btn-login {
-  border: 1.5px solid rgba(255,255,255,0.15);
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
   border-radius: 50px;
   justify-content: center;
   margin-top: 0.3rem;
 }
 
 .auth-btn-login:hover {
-  background: rgba(255,255,255,0.08);
-  border-color: rgba(255,255,255,0.3);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
 .auth-btn-signup {
@@ -438,15 +441,15 @@
 
 .auth-btn-signup:hover {
   transform: translateX(5px);
-  box-shadow: 0 4px 20px rgba(217,119,6,0.3);
+  box-shadow: 0 4px 20px rgba(217, 119, 6, 0.3);
 }
 
 .mobile-footer {
   padding: 1.5rem;
   text-align: center;
-  color: rgba(255,255,255,0.3);
+  color: rgba(255, 255, 255, 0.3);
   font-size: 0.8rem;
-  border-top: 1px solid rgba(255,255,255,0.05);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .mobile-social {
@@ -457,7 +460,7 @@
 }
 
 .mobile-social-icon {
-  color: rgba(255,255,255,0.3);
+  color: rgba(255, 255, 255, 0.3);
   text-decoration: none;
   font-size: 1.2rem;
   transition: all 0.3s ease;
@@ -468,39 +471,46 @@
   transform: translateY(-2px);
 }
 
+
+/* =========================================================
+   SCROLLED NAVBAR
+   SAME COLOR ON DESKTOP, TABLET AND MOBILE
+   ========================================================= */
+
 .navbar.scrolled {
-  background: var(--bg-navbar, rgba(255,255,255,0.95));
+  background: #074ca5;
   backdrop-filter: blur(20px);
-  box-shadow: 0 2px 30px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 30px rgba(0, 0, 0, 0.2);
   padding: 0.5rem 0;
   height: 70px;
+  color: #ffffff;
 }
 
 .navbar.scrolled .navbar-logo h2 {
-  color: var(--text-primary, #1e3a5f);
+  color: #ffffff;
 }
 
 .navbar.scrolled .nav-link {
-  color: var(--text-secondary, rgba(30,30,30,0.7));
+  color: #ffffff;
 }
 
 .navbar.scrolled .nav-link:hover {
-  color: var(--text-primary, #1e3a5f);
+  color: #fbff00;
 }
 
 .navbar.scrolled .nav-link.active {
-  color: #d97706;
+  color: #fbff00;
 }
 
 .navbar.scrolled .btn-login {
-  background: transparent;
-  color: var(--text-primary, #1e3a5f);
-  border: 1.5px solid var(--border-color, #d1d5db);
+  background: hsla(25, 73%, 35%, 0.84);
+  color: #ffffff;
+  border: 1.5px solid #de9866;
   backdrop-filter: none;
 }
 
 .navbar.scrolled .btn-login:hover {
-  background: rgba(217,119,6,0.05);
+  background: rgba(217, 119, 6, 0.05);
   border-color: #d97706;
   color: #d97706;
 }
@@ -510,8 +520,8 @@
 }
 
 .navbar.scrolled .profile-link {
-  color: var(--text-primary, #1e3a5f);
-  border-color: var(--border-color, #d1d5db);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.3);
   background: transparent;
   backdrop-filter: none;
 }
@@ -522,52 +532,68 @@
 }
 
 .navbar.scrolled .logout-btn {
-  color: #dc2626;
-  border-color: var(--border-color, #d1d5db);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.3);
   background: transparent;
   backdrop-filter: none;
 }
 
 .navbar.scrolled .logout-btn:hover {
-  background: rgba(220,38,38,0.05);
+  background: rgba(220, 38, 38, 0.05);
   border-color: #dc2626;
 }
 
 .navbar.scrolled .hamburger-line {
-  background: var(--text-primary, #1e3a5f);
+  background: #ffffff;
 }
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
 
 @media (max-width: 1024px) {
   .navbar-links-desktop {
     gap: 1.2rem;
   }
+
+  /* Keep same scrolled color */
+  .navbar.scrolled {
+    background: #074ca5;
+  }
 }
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
 
 @media (max-width: 768px) {
   .navbar-links-desktop {
     display: none;
   }
-  
+
   .hamburger {
     display: flex;
   }
-  
+
   .navbar {
     height: 70px;
   }
-  
+
   .navbar.scrolled {
     height: 65px;
+    background: #074ca5;
   }
-  
+
   .navbar-logo h2 {
     font-size: 1.1rem;
   }
-  
+
   .logo-icon {
     font-size: 1.4rem;
   }
-  
+
   .navbar-container {
     padding: 0 1rem;
   }
@@ -583,23 +609,29 @@
   }
 }
 
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
 @media (max-width: 480px) {
   .navbar {
     height: 60px;
   }
-  
+
   .navbar.scrolled {
     height: 58px;
+    background: #074ca5;
   }
-  
+
   .navbar-logo h2 {
     font-size: 0.95rem;
   }
-  
+
   .logo-icon {
     font-size: 1.2rem;
   }
-  
+
   .mobile-menu {
     width: 90%;
     max-width: 350px;

@@ -84,7 +84,7 @@ const Navbar = () => {
             to="/transport"
             className={`nav-link ${isActive("/transport") ? "active" : ""}`}
           >
-            🚌 Transport
+             Transport
           </Link>
           <Link
             to="/hotels"

@@ -5,19 +5,19 @@
   padding: 8px 14px;
   border-radius: 50px;
   border: 2px solid var(--border-color, #e2e8f0);
-  background: var(--bg-card, #ffffff);
-  color: var(--text-primary, #0f172a);
+  background: var(--bg-card, #08cd29);
+  color: var(--text-primary, #04c497);
   cursor: pointer;
   font-size: 13px;
   font-weight: 600;
   transition: all 0.3s ease;
-  box-shadow: var(--shadow-sm, 0 1px 3px rgba(0,0,0,0.06));
+  box-shadow: var(--shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.06));
   font-family: inherit;
 }
 
 .theme-toggle:hover {
   transform: translateY(-2px);
-  box-shadow: var(--shadow-md, 0 4px 20px rgba(0,0,0,0.08));
+  box-shadow: var(--shadow-md, 0 4px 20px rgba(0, 0, 0, 0.08));
 }
 
 .theme-toggle .theme-icon {
@@ -30,28 +30,33 @@
   font-weight: 600;
 }
 
+/* ===== LIGHT MODE: Almost White Background, Red Text ===== */
 .theme-toggle.light {
-  background: rgba(255, 255, 255, 0.9);
-  border-color: #e2e8f0;
-  color: #1a202c;
+ background: #1a1a1a;  /* Almost black (not true black) */
+  border-color: #333333;  /* Dark gray border */
+  color: #f5f5f5; 
 }
 
 .theme-toggle.light:hover {
-  background: #ffffff;
-  border-color: #cbd5e1;
+  background: #eeeeee;  /* Slightly darker almost-white on hover */
+  border-color: #cccccc;
+  color: black;
 }
 
+/* ===== DARK MODE: Almost Black Background, White Text ===== */
 .theme-toggle.dark {
-  background: rgba(30, 41, 59, 0.9);
-  border-color: #334155;
-  color: #f8fafc;
+  background: #f5f5f5;  /* Almost white (not true white) */
+  border-color: #e0e0e0;  /* Light gray border */
+  color: #dc2626;   /* Almost white text (not true white) */
 }
 
 .theme-toggle.dark:hover {
-  background: #1e293b;
-  border-color: #475569;
+  background: #222222;  /* Slightly lighter almost-black on hover */
+  border-color: #444444;
+  color: white;
 }
 
+/* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
   .theme-toggle {
     padding: 6px 10px;

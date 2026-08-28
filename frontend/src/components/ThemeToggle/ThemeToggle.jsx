@@ -12,7 +12,7 @@ const ThemeToggle = () => {
       className={`theme-toggle ${theme}`}
       onClick={toggleTheme}
       aria-label="Toggle theme"
-      title={theme === "light" ? "Switch to Dark Mode" : "Switch to Light Mode"}
+      title={theme === "light" ? "Switch to Light" : "Switch to Dark"}
     >
       {theme === "light" ? (
         <>
