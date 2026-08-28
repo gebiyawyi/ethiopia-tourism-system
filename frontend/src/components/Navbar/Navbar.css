@@ -1,29 +1,50 @@
+/* =========================================================
+   MAIN NAVBAR
+   ========================================================= */
+
 .navbar {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 1000;
+
   padding: 0 20px;
   height: 80px;
+
   display: flex;
   align-items: center;
+
   transition: all 0.4s ease;
+
   background: #216647;
 }
 
+
+/* =========================================================
+   NAVBAR OVERLAY / BACKGROUND EFFECT
+   ========================================================= */
+
 .navbar::before {
   content: "";
+
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
+
   background:
-    linear-gradient(green),
-    rgba(#00af87) transparent;
+    linear-gradient(
+      135deg,
+      rgba(0, 175, 135, 0.95),
+      rgba(33, 102, 71, 0.95)
+    );
+
   pointer-events: none;
+
   z-index: -1;
+
   transition: opacity 0.4s ease;
 }
 
@@ -31,29 +52,50 @@
   opacity: 0;
 }
 
+
+/* =========================================================
+   NAVBAR CONTAINER
+   ========================================================= */
+
 .navbar-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   max-width: 1280px;
+
   margin: 0 auto;
+
   padding: 0 2rem;
+
   width: 100%;
+
   position: relative;
 }
+
+
+/* =========================================================
+   LOGO
+   ========================================================= */
 
 .navbar-logo {
   display: flex;
   align-items: center;
+
   gap: 0.6rem;
+
   text-decoration: none;
+
   flex-shrink: 0;
+
   z-index: 1001;
+
   color: yellow;
 }
 
 .logo-icon {
   font-size: 1.8rem;
+
   transition: transform 0.3s ease;
 }
 
@@ -63,42 +105,75 @@
 
 .navbar-logo h2 {
   font-size: 1.4rem;
+
   font-weight: 700;
-  color: var(--text-white, #ffffff);
+
+  color: #ffffff;
+
   transition: color 0.3s ease;
+
   letter-spacing: -0.5px;
+
+  margin: 0;
 }
 
 .navbar-logo h2 span {
   color: #fbbf24;
 }
 
+
+/* =========================================================
+   DESKTOP NAVIGATION
+   ========================================================= */
+
 .navbar-links-desktop {
   display: flex;
+
   gap: 2rem;
+
   align-items: center;
 }
 
 .nav-link {
   font-weight: 500;
+
   color: rgba(255, 255, 255, 0.85);
+
   text-decoration: none;
+
   padding: 0.5rem 0;
+
   border-bottom: 2px solid transparent;
+
   transition: all 0.3s ease;
+
   font-size: 0.95rem;
+
   position: relative;
 }
 
+
+/* =========================================================
+   DESKTOP NAV LINK UNDERLINE
+   ========================================================= */
+
 .nav-link::after {
   content: "";
+
   position: absolute;
+
   bottom: 0;
+
   left: 50%;
+
   width: 0;
+
   height: 2px;
+
   background: #fbbf24;
+
   transition: all 0.3s ease;
+
   transform: translateX(-50%);
 }
 
@@ -111,142 +186,292 @@
   background: hsl(0, 81%, 48%);
 }
 
+
+/* =========================================================
+   NAVBAR ACTIONS
+   ========================================================= */
+
 .navbar-actions {
   display: flex;
+
   align-items: center;
+
   gap: 0.8rem;
+
   z-index: 1001;
 }
 
+
+/* =========================================================
+   LOGIN BUTTON
+   ========================================================= */
+
 .btn-login {
   padding: 0.6rem 1.6rem;
-  background: linear-gradient(135deg, #D2BB00, #D2BB00);
+
+  background: linear-gradient(
+    135deg,
+    #d2bb00,
+    #d2bb00
+  );
+
   color: #ffffff;
+
   border: 1.5px solid #d2bb00;
+
   border-radius: 50px;
+
   font-weight: 600;
+
   font-size: 0.9rem;
+
   text-decoration: none;
+
   transition: all 0.3s ease;
+
   backdrop-filter: blur(12px);
 }
 
 .btn-login:hover {
-  background: rgba(blue);
-  border-color: rgba(blue);
+  background: rgba(255, 255, 255, 0.15);
+
+  border-color: rgba(255, 255, 255, 0.7);
+
   transform: translateY(-2px);
 }
 
+
+/* =========================================================
+   SIGN UP BUTTON
+   ========================================================= */
+
 .btn-signup {
   padding: 0.6rem 1.8rem;
-  background: linear-gradient(135deg, #3d7bec, rgb(0, 123, 255));
+
+  background: linear-gradient(
+    135deg,
+    #3d7bec,
+    rgb(0, 123, 255)
+  );
+
   color: #ffffff;
+
   border: none;
+
   border-radius: 50px;
+
   font-weight: 600;
+
   font-size: 0.9rem;
+
   text-decoration: none;
+
   transition: all 0.3s ease;
-  box-shadow: 0 4px 20px rgba(217, 119, 6, 0.35);
+
+  box-shadow:
+    0 4px 20px rgba(217, 119, 6, 0.35);
 }
 
 .btn-signup:hover {
   transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 6px 30px rgba(217, 119, 6, 0.5);
+
+  box-shadow:
+    0 6px 30px rgba(217, 119, 6, 0.5);
 }
+
+
+/* =========================================================
+   PROFILE LINK
+   ========================================================= */
 
 .profile-link {
   display: flex;
+
   align-items: center;
+
   gap: 0.6rem;
+
   padding: 0.3rem 1.2rem 0.3rem 0.3rem;
+
   background: rgba(255, 255, 255, 0.1);
+
   color: #ffffff;
+
   border: 1.5px solid rgba(255, 255, 255, 0.3);
+
   border-radius: 50px;
+
   font-weight: 600;
+
   font-size: 0.9rem;
+
   text-decoration: none;
+
   transition: all 0.3s ease;
+
   backdrop-filter: blur(12px);
 }
 
 .profile-link:hover {
   background: rgba(255, 255, 255, 0.2);
+
   border-color: rgba(255, 255, 255, 0.6);
+
   transform: translateY(-2px);
 }
 
+
+/* =========================================================
+   PROFILE IMAGE
+   ========================================================= */
+
 .avatar-image-small {
   width: 32px;
+
   height: 32px;
+
   border-radius: 50%;
+
   object-fit: cover;
+
   border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
+
+/* =========================================================
+   AVATAR LETTER
+   ========================================================= */
+
 .avatar-circle-small {
   display: flex;
+
   align-items: center;
+
   justify-content: center;
+
   width: 32px;
+
   height: 32px;
+
   border-radius: 50%;
-  background: linear-gradient(135deg, #d97706, #b45309);
+
+  background: linear-gradient(
+    135deg,
+    #d97706,
+    #b45309
+  );
+
   color: #ffffff;
+
   font-size: 0.8rem;
+
   font-weight: 700;
+
   flex-shrink: 0;
 }
 
+
+/* =========================================================
+   PROFILE NAME
+   ========================================================= */
+
 .profile-name {
   max-width: 100px;
+
   overflow: hidden;
+
   text-overflow: ellipsis;
+
   white-space: nowrap;
 }
 
+
+/* =========================================================
+   LOGOUT BUTTON
+   ========================================================= */
+
 .logout-btn {
   padding: 0.5rem 1.2rem;
+
   background: rgba(220, 38, 38, 0.15);
+
   color: #ffffff;
+
   border: 1.5px solid rgba(220, 38, 38, 0.3);
+
   border-radius: 50px;
+
   font-weight: 600;
+
   font-size: 0.9rem;
+
   cursor: pointer;
+
   transition: all 0.3s ease;
+
   backdrop-filter: blur(12px);
 }
 
 .logout-btn:hover {
   background: rgba(220, 38, 38, 0.25);
+
   border-color: rgba(220, 38, 38, 0.6);
+
   transform: translateY(-2px);
 }
 
+
+/* =========================================================
+   HAMBURGER BUTTON
+   ========================================================= */
+
 .hamburger {
   display: none;
+
   flex-direction: column;
+
   justify-content: space-between;
+
   width: 30px;
+
   height: 22px;
+
   background: transparent;
+
   border: none;
+
   cursor: pointer;
+
   padding: 0;
-  z-index: 1001;
+
+  z-index: 1200;
 }
+
+
+/* =========================================================
+   HAMBURGER LINES
+   ========================================================= */
 
 .hamburger-line {
   display: block;
+
   width: 100%;
+
   height: 2.5px;
+
   background: #ffffff;
+
   border-radius: 2px;
+
   transition: all 0.3s ease;
+
   transform-origin: center;
 }
+
+
+/* =========================================================
+   HAMBURGER ACTIVE
+   ========================================================= */
 
 .hamburger.active .hamburger-line:nth-child(1) {
   transform: translateY(9.5px) rotate(45deg);
@@ -254,6 +479,7 @@
 
 .hamburger.active .hamburger-line:nth-child(2) {
   opacity: 0;
+
   transform: scaleX(0);
 }
 
@@ -261,234 +487,483 @@
   transform: translateY(-9.5px) rotate(-45deg);
 }
 
+
+/* =========================================================
+   MOBILE OVERLAY
+   ========================================================= */
+
 .mobile-overlay {
   display: none;
+
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+
+  inset: 0;
+
+  background: rgba(0, 0, 0, 0.55);
+
   backdrop-filter: blur(4px);
-  z-index: 999;
+
+  z-index: 1090;
+
   opacity: 0;
+
   transition: opacity 0.3s ease;
 }
 
 .mobile-overlay.active {
   display: block;
+
   opacity: 1;
 }
 
+
+/* =========================================================
+   MOBILE MENU
+   ========================================================= */
+
 .mobile-menu {
   display: none;
+
   position: fixed;
+
   top: 0;
+
   right: -100%;
-  width: 85%;
-  max-width: 400px;
+
+  width: 100%;
+
+  max-width: none;
+
   height: 100vh;
-  background: linear-gradient(180deg, #1e3a5f, #0a1a2f);
-  z-index: 1000;
+
+  background: #074ca5;
+
+  z-index: 1100;
+
   padding: 0;
-  transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  box-shadow: -10px 0 40px rgba(0, 0, 0, 0.3);
+
+  transition:
+    right 0.4s cubic-bezier(
+      0.25,
+      0.46,
+      0.45,
+      0.94
+    );
+
+  box-shadow:
+    -10px 0 40px rgba(0, 0, 0, 0.3);
+
   overflow-y: auto;
 }
 
+
+/* =========================================================
+   MOBILE MENU ACTIVE
+   ========================================================= */
+
 .mobile-menu.active {
   display: flex;
+
   flex-direction: column;
+
   right: 0;
 }
 
+
+/* =========================================================
+   MOBILE MENU HEADER
+   ========================================================= */
+
 .mobile-menu-header {
   display: flex;
+
   justify-content: space-between;
+
   align-items: center;
-  padding: 1.5rem 1.5rem 1rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+  padding: 1.4rem 1.5rem;
+
+  min-height: 90px;
+
+  border-bottom:
+    1px solid rgba(255, 255, 255, 0.15);
+
+  background: #074ca5;
 }
+
+
+/* =========================================================
+   MOBILE LOGO
+   ========================================================= */
 
 .mobile-logo {
   display: flex;
+
   align-items: center;
+
   gap: 0.6rem;
+
   text-decoration: none;
 }
 
 .mobile-logo h2 {
-  font-size: 1.2rem;
+  font-size: 1.25rem;
+
+  font-weight: 700;
+
   color: #ffffff;
+
+  margin: 0;
 }
 
 .mobile-logo span {
   color: #fbbf24;
 }
 
+
+/* =========================================================
+   MOBILE CLOSE BUTTON
+   ========================================================= */
+
 .mobile-close {
-  width: 40px;
-  height: 40px;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  width: 46px;
+
+  height: 46px;
+
+  background:
+    rgba(255, 255, 255, 0.12);
+
+  border:
+    1px solid rgba(255, 255, 255, 0.25);
+
   border-radius: 50%;
+
   color: #ffffff;
+
   font-size: 1.4rem;
+
   cursor: pointer;
+
   transition: all 0.3s ease;
+
   display: flex;
+
   align-items: center;
+
   justify-content: center;
 }
 
 .mobile-close:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background:
+    rgba(255, 255, 255, 0.2);
+
   transform: rotate(90deg);
 }
 
+
+/* =========================================================
+   MOBILE NAVIGATION
+   ========================================================= */
+
 .mobile-nav-links {
   display: flex;
+
   flex-direction: column;
-  padding: 1.5rem;
-  gap: 0.5rem;
+
+  padding: 2rem 1.5rem;
+
+  gap: 0.6rem;
+
   flex: 1;
 }
 
+
+/* =========================================================
+   MOBILE NAVIGATION LINK
+   ========================================================= */
+
 .mobile-nav-link {
   display: flex;
+
   align-items: center;
+
   gap: 1rem;
-  padding: 0.8rem 1rem;
-  color: rgba(255, 255, 255, 0.7);
+
+  padding: 1rem 1.2rem;
+
+  color:
+    rgba(255, 255, 255, 0.75);
+
   text-decoration: none;
-  border-radius: 12px;
+
+  border-radius: 14px;
+
   transition: all 0.3s ease;
+
   font-size: 1.05rem;
-  font-weight: 500;
-  background: none;
-  border: none;
+
+  font-weight: 600;
+
+  background: transparent;
+
+  border: 1px solid transparent;
+
   width: 100%;
+
   text-align: left;
+
   cursor: pointer;
 }
 
+
+/* =========================================================
+   MOBILE LINK HOVER
+   ========================================================= */
+
 .mobile-nav-link:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background:
+    rgba(255, 255, 255, 0.1);
+
   color: #ffffff;
+
   transform: translateX(5px);
 }
 
+
+/* =========================================================
+   MOBILE ACTIVE LINK
+   ========================================================= */
+
 .mobile-nav-link.active {
-  background: rgba(217, 119, 6, 0.2);
+  background:
+    rgba(255, 255, 255, 0.16);
+
   color: #fbbf24;
-  border: 1px solid rgba(217, 119, 6, 0.3);
+
+  border:
+    1px solid rgba(251, 191, 36, 0.35);
+
+  box-shadow:
+    0 4px 15px rgba(0, 0, 0, 0.15);
 }
+
+
+/* =========================================================
+   MOBILE NAV ICON
+   ========================================================= */
 
 .mobile-nav-icon {
   font-size: 1.3rem;
+
   width: 30px;
+
+  flex-shrink: 0;
 }
 
+
+/* =========================================================
+   MOBILE LOGOUT
+   ========================================================= */
+
 .mobile-nav-link.logout-btn-mobile {
-  color: #dc2626;
+  color: #ff7070;
+
   justify-content: center;
-  border: 1.5px solid rgba(220, 38, 38, 0.3);
+
+  border:
+    1.5px solid rgba(220, 38, 38, 0.3);
+
   border-radius: 50px;
-  background: rgba(220, 38, 38, 0.1);
+
+  background:
+    rgba(220, 38, 38, 0.1);
 }
 
 .mobile-nav-link.logout-btn-mobile:hover {
-  background: rgba(220, 38, 38, 0.2);
+  background:
+    rgba(220, 38, 38, 0.2);
+
+  color: #ff8a8a;
 }
+
+
+/* =========================================================
+   MOBILE DIVIDER
+   ========================================================= */
 
 .mobile-divider {
   height: 1px;
-  background: rgba(255, 255, 255, 0.08);
-  margin: 0.5rem 0;
+
+  background:
+    rgba(255, 255, 255, 0.15);
+
+  margin: 0.8rem 0;
 }
+
+
+/* =========================================================
+   MOBILE BADGE
+   ========================================================= */
 
 .mobile-badge {
   margin-left: auto;
-  background: rgba(217, 119, 6, 0.2);
+
+  background:
+    rgba(251, 191, 36, 0.2);
+
   color: #fbbf24;
-  padding: 0.1rem 0.6rem;
+
+  padding: 0.15rem 0.7rem;
+
   border-radius: 50px;
+
   font-size: 0.6rem;
+
   font-weight: 600;
+
   text-transform: uppercase;
 }
 
+
+/* =========================================================
+   MOBILE SIGN IN
+   ========================================================= */
+
 .auth-btn-login {
-  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  border:
+    1.5px solid rgba(255, 255, 255, 0.2);
+
   border-radius: 50px;
+
   justify-content: center;
+
   margin-top: 0.3rem;
 }
 
 .auth-btn-login:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.3);
+  background:
+    rgba(255, 255, 255, 0.1);
+
+  border-color:
+    rgba(255, 255, 255, 0.4);
 }
 
+
+/* =========================================================
+   MOBILE SIGN UP
+   ========================================================= */
+
 .auth-btn-signup {
-  background: linear-gradient(135deg, #d97706, #f59e0b);
+  background:
+    linear-gradient(
+      135deg,
+      #d97706,
+      #f59e0b
+    );
+
   color: #ffffff;
+
   border-radius: 50px;
+
   justify-content: center;
+
   padding: 0.8rem 1.5rem;
+
   margin-top: 0.3rem;
 }
 
 .auth-btn-signup:hover {
   transform: translateX(5px);
-  box-shadow: 0 4px 20px rgba(217, 119, 6, 0.3);
+
+  box-shadow:
+    0 4px 20px rgba(217, 119, 6, 0.3);
 }
+
+
+/* =========================================================
+   MOBILE FOOTER
+   ========================================================= */
 
 .mobile-footer {
   padding: 1.5rem;
+
   text-align: center;
-  color: rgba(255, 255, 255, 0.3);
+
+  color:
+    rgba(255, 255, 255, 0.5);
+
   font-size: 0.8rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+
+  border-top:
+    1px solid rgba(255, 255, 255, 0.1);
 }
+
+
+/* =========================================================
+   MOBILE SOCIAL
+   ========================================================= */
 
 .mobile-social {
   display: flex;
+
   justify-content: center;
+
   gap: 1rem;
+
   margin-top: 0.8rem;
 }
 
 .mobile-social-icon {
-  color: rgba(255, 255, 255, 0.3);
+  color:
+    rgba(255, 255, 255, 0.5);
+
   text-decoration: none;
+
   font-size: 1.2rem;
+
   transition: all 0.3s ease;
 }
 
 .mobile-social-icon:hover {
   color: #ffffff;
+
   transform: translateY(-2px);
 }
 
 
 /* =========================================================
    SCROLLED NAVBAR
-   SAME COLOR ON DESKTOP, TABLET AND MOBILE
+   SAME COLOR ON ALL DEVICES
    ========================================================= */
 
 .navbar.scrolled {
   background: #074ca5;
+
   backdrop-filter: blur(20px);
-  box-shadow: 0 2px 30px rgba(0, 0, 0, 0.2);
+
+  box-shadow:
+    0 2px 30px rgba(0, 0, 0, 0.2);
+
   padding: 0.5rem 0;
+
   height: 70px;
+
   color: #ffffff;
 }
+
+
+/* =========================================================
+   SCROLLED LOGO
+   ========================================================= */
 
 .navbar.scrolled .navbar-logo h2 {
   color: #ffffff;
 }
+
+
+/* =========================================================
+   SCROLLED NAV LINKS
+   ========================================================= */
 
 .navbar.scrolled .nav-link {
   color: #ffffff;
@@ -502,46 +977,95 @@
   color: #fbff00;
 }
 
+
+/* =========================================================
+   SCROLLED LOGIN
+   ========================================================= */
+
 .navbar.scrolled .btn-login {
-  background: hsla(25, 73%, 35%, 0.84);
+  background:
+    hsla(25, 73%, 35%, 0.84);
+
   color: #ffffff;
-  border: 1.5px solid #de9866;
+
+  border:
+    1.5px solid #de9866;
+
   backdrop-filter: none;
 }
 
 .navbar.scrolled .btn-login:hover {
-  background: rgba(217, 119, 6, 0.05);
+  background:
+    rgba(217, 119, 6, 0.05);
+
   border-color: #d97706;
+
   color: #d97706;
 }
 
+
+/* =========================================================
+   SCROLLED SIGN UP
+   ========================================================= */
+
 .navbar.scrolled .btn-signup {
-  background: linear-gradient(135deg, #d97706, #f59e0b);
+  background:
+    linear-gradient(
+      135deg,
+      #d97706,
+      #f59e0b
+    );
 }
+
+
+/* =========================================================
+   SCROLLED PROFILE
+   ========================================================= */
 
 .navbar.scrolled .profile-link {
   color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.3);
+
+  border-color:
+    rgba(255, 255, 255, 0.3);
+
   background: transparent;
+
   backdrop-filter: none;
 }
 
 .navbar.scrolled .profile-link:hover {
   border-color: #d97706;
+
   color: #d97706;
 }
 
+
+/* =========================================================
+   SCROLLED LOGOUT
+   ========================================================= */
+
 .navbar.scrolled .logout-btn {
   color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.3);
+
+  border-color:
+    rgba(255, 255, 255, 0.3);
+
   background: transparent;
+
   backdrop-filter: none;
 }
 
 .navbar.scrolled .logout-btn:hover {
-  background: rgba(220, 38, 38, 0.05);
+  background:
+    rgba(220, 38, 38, 0.05);
+
   border-color: #dc2626;
 }
+
+
+/* =========================================================
+   SCROLLED HAMBURGER
+   ========================================================= */
 
 .navbar.scrolled .hamburger-line {
   background: #ffffff;
@@ -553,11 +1077,16 @@
    ========================================================= */
 
 @media (max-width: 1024px) {
+
   .navbar-links-desktop {
     gap: 1.2rem;
   }
 
-  /* Keep same scrolled color */
+  /*
+     IMPORTANT:
+     Same scrolled color on tablet.
+  */
+
   .navbar.scrolled {
     background: #074ca5;
   }
@@ -569,22 +1098,48 @@
    ========================================================= */
 
 @media (max-width: 768px) {
+
+  /*
+     Hide desktop navigation.
+  */
+
   .navbar-links-desktop {
     display: none;
   }
+
+
+  /*
+     Show hamburger.
+  */
 
   .hamburger {
     display: flex;
   }
 
+
+  /*
+     Normal mobile navbar height.
+  */
+
   .navbar {
     height: 70px;
   }
 
+
+  /*
+     Same blue when scrolled.
+  */
+
   .navbar.scrolled {
     height: 65px;
+
     background: #074ca5;
   }
+
+
+  /*
+     Mobile logo.
+  */
 
   .navbar-logo h2 {
     font-size: 1.1rem;
@@ -594,18 +1149,46 @@
     font-size: 1.4rem;
   }
 
+
+  /*
+     Container spacing.
+  */
+
   .navbar-container {
     padding: 0 1rem;
   }
+
+
+  /*
+     Profile name.
+  */
 
   .profile-name {
     max-width: 70px;
   }
 
+
+  /*
+     Hide desktop authentication buttons.
+  */
+
   .navbar-actions .btn-login,
   .navbar-actions .btn-signup,
   .navbar-actions .logout-btn {
     display: none;
+  }
+
+
+  /*
+     Make mobile menu full screen.
+  */
+
+  .mobile-menu {
+    width: 100%;
+
+    max-width: none;
+
+    background: #074ca5;
   }
 }
 
@@ -615,14 +1198,30 @@
    ========================================================= */
 
 @media (max-width: 480px) {
+
+  /*
+     Smaller navbar.
+  */
+
   .navbar {
     height: 60px;
   }
 
+
+  /*
+     Same blue after scrolling.
+  */
+
   .navbar.scrolled {
     height: 58px;
+
     background: #074ca5;
   }
+
+
+  /*
+     Smaller logo.
+  */
 
   .navbar-logo h2 {
     font-size: 0.95rem;
@@ -632,28 +1231,91 @@
     font-size: 1.2rem;
   }
 
+
+  /*
+     IMPORTANT:
+     Do NOT use 90% here.
+     Full width removes the side gap.
+  */
+
   .mobile-menu {
-    width: 90%;
-    max-width: 350px;
+    width: 100%;
+
+    max-width: none;
+
+    background: #074ca5;
   }
+
+
+  /*
+     Smaller profile.
+  */
 
   .profile-link {
     font-size: 0.8rem;
-    padding: 0.3rem 0.8rem 0.3rem 0.3rem;
+
+    padding:
+      0.3rem
+      0.8rem
+      0.3rem
+      0.3rem;
   }
+
 
   .avatar-image-small {
     width: 26px;
+
     height: 26px;
   }
+
 
   .avatar-circle-small {
     width: 26px;
+
     height: 26px;
+
     font-size: 0.7rem;
   }
 
+
   .profile-name {
     max-width: 50px;
+  }
+
+
+  /*
+     Smaller mobile menu spacing.
+  */
+
+  .mobile-menu-header {
+    padding:
+      1.2rem 1rem;
+
+    min-height: 80px;
+  }
+
+
+  .mobile-nav-links {
+    padding:
+      1.5rem 1rem;
+
+    gap: 0.5rem;
+  }
+
+
+  .mobile-nav-link {
+    padding:
+      0.9rem 1rem;
+
+    font-size: 1rem;
+  }
+
+
+  .mobile-close {
+    width: 42px;
+
+    height: 42px;
+
+    font-size: 1.2rem;
   }
 }

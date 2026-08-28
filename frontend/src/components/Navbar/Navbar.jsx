@@ -190,7 +190,7 @@ const Navbar = () => {
               className={`mobile-nav-link ${isActive("/") ? "active" : ""}`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              <span className="mobile-nav-icon">🏠</span>
+              <span className="mobile-nav-icon"></span>
               Home
             </Link>
             <Link
@@ -198,7 +198,7 @@ const Navbar = () => {
               className={`mobile-nav-link ${isActive("/destinations") ? "active" : ""}`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              <span className="mobile-nav-icon">📍</span>
+              <span className="mobile-nav-icon"></span>
               Destinations
             </Link>
             <Link
@@ -206,7 +206,7 @@ const Navbar = () => {
               className={`mobile-nav-link ${isActive("/transport") ? "active" : ""}`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              <span className="mobile-nav-icon">🚌</span>
+              <span className="mobile-nav-icon"></span>
               Transport
             </Link>
             <Link
@@ -214,7 +214,7 @@ const Navbar = () => {
               className={`mobile-nav-link ${isActive("/hotels") ? "active" : ""}`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              <span className="mobile-nav-icon">🏨</span>
+              <span className="mobile-nav-icon"></span>
               Hotels
             </Link>
             <Link
@@ -222,7 +222,7 @@ const Navbar = () => {
               className={`mobile-nav-link ${isActive("/about") ? "active" : ""}`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              <span className="mobile-nav-icon">ℹ️</span>
+              <span className="mobile-nav-icon"></span>
               About
             </Link>
             <Link
@@ -230,7 +230,7 @@ const Navbar = () => {
               className={`mobile-nav-link ${isActive("/contact") ? "active" : ""}`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              <span className="mobile-nav-icon">📧</span>
+              <span className="mobile-nav-icon"></span>
               Contact
             </Link>
 
@@ -243,7 +243,7 @@ const Navbar = () => {
                   className="mobile-nav-link"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  <span className="mobile-nav-icon">👤</span>
+                  <span className="mobile-nav-icon"></span>
                   {getDisplayName()}
                   <span className="mobile-badge">Profile</span>
                 </Link>
@@ -254,7 +254,7 @@ const Navbar = () => {
                   }}
                   className="mobile-nav-link logout-btn-mobile"
                 >
-                  <span className="mobile-nav-icon">🚪</span>
+                  <span className="mobile-nav-icon"></span>
                   Logout
                 </button>
               </>
@@ -265,7 +265,7 @@ const Navbar = () => {
                   className="mobile-nav-link auth-btn-login"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  <span className="mobile-nav-icon">🔑</span>
+                  <span className="mobile-nav-icon"></span>
                   Sign In
                 </Link>
                 <Link
@@ -273,7 +273,7 @@ const Navbar = () => {
                   className="mobile-nav-link auth-btn-signup"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  <span className="mobile-nav-icon">📝</span>
+                  <span className="mobile-nav-icon"></span>
                   Sign Up
                 </Link>
               </>
