@@ -428,12 +428,7 @@ const destinationItems = [
     bestTime: "Year-round",
   },
 ];
-
-// ============================================
-// 📸 EVENT DATA
-// ============================================
 const eventsData = [
-  // ===== AMHARA REGION EVENTS =====
   {
     id: 1,
     title: "Timkat - Ethiopian Epiphany",
@@ -469,8 +464,8 @@ const eventsData = [
     type: "event",
     description:
       "A colorful cultural festival celebrating young women with music, dance, and traditional attire.",
-    startDate: "Aug 22, 2026",
-    endDate: "Aug 25, 2026",
+    // startDate: "Aug 22, 2026",
+    // endDate: "Aug 25, 2026",
     location: "Tigray & Amhara Regions",
     region: "Amhara",
     category: "Cultural",
@@ -495,8 +490,8 @@ const eventsData = [
     type: "event",
     description:
       "Celebration of the birth of Jesus Christ at the rock-hewn churches of Lalibela.",
-    startDate: "Jan 7, 2026",
-    endDate: "Jan 7, 2026",
+    // startDate: "Jan 7, 2026",
+    // endDate: "Jan 7, 2026",
     location: "Lalibela, Amhara Region",
     region: "Amhara",
     category: "Religious",
@@ -1750,7 +1745,7 @@ const eventsData = [
 const Events = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { isLoggedIn } = useAuth(); // ✅ ADD THIS
+  const { isLoggedIn } = useAuth(); 
   const [items, setItems] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -1801,10 +1796,6 @@ const Events = () => {
       setLoading(false);
     }, 500);
   }, [destinationName]);
-
-  // ============================================
-  // SEARCH & FILTER LOGIC
-  // ============================================
   useEffect(() => {
     let result = items;
 
@@ -1832,41 +1823,29 @@ const Events = () => {
 
     setFilteredItems(result);
   }, [searchTerm, selectedCategory, selectedRegion, items]);
-
-  // ============================================
-  // CATEGORIES
-  // ============================================
   const categories = [
     { value: "all", label: "All Items" },
-    { value: "destination", label: "📍 Destinations" },
-    { value: "Religious", label: "⛪ Religious" },
-    { value: "Cultural", label: "🎭 Cultural" },
-    { value: "Muslim", label: "🕌 Muslim" },
-    { value: "Festival", label: "🎉 Festival" },
+    { value: "destination", label: " Destinations" },
+    { value: "Religious", label: " Religious" },
+    { value: "Cultural", label: " Cultural" },
+    { value: "Muslim", label: " Muslim" },
+    { value: "Festival", label: " Festival" },
     { value: "National", label: "🇪🇹 National" },
-    { value: "Nature", label: "🌿 Nature" },
+    { value: "Nature", label: " Nature" },
   ];
-
-  // ============================================
-  // REGIONS
-  // ============================================
   const regions = [
     { value: "all", label: "All Regions" },
     { value: "Nationwide", label: "🇪🇹 Nationwide" },
-    { value: "Amhara", label: "⛰️ Amhara" },
-    { value: "Tigray", label: "🏛️ Tigray" },
-    { value: "Afar", label: "🌋 Afar" },
-    { value: "Oromia", label: "🌿 Oromia" },
-    { value: "Southern", label: "🎭 Southern" },
-    { value: "Sidama", label: "🌺 Sidama" },
-    { value: "Harari", label: "🕌 Harari" },
-    { value: "Addis Ababa", label: "🏙️ Addis Ababa" },
-    { value: "Dire Dawa", label: "🌊 Dire Dawa" },
+    { value: "Amhara", label: " Amhara" },
+    { value: "Tigray", label: " Tigray" },
+    { value: "Afar", label: " Afar" },
+    { value: "Oromia", label: " Oromia" },
+    { value: "Southern", label: " Southern" },
+    { value: "Sidama", label: " Sidama" },
+    { value: "Harari", label: " Harari" },
+    { value: "Addis Ababa", label: " Addis Ababa" },
+    { value: "Dire Dawa", label: " Dire Dawa" },
   ];
-
-  // ============================================
-  // GET CATEGORY COLOR
-  // ============================================
   const getCategoryColor = (category) => {
     const colors = {
       destination: "#1e3a5f",
@@ -1886,31 +1865,26 @@ const Events = () => {
   const getRegionIcon = (region) => {
     const icons = {
       Nationwide: "🇪🇹",
-      Tigray: "🏛️",
-      Amhara: "⛰️",
-      Afar: "🌋",
-      Oromia: "🌿",
-      Southern: "🎭",
-      Sidama: "🌺",
-      Harari: "🕌",
-      "Addis Ababa": "🏙️",
-      "Dire Dawa": "🌊",
+      Tigray: "",
+      Amhara: "",
+      Afar: "",
+      Oromia: "",
+      Southern: "",
+      Sidama: "",
+      Harari: "",
+      "Addis Ababa": "",
+      "Dire Dawa": "",
     };
-    return icons[region] || "📍";
+    return icons[region] || "";
   };
-
-  // ============================================
-  // ✅ UPDATED: TOGGLE SELECT ITEM WITH AUTH
-  // ============================================
   const toggleSelectItem = (itemId) => {
-    // ✅ Check if user is logged in
+
     if (!isLoggedIn) {
-      alert("🔐 Please sign in or register to select items for your trip!");
+      alert(" Please sign in or register to select items for your trip!");
       navigate("/login?return=/events" + location.search);
       return;
     }
 
-    // ✅ If logged in, allow selection
     setSelectedItems((prev) => {
       if (prev.includes(itemId)) {
         return prev.filter((id) => id !== itemId);
@@ -1919,14 +1893,9 @@ const Events = () => {
       }
     });
   };
-
-  // ============================================
-  // OPEN/CLOSE MODAL
-  // ============================================
   const openItemModal = (item) => {
-    // ✅ Check auth before showing modal
     if (!isLoggedIn) {
-      alert("🔐 Please sign in or register to view item details!");
+      alert(" Please sign in or register to view item details!");
       navigate("/login?return=/events" + location.search);
       return;
     }
@@ -1940,31 +1909,18 @@ const Events = () => {
     setSelectedItem(null);
     document.body.style.overflow = "unset";
   };
-
-  // ============================================
-  // RESET FILTERS
-  // ============================================
   const resetFilters = () => {
     setSearchTerm("");
     setSelectedCategory("all");
     setSelectedRegion("all");
   };
-
-  // ============================================
-  // HANDLE BACK TO DESTINATIONS
-  // ============================================
   const handleBack = () => {
     navigate(-1);
   };
-
-  // ============================================
-  // HANDLE CONTINUE
-  // ============================================
   const handleContinue = () => {
     if (selectedItems.length > 0) {
-      // ✅ Check auth before continuing
       if (!isLoggedIn) {
-        alert("🔐 Please sign in or register to continue!");
+        alert(" Please sign in or register to continue!");
         navigate("/login?return=/events" + location.search);
         return;
       }
@@ -1979,7 +1935,7 @@ const Events = () => {
       {/* ===== HERO SECTION ===== */}
       <section className="events-hero">
         <div className="events-hero-content">
-          <h1>🎪 Plan Your Trip</h1>
+          <h1> Plan Your Trip</h1>
           <p>
             {destinationName
               ? `Items for ${destinationName}`
@@ -1996,8 +1952,6 @@ const Events = () => {
           </button>
         </div>
       </div>
-
-      {/* ===== FILTERS ===== */}
       <section className="events-filters">
         <div className="container">
           <div className="filter-bar">
@@ -2008,7 +1962,7 @@ const Events = () => {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
-              <span className="search-icon">🔍</span>
+              <span className="search-icon"></span>
               {searchTerm && (
                 <button
                   className="clear-search"
@@ -2067,7 +2021,7 @@ const Events = () => {
             )}
             {searchTerm && (
               <span className="active-filter">
-                🔍 "{searchTerm}"
+                 "{searchTerm}"
                 <button onClick={() => setSearchTerm("")}>✕</button>
               </span>
             )}
@@ -2076,7 +2030,7 @@ const Events = () => {
           {destinationName && (
             <div className="destination-banner">
               <span className="destination-badge">
-                📍 Showing items for: <strong>{destinationName}</strong>
+                 Showing items for: <strong>{destinationName}</strong>
               </span>
             </div>
           )}
@@ -2097,14 +2051,12 @@ const Events = () => {
             )}
             {selectedItems.length > 0 && (
               <span className="selected-count">
-                ✅ {selectedItems.length} selected
+                 {selectedItems.length} selected
               </span>
             )}
           </div>
         </div>
       </section>
-
-      {/* ===== ITEMS GRID ===== */}
       <section className="section events-grid-section">
         <div className="container">
           {loading ? (
@@ -2139,7 +2091,7 @@ const Events = () => {
                         }}
                       >
                         {item.type === "destination"
-                          ? "📍 Destination"
+                          ? " Destination"
                           : item.category}
                       </span>
                       <span className="item-region">
@@ -2180,7 +2132,7 @@ const Events = () => {
                       ) : (
                         <>
                           <div className="item-date">
-                            <span className="item-icon">📅</span>
+                            <span className="item-icon"></span>
                             <span>{item.startDate}</span>
                             {item.endDate &&
                               item.endDate !== item.startDate && (
@@ -2196,22 +2148,20 @@ const Events = () => {
                               .slice(0, 3)
                               .map((highlight, index) => (
                                 <span key={index} className="highlight-tag">
-                                  ✨ {highlight}
+                                   {highlight}
                                 </span>
                               ))}
                           </div>
                         </>
                       )}
                     </div>
-
-                    {/* TWO BUTTONS: Select + View More */}
                     <div className="item-actions">
                       <button
                         className={`select-btn ${selectedItems.includes(item.id) ? "selected" : ""}`}
                         onClick={() => toggleSelectItem(item.id)}
                       >
                         {selectedItems.includes(item.id)
-                          ? "✅ Selected"
+                          ? " Selected"
                           : "Select"}
                       </button>
                       <button
@@ -2228,14 +2178,12 @@ const Events = () => {
           )}
         </div>
       </section>
-
-      {/* CONTINUE BUTTON */}
       {selectedItems.length > 0 && (
         <div className="continue-section">
           <div className="continue-box">
             <div className="continue-info">
               <span className="selected-info">
-                ✅ {selectedItems.length} item(s) selected
+                 {selectedItems.length} item(s) selected
               </span>
             </div>
             <button className="continue-btn" onClick={handleContinue}>
@@ -2267,7 +2215,7 @@ const Events = () => {
                   }}
                 >
                   {selectedItem.type === "destination"
-                    ? "📍 Destination"
+                    ? " Destination"
                     : selectedItem.category}
                 </span>
                 <span className="modal-region">
@@ -2294,7 +2242,7 @@ const Events = () => {
                 {selectedItem.type === "destination" ? (
                   <>
                     <div className="modal-detail-item">
-                      <span className="modal-detail-icon">⭐</span>
+                      <span className="modal-detail-icon"></span>
                       <div>
                         <span className="modal-detail-label">Rating</span>
                         <span className="modal-detail-value">
@@ -2303,7 +2251,7 @@ const Events = () => {
                       </div>
                     </div>
                     <div className="modal-detail-item">
-                      <span className="modal-detail-icon">💰</span>
+                      <span className="modal-detail-icon"></span>
                       <div>
                         <span className="modal-detail-label">Price</span>
                         <span className="modal-detail-value">
@@ -2314,7 +2262,7 @@ const Events = () => {
                       </div>
                     </div>
                     <div className="modal-detail-item">
-                      <span className="modal-detail-icon">📅</span>
+                      <span className="modal-detail-icon"></span>
                       <div>
                         <span className="modal-detail-label">Best Time</span>
                         <span className="modal-detail-value">
@@ -2323,11 +2271,11 @@ const Events = () => {
                       </div>
                     </div>
                     <div className="modal-highlights">
-                      <h4>📍 Attractions</h4>
+                      <h4> Attractions</h4>
                       <div className="modal-highlights-list">
                         {selectedItem.attractions.map((item, index) => (
                           <span key={index} className="modal-highlight-tag">
-                            ✅ {item}
+                             {item}
                           </span>
                         ))}
                       </div>
@@ -2336,9 +2284,9 @@ const Events = () => {
                 ) : (
                   <>
                     <div className="modal-detail-item">
-                      <span className="modal-detail-icon">📅</span>
+                      <span className="modal-detail-icon"></span>
                       <div>
-                        <span className="modal-detail-label">Start Date</span>
+                        
                         <span className="modal-detail-value">
                           {selectedItem.startDate}
                         </span>
@@ -2347,9 +2295,8 @@ const Events = () => {
                     {selectedItem.endDate &&
                       selectedItem.endDate !== selectedItem.startDate && (
                         <div className="modal-detail-item">
-                          <span className="modal-detail-icon">📅</span>
+                          <span className="modal-detail-icon"></span>
                           <div>
-                            <span className="modal-detail-label">End Date</span>
                             <span className="modal-detail-value">
                               {selectedItem.endDate}
                             </span>
@@ -2357,7 +2304,7 @@ const Events = () => {
                         </div>
                       )}
                     <div className="modal-detail-item">
-                      <span className="modal-detail-icon">📍</span>
+                      <span className="modal-detail-icon"></span>
                       <div>
                         <span className="modal-detail-label">Location</span>
                         <span className="modal-detail-value">
@@ -2366,11 +2313,11 @@ const Events = () => {
                       </div>
                     </div>
                     <div className="modal-highlights">
-                      <h4>✨ Highlights</h4>
+                      <h4> Highlights</h4>
                       <div className="modal-highlights-list">
                         {selectedItem.highlights.map((item, index) => (
                           <span key={index} className="modal-highlight-tag">
-                            ✨ {item}
+                             {item}
                           </span>
                         ))}
                       </div>

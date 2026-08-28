@@ -439,9 +439,9 @@
 }
 
 .navbar.scrolled .btn-login {
-  background: rgba(217, 119, 6, 0.15);
-  border-color: #d97706;
-  color: #ffffff;
+  background:#14A37F;
+  border-color: #d0f12e;
+  color:#d0f12e;
   backdrop-filter: none;
 }
 

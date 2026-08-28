@@ -2,12 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Home.css";
 import Carousel from "../../components/Carousel/Carousel";
-
-// ============================================
-// 📸 IMPORT YOUR IMAGES HERE
-// ============================================
-// Place images in: frontend/src/assets/images/
-// ============================================
 import lalibela from "../../assets/images/lalibela.png";
 import denkel from "../../assets/images/Danakil-Depression.png";
 import semien from "../../assets/images/walia.png";
@@ -37,95 +31,54 @@ import etmap from "../../assets/images/etmap.png";
 import lwommo from "../../assets/images/lwommo.png";
 import lwaw from "../../assets/images/lwaw.png";
 import konso from "../../assets/images/konso.png";
+import heroVideo from "../../assets/vidoes/vid.mp4";
 const Home = () => {
   const [scrolled, setScrolled] = useState(false);
   const [verticalOffset, setVerticalOffset] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
-
-  // ============================================
-  // 📸 ADD YOUR IMAGES HERE
-  // ============================================
   const images = {
-    // ===== HERO BACKGROUND =====
     heroBg:
-      "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=1920&h=1080&fit=crop",
-
-    // ===== VIDEO =====
-    heroVideo: "https://www.w3schools.com/html/mov_bbb.mp4",
-
-    // ===== VERTICAL LEFT SIDE IMAGES =====
-    verticalLeft1:
-      lalibela,
-    verticalLeft2:
-      semien2,
-    verticalLeft3:
-      denkele1,
-    verticalLeft4:
-      ommo1,
-    verticalLeft5:
-    axum,
-    verticalLeft6:
-      harari,
-    verticalLeft7:
-      gondar,
-    verticalLeft8:
-      bluenile,
-
-    // ===== VERTICAL RIGHT SIDE IMAGES =====
-    verticalRight1:
-     etcu,
-    verticalRight2:
-      coffee,
-    verticalRight3:
-      wildanimal,
-    verticalRight4:
-      rasdashen,
-    verticalRight5:
-      culturalfe,
-    verticalRight6:
-    debredamo,
-    verticalRight7:
-      national,
-    verticalRight8:
-      tana,
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4lsFdBk9hO-39o-KMI_LjYwUdD4EwqZiH463bJhsgRA&s",
+    heroVideo: heroVideo,
+    verticalLeft1: lalibela,
+    verticalLeft2: semien2,
+    verticalLeft3: denkele1,
+    verticalLeft4: ommo1,
+    verticalLeft5: axum,
+    verticalLeft6: harari,
+    verticalLeft7: gondar,
+    verticalLeft8: bluenile,
+    verticalRight1: etcu,
+    verticalRight2: coffee,
+    verticalRight3: wildanimal,
+    verticalRight4: rasdashen,
+    verticalRight5: culturalfe,
+    verticalRight6: debredamo,
+    verticalRight7: national,
+    verticalRight8: tana,
 
     // ===== CENTER MAP =====
-    ethiopiaMap:
-      etmap,
+    ethiopiaMap: etmap,
 
     // ===== FEATURED DESTINATION IMAGES =====
-    featured1:
-     lalibela ,
-    featured2:
-     semien,
-    featured3:
-      gondar,
-    featured4:
-      tana,
+    featured1: lalibela,
+    featured2: semien,
+    featured3: gondar,
+    featured4: tana,
 
     // ===== UNESCO IMAGES =====
-    unesco1:
-      harari,
-    unesco2:
-     lwommo,
-    unesco3:
-      lwaw,
-    unesco4:
-    konso,
+    unesco1: harari,
+    unesco2: lwommo,
+    unesco3: lwaw,
+    unesco4: konso,
 
     // ===== EVENTS IMAGES =====
-    event1:
-      timiket,
-    event2:
-      buhie,
-    event3:
-     ashenda,
-    event4:
-     newyear,
-    event5:meskel
-     ,
-    event6:
-     fiche,
+    event1: timiket,
+    event2: buhie,
+    event3: ashenda,
+    event4: newyear,
+    event5: meskel,
+    event6: fiche,
   };
 
   // ============================================
@@ -497,9 +450,6 @@ const Home = () => {
 
   return (
     <div className="home-page">
-      {/* ============================================ */}
-      {/* HERO SECTION */}
-      {/* ============================================ */}
       <section className="hero-section">
         <div className="hero-video-wrapper">
           <video
@@ -516,7 +466,7 @@ const Home = () => {
 
           <div className="hero-overlay">
             <div className="hero-content">
-              <div className="hero-badge">🇪🇹 Welcome to Ethiopia</div>
+              {/* <div className="hero-badge">🇪🇹 Welcome to Ethiopia</div> */}
               <h1 className="hero-title">
                 <span className="hero-subtitle-top">
                   LET'S EXPLORE ETHIOPIA
@@ -530,7 +480,7 @@ const Home = () => {
               </p>
               <div className="hero-buttons">
                 <Link to="/destinations" className="btn-primary">
-                  Explore Destinations 🚀
+                  Explore Destinations 
                 </Link>
                 <Link to="/about" className="btn-secondary">
                   Learn More →
@@ -560,14 +510,9 @@ const Home = () => {
           <div className="mouse"></div>
         </div>
       </section>
-
-      {/* ============================================ */}
-      {/* ✅ CAROUSEL SECTION - Changes every 3 seconds */}
-      {/* ============================================ */}
       <section className="section carousel-section">
         <div className="container">
           <div className="section-header">
-            <span className="section-tag">🌟 Featured</span>
             <h2>Discover Ethiopia's Wonders</h2>
             <p>
               Explore the most iconic destinations across the Land of Origins
@@ -585,7 +530,6 @@ const Home = () => {
       <section className="section events-section">
         <div className="container">
           <div className="section-header">
-            <span className="section-tag">🎪 Events</span>
             <h2>Upcoming Events & Festivals</h2>
             <p className="section-subtitle">
               Meet in the Land of Origins - Experience Ethiopia's vibrant
@@ -625,19 +569,17 @@ const Home = () => {
 
                   <div className="event-details">
                     <div className="event-date">
-                      <span className="event-icon">📅</span>
                       <span className="event-label">Start:</span>
                       <span className="event-value">{event.startDate}</span>
                     </div>
                     {event.endDate && event.endDate !== event.startDate && (
                       <div className="event-date">
-                        <span className="event-icon">📅</span>
                         <span className="event-label">End:</span>
                         <span className="event-value">{event.endDate}</span>
                       </div>
                     )}
                     <div className="event-location">
-                      <span className="event-icon">📍</span>
+                      <span className="event-icon"></span>
                       <span className="event-value">{event.location}</span>
                     </div>
                   </div>
@@ -658,7 +600,7 @@ const Home = () => {
 
           <div className="events-footer">
             <Link to="/events" className="events-view-all">
-              View All Events 📅
+              View All Events 
             </Link>
           </div>
         </div>
