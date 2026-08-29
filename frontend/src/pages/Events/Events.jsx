@@ -2,10 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./Events.css";
 import { useAuth } from "../../context/AuthContext";
-
-// ============================================
-// 📸 IMPORT YOUR IMAGES HERE
-// ============================================
+import guragie from "../../assets/images/guragie.png";
 import timiket from "../../assets/images/timiket.png";
 import hidar from "../../assets/images/hidartsion.png";
 import ashenda from "../../assets/images/ashenda2.png";
@@ -54,7 +51,6 @@ import DallolSprings from "../../assets/images/DallolSprings.png";
 import ommo1 from "../../assets/images/ommo1.png";
 import Mago from "../../assets/images/Mago.png";
 import harar from "../../assets/images/harar.png";
-// import hararcityfes from "../../assets/images/hararcityfes.png";
 import bale from "../../assets/images/bale.png";
 import SofOmar from "../../assets/images/SofOmar.png";
 import LakeLangano from "../../assets/images/LakeLangano.png";
@@ -428,6 +424,7 @@ const destinationItems = [
     bestTime: "Year-round",
   },
 ];
+
 const eventsData = [
   {
     id: 1,
@@ -436,8 +433,8 @@ const eventsData = [
     type: "event",
     description:
       "One of the most colorful festivals in Ethiopia, celebrating the baptism of Jesus Christ.",
-    startDate: "Jan 19, 2026",
-    endDate: "Jan 20, 2026",
+    startDate: "Jan 10",
+    endDate: "Jan 11",
     location: "Gondar & Nationwide",
     region: "Amhara",
     category: "Religious",
@@ -464,8 +461,8 @@ const eventsData = [
     type: "event",
     description:
       "A colorful cultural festival celebrating young women with music, dance, and traditional attire.",
-    // startDate: "Aug 22, 2026",
-    // endDate: "Aug 25, 2026",
+    startDate: "Aug 16",
+    endDate: "Aug 21",
     location: "Tigray & Amhara Regions",
     region: "Amhara",
     category: "Cultural",
@@ -490,8 +487,6 @@ const eventsData = [
     type: "event",
     description:
       "Celebration of the birth of Jesus Christ at the rock-hewn churches of Lalibela.",
-    // startDate: "Jan 7, 2026",
-    // endDate: "Jan 7, 2026",
     location: "Lalibela, Amhara Region",
     region: "Amhara",
     category: "Religious",
@@ -512,8 +507,7 @@ const eventsData = [
     type: "event",
     description:
       "Traditional Agew horse racing and equestrian festival celebrating the rich cultural heritage.",
-    startDate: "Oct 15, 2026",
-    endDate: "Oct 17, 2026",
+    startDate: "Jan 23",
     location: "Awi Zone, Amhara Region",
     region: "Amhara",
     category: "Cultural",
@@ -538,8 +532,6 @@ const eventsData = [
     type: "event",
     description:
       "Celebration at the ancient island monasteries of Lake Tana, featuring traditional prayers and boat processions.",
-    startDate: "Apr 25, 2026",
-    endDate: "Apr 26, 2026",
     location: "Lake Tana, Bahir Dar",
     region: "Amhara",
     category: "Religious",
@@ -559,8 +551,6 @@ const eventsData = [
     type: "event",
     description:
       "Celebration of the birthplace of coffee in the Gish Abay area, featuring traditional coffee ceremonies.",
-    startDate: "Mar 20, 2026",
-    endDate: "Mar 22, 2026",
     location: "Gish Abay, Amhara Region",
     region: "Amhara",
     category: "Cultural",
@@ -585,8 +575,7 @@ const eventsData = [
     type: "event",
     description:
       "A vibrant religious celebration with massive bonfires, colorful processions, and traditional music.",
-    startDate: "Sep 27, 2026",
-    endDate: "Sep 27, 2026",
+    startDate: "Sep 17",
     location: "Gondar, Amhara & Nationwide",
     region: "Amhara",
     category: "Religious",
@@ -613,8 +602,7 @@ const eventsData = [
     type: "event",
     description:
       "Celebration of the resurrection of Jesus Christ with overnight church services and festive meals.",
-    startDate: "Apr 19, 2026",
-    endDate: "Apr 20, 2026",
+    startDate: "Dec 29",
     location: "Nationwide",
     region: "Amhara",
     category: "Religious",
@@ -640,8 +628,8 @@ const eventsData = [
     type: "event",
     description:
       "One of the most colorful festivals in Ethiopia, celebrating the baptism of Jesus Christ.",
-    startDate: "Jan 19, 2026",
-    endDate: "Jan 20, 2026",
+    startDate: "Jan 10",
+    endDate: "Jan 11",
     location: "Axum, Tigray & Nationwide",
     region: "Tigray",
     category: "Religious",
@@ -666,8 +654,8 @@ const eventsData = [
     type: "event",
     description:
       "A colorful cultural festival celebrating young women with music, dance, and traditional attire.",
-    startDate: "Aug 22, 2026",
-    endDate: "Aug 25, 2026",
+    startDate: "Aug 16",
+    endDate: "Aug 21",
     location: "Tigray Region",
     region: "Tigray",
     category: "Cultural",
@@ -692,8 +680,7 @@ const eventsData = [
     type: "event",
     description:
       "Celebration of the Virgin Mary at the Church of Our Lady Mary of Zion in Axum.",
-    startDate: "Nov 21, 2026",
-    endDate: "Nov 21, 2026",
+    startDate: "Nov 21",
     location: "Axum, Tigray Region",
     region: "Tigray",
     category: "Religious",
@@ -713,8 +700,7 @@ const eventsData = [
     type: "event",
     description:
       "Commemoration of the Ethiopian victory at the Battle of Adwa in 1896.",
-    startDate: "Mar 2, 2026",
-    endDate: "Mar 2, 2026",
+    startDate: "Feb 23",
     location: "Adwa, Tigray & Nationwide",
     region: "Tigray",
     category: "National",
@@ -740,8 +726,6 @@ const eventsData = [
     type: "event",
     description:
       "Traditional Afar cultural festival featuring camel racing, traditional dances, and nomadic heritage.",
-    startDate: "Mar 15, 2026",
-    endDate: "Mar 17, 2026",
     location: "Afar Region",
     region: "Afar",
     category: "Cultural",
@@ -766,8 +750,6 @@ const eventsData = [
     type: "event",
     description:
       "Celebration of the ancient salt trade in the Danakil Depression, featuring camel caravans.",
-    startDate: "Nov 20, 2026",
-    endDate: "Nov 22, 2026",
     location: "Danakil Depression, Afar Region",
     region: "Afar",
     category: "Cultural",
@@ -791,8 +773,6 @@ const eventsData = [
     type: "event",
     description:
       "Islamic festival commemorating the willingness of Prophet Ibrahim to sacrifice his son.",
-    startDate: "Jun 6, 2026",
-    endDate: "Jun 8, 2026",
     location: "Nationwide (Especially Harar, Addis Ababa, Dire Dawa)",
     region: "Afar",
     category: "Muslim",
@@ -816,8 +796,6 @@ const eventsData = [
     type: "event",
     description:
       "Celebration marking the end of the holy month of Ramadan, featuring special prayers and festive meals.",
-    startDate: "Mar 30, 2026",
-    endDate: "Apr 1, 2026",
     location: "Nationwide (Especially Harar, Addis Ababa, Dire Dawa)",
     region: "Afar",
     category: "Muslim",
@@ -841,8 +819,6 @@ const eventsData = [
     type: "event",
     description:
       "The holy month of fasting, prayer, and reflection observed by Muslims across Ethiopia.",
-    startDate: "Feb 28, 2026",
-    endDate: "Mar 29, 2026",
     location: "Nationwide",
     region: "Afar",
     category: "Muslim",
@@ -866,8 +842,6 @@ const eventsData = [
     type: "event",
     description:
       "Celebration of the birth of Prophet Muhammad, featuring religious sermons and community feasts.",
-    startDate: "Sep 15, 2026",
-    endDate: "Sep 16, 2026",
     location: "Nationwide (Especially Harar, Addis Ababa)",
     region: "Afar",
     category: "Muslim",
@@ -893,8 +867,6 @@ const eventsData = [
     type: "event",
     description:
       "The largest Oromo cultural festival, celebrating the end of the rainy season with colorful gatherings around lakes and rivers.",
-    startDate: "Oct 5, 2026",
-    endDate: "Oct 6, 2026",
     location: "Bishoftu, Oromia Region",
     region: "Oromia",
     category: "Cultural",
@@ -919,8 +891,6 @@ const eventsData = [
     type: "event",
     description:
       "Celebration of the traditional Gada governance system of the Oromo people, recognized as UNESCO Intangible Cultural Heritage.",
-    startDate: "Nov 15, 2026",
-    endDate: "Nov 18, 2026",
     location: "Oromia Region",
     region: "Oromia",
     category: "Cultural",
@@ -944,8 +914,6 @@ const eventsData = [
     type: "event",
     description:
       "Annual trekking festival in the Bale Mountains National Park, celebrating Ethiopia's unique Afro-alpine ecosystem.",
-    startDate: "Jun 5, 2026",
-    endDate: "Jun 8, 2026",
     location: "Bale Mountains, Oromia",
     region: "Oromia",
     category: "Nature",
@@ -967,8 +935,6 @@ const eventsData = [
     type: "event",
     description:
       "Cultural festival celebrating the diverse tribes of the Omo Valley, featuring traditional body painting, dances, and ceremonies.",
-    startDate: "Mar 10, 2026",
-    endDate: "Mar 12, 2026",
     location: "Omo Valley, Southern Ethiopia",
     region: "Southern",
     category: "Cultural",
@@ -992,8 +958,6 @@ const eventsData = [
     type: "event",
     description:
       "Celebration of the unique culture of the Mursi people, featuring traditional body painting, lip plates, and cultural performances.",
-    startDate: "Apr 5, 2026",
-    endDate: "Apr 7, 2026",
     location: "Omo Valley, Southern Ethiopia",
     region: "Southern",
     category: "Cultural",
@@ -1013,8 +977,6 @@ const eventsData = [
     type: "event",
     description:
       "Vibrant Saturday market festival where different tribes gather to trade, socialize, and celebrate their unique traditions.",
-    startDate: "Nov 10, 2026",
-    endDate: "Nov 12, 2026",
     location: "Turmi, Omo Valley",
     region: "Southern",
     category: "Cultural",
@@ -1034,8 +996,6 @@ const eventsData = [
     type: "event",
     description:
       "Traditional New Year celebration of the Sidama people, featuring cultural performances, traditional foods, and community gatherings.",
-    startDate: "Dec 12, 2026",
-    endDate: "Dec 13, 2026",
     location: "Sidama Region",
     region: "Southern",
     category: "Cultural",
@@ -1059,12 +1019,10 @@ const eventsData = [
     type: "event",
     description:
       "Vibrant celebration in the Gurage Zone with massive bonfires, colorful processions, and traditional music.",
-    startDate: "Sep 27, 2026",
-    endDate: "Sep 27, 2026",
     location: "Gurage Zone, Southern Ethiopia",
     region: "Southern",
     category: "Religious",
-    image: meskel || FALLBACK_IMAGE,
+    image: guragie || FALLBACK_IMAGE,
     highlights: [
       "Massive Bonfires",
       "Colorful Processions",
@@ -1087,8 +1045,6 @@ const eventsData = [
     type: "event",
     description:
       "Unique cultural tradition in Harar where the local people feed wild hyenas, symbolizing peaceful coexistence.",
-    startDate: "Sep 2, 2026",
-    endDate: "Sep 3, 2026",
     location: "Harar Jugol, Harari Region",
     region: "Harari",
     category: "Cultural",
@@ -1108,8 +1064,6 @@ const eventsData = [
     type: "event",
     description:
       "Celebration of the rich history and culture of Harar's ancient walled city.",
-    startDate: "Oct 10, 2026",
-    endDate: "Oct 12, 2026",
     location: "Harar, Harari Region",
     region: "Harari",
     category: "Cultural",
@@ -1129,8 +1083,6 @@ const eventsData = [
     type: "event",
     description:
       "Celebration of the diverse cultures of Dire Dawa and the Somali region.",
-    startDate: "Dec 5, 2026",
-    endDate: "Dec 7, 2026",
     location: "Dire Dawa & Somali Region",
     region: "Dire Dawa",
     category: "Cultural",
@@ -1150,8 +1102,6 @@ const eventsData = [
     type: "event",
     description:
       "Islamic festival commemorating the willingness of Prophet Ibrahim to sacrifice his son.",
-    startDate: "Jun 6, 2026",
-    endDate: "Jun 8, 2026",
     location: "Nationwide (Especially Harar, Addis Ababa, Dire Dawa)",
     region: "Harari",
     category: "Muslim",
@@ -1171,8 +1121,6 @@ const eventsData = [
     type: "event",
     description:
       "Celebration marking the end of the holy month of Ramadan, featuring special prayers and festive meals.",
-    startDate: "Mar 30, 2026",
-    endDate: "Apr 1, 2026",
     location: "Nationwide (Especially Harar, Addis Ababa, Dire Dawa)",
     region: "Harari",
     category: "Muslim",
@@ -1192,8 +1140,6 @@ const eventsData = [
     type: "event",
     description:
       "The holy month of fasting, prayer, and reflection observed by Muslims.",
-    startDate: "Feb 28, 2026",
-    endDate: "Mar 29, 2026",
     location: "Nationwide",
     region: "Harari",
     category: "Muslim",
@@ -1213,8 +1159,6 @@ const eventsData = [
     type: "event",
     description:
       "Celebration of the birth of Prophet Muhammad, featuring religious sermons and community feasts.",
-    startDate: "Sep 15, 2026",
-    endDate: "Sep 16, 2026",
     location: "Nationwide (Especially Harar, Addis Ababa)",
     region: "Harari",
     category: "Muslim",
@@ -1236,8 +1180,6 @@ const eventsData = [
     type: "event",
     description:
       "A vibrant religious celebration with massive bonfires, colorful processions, and traditional music in Addis Ababa's Meskel Square.",
-    startDate: "Sep 27, 2026",
-    endDate: "Sep 27, 2026",
     location: "Meskel Square, Addis Ababa",
     region: "Addis Ababa",
     category: "Religious",
@@ -1262,8 +1204,6 @@ const eventsData = [
     type: "event",
     description:
       "Celebrate the Ethiopian New Year with traditional feasts, coffee ceremonies, and the blooming of yellow daisies.",
-    startDate: "Sep 11, 2026",
-    endDate: "Sep 12, 2026",
     location: "Addis Ababa & Nationwide",
     region: "Addis Ababa",
     category: "Festival",
@@ -1287,8 +1227,6 @@ const eventsData = [
     type: "event",
     description:
       "Commemoration of the Ethiopian victory at the Battle of Adwa in 1896, celebrated with parades and ceremonies.",
-    startDate: "Mar 2, 2026",
-    endDate: "Mar 2, 2026",
     location: "Addis Ababa & Nationwide",
     region: "Addis Ababa",
     category: "National",
@@ -1312,8 +1250,6 @@ const eventsData = [
     type: "event",
     description:
       "Celebration of the Ethiopian flag and national pride, featuring cultural events and performances.",
-    startDate: "Oct 11, 2026",
-    endDate: "Oct 11, 2026",
     location: "Addis Ababa & Nationwide",
     region: "Addis Ababa",
     category: "National",
@@ -1337,8 +1273,7 @@ const eventsData = [
     type: "event",
     description:
       "Celebration of the Transfiguration of Jesus Christ, marked by traditional songs, bonfires, and festive meals.",
-    startDate: "Aug 19, 2026",
-    endDate: "Aug 19, 2026",
+    startDate: "Aug 13",
     location: "Addis Ababa & Nationwide",
     region: "Addis Ababa",
     category: "Religious",
@@ -1362,8 +1297,8 @@ const eventsData = [
     type: "event",
     description:
       "One of the most colorful festivals in Ethiopia, celebrating the baptism of Jesus Christ with processions and ceremonies.",
-    startDate: "Jan 19, 2026",
-    endDate: "Jan 20, 2026",
+    startDate: "Jan 10",
+    endDate: "Jan 11",
     location: "Addis Ababa & Nationwide",
     region: "Addis Ababa",
     category: "Religious",
@@ -1387,8 +1322,7 @@ const eventsData = [
     type: "event",
     description:
       "Celebration of the resurrection of Jesus Christ with overnight church services and festive meals.",
-    startDate: "Apr 19, 2026",
-    endDate: "Apr 20, 2026",
+    startDate: "Dec 29",
     location: "Addis Ababa & Nationwide",
     region: "Addis Ababa",
     category: "Religious",
@@ -1412,8 +1346,6 @@ const eventsData = [
     type: "event",
     description:
       "Islamic festival commemorating the willingness of Prophet Ibrahim to sacrifice his son.",
-    startDate: "Jun 6, 2026",
-    endDate: "Jun 8, 2026",
     location: "Addis Ababa & Nationwide",
     region: "Addis Ababa",
     category: "Muslim",
@@ -1437,8 +1369,6 @@ const eventsData = [
     type: "event",
     description:
       "Celebration marking the end of the holy month of Ramadan, featuring special prayers and festive meals.",
-    startDate: "Mar 30, 2026",
-    endDate: "Apr 1, 2026",
     location: "Addis Ababa & Nationwide",
     region: "Addis Ababa",
     category: "Muslim",
@@ -1462,8 +1392,6 @@ const eventsData = [
     type: "event",
     description:
       "The holy month of fasting, prayer, and reflection observed by Muslims.",
-    startDate: "Feb 28, 2026",
-    endDate: "Mar 29, 2026",
     location: "Addis Ababa & Nationwide",
     region: "Addis Ababa",
     category: "Muslim",
@@ -1487,8 +1415,6 @@ const eventsData = [
     type: "event",
     description:
       "Celebration of the birth of Prophet Muhammad, featuring religious sermons and community feasts.",
-    startDate: "Sep 15, 2026",
-    endDate: "Sep 16, 2026",
     location: "Addis Ababa & Nationwide",
     region: "Addis Ababa",
     category: "Muslim",
@@ -1514,8 +1440,6 @@ const eventsData = [
     type: "event",
     description:
       "Celebration of the Ethiopian flag and national pride across the entire country.",
-    startDate: "Oct 11, 2026",
-    endDate: "Oct 11, 2026",
     location: "Nationwide",
     region: "Nationwide",
     category: "National",
@@ -1535,8 +1459,7 @@ const eventsData = [
     type: "event",
     description:
       "Commemoration of the Ethiopian victory at the Battle of Adwa in 1896.",
-    startDate: "Mar 2, 2026",
-    endDate: "Mar 2, 2026",
+    startDate: "Feb 23",
     location: "Nationwide",
     region: "Nationwide",
     category: "National",
@@ -1556,8 +1479,6 @@ const eventsData = [
     type: "event",
     description:
       "Celebrate the Ethiopian New Year across the entire country with traditional feasts and coffee ceremonies.",
-    startDate: "Sep 11, 2026",
-    endDate: "Sep 12, 2026",
     location: "Nationwide",
     region: "Nationwide",
     category: "Festival",
@@ -1577,8 +1498,7 @@ const eventsData = [
     type: "event",
     description:
       "A vibrant religious celebration across Ethiopia commemorating the discovery of the True Cross.",
-    startDate: "Sep 27, 2026",
-    endDate: "Sep 27, 2026",
+    startDate: "Sep 17",
     location: "Nationwide",
     region: "Nationwide",
     category: "Religious",
@@ -1598,8 +1518,8 @@ const eventsData = [
     type: "event",
     description:
       "One of the most colorful festivals in Ethiopia, celebrating the baptism of Jesus Christ.",
-    startDate: "Jan 19, 2026",
-    endDate: "Jan 20, 2026",
+    startDate: "Jan 10",
+    endDate: "Jan 11",
     location: "Nationwide",
     region: "Nationwide",
     category: "Religious",
@@ -1619,8 +1539,7 @@ const eventsData = [
     type: "event",
     description:
       "Celebration of the Transfiguration of Jesus Christ across Ethiopia.",
-    startDate: "Aug 19, 2026",
-    endDate: "Aug 19, 2026",
+    startDate: "Aug 13",
     location: "Nationwide",
     region: "Nationwide",
     category: "Religious",
@@ -1640,8 +1559,7 @@ const eventsData = [
     type: "event",
     description:
       "Celebration of the resurrection of Jesus Christ across Ethiopia.",
-    startDate: "Apr 19, 2026",
-    endDate: "Apr 20, 2026",
+    startDate: "Dec 29",
     location: "Nationwide",
     region: "Nationwide",
     category: "Religious",
@@ -1661,8 +1579,6 @@ const eventsData = [
     type: "event",
     description:
       "Islamic festival commemorating the willingness of Prophet Ibrahim to sacrifice his son.",
-    startDate: "Jun 6, 2026",
-    endDate: "Jun 8, 2026",
     location: "Nationwide",
     region: "Nationwide",
     category: "Muslim",
@@ -1681,8 +1597,6 @@ const eventsData = [
     amharicTitle: "የዒድ አልፈጥር",
     type: "event",
     description: "Celebration marking the end of the holy month of Ramadan.",
-    startDate: "Mar 30, 2026",
-    endDate: "Apr 1, 2026",
     location: "Nationwide",
     region: "Nationwide",
     category: "Muslim",
@@ -1702,8 +1616,6 @@ const eventsData = [
     type: "event",
     description:
       "The holy month of fasting, prayer, and reflection observed by Muslims across Ethiopia.",
-    startDate: "Feb 28, 2026",
-    endDate: "Mar 29, 2026",
     location: "Nationwide",
     region: "Nationwide",
     category: "Muslim",
@@ -1723,8 +1635,6 @@ const eventsData = [
     type: "event",
     description:
       "Celebration of the birth of Prophet Muhammad, featuring religious sermons and community feasts.",
-    startDate: "Sep 15, 2026",
-    endDate: "Sep 16, 2026",
     location: "Nationwide",
     region: "Nationwide",
     category: "Muslim",
@@ -1745,7 +1655,7 @@ const eventsData = [
 const Events = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { isLoggedIn } = useAuth(); 
+  const { isLoggedIn } = useAuth();
   const [items, setItems] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -1796,6 +1706,7 @@ const Events = () => {
       setLoading(false);
     }, 500);
   }, [destinationName]);
+
   useEffect(() => {
     let result = items;
 
@@ -1823,6 +1734,7 @@ const Events = () => {
 
     setFilteredItems(result);
   }, [searchTerm, selectedCategory, selectedRegion, items]);
+
   const categories = [
     { value: "all", label: "All Items" },
     { value: "destination", label: " Destinations" },
@@ -1833,6 +1745,7 @@ const Events = () => {
     { value: "National", label: "🇪🇹 National" },
     { value: "Nature", label: " Nature" },
   ];
+
   const regions = [
     { value: "all", label: "All Regions" },
     { value: "Nationwide", label: "🇪🇹 Nationwide" },
@@ -1846,6 +1759,7 @@ const Events = () => {
     { value: "Addis Ababa", label: " Addis Ababa" },
     { value: "Dire Dawa", label: " Dire Dawa" },
   ];
+
   const getCategoryColor = (category) => {
     const colors = {
       destination: "#1e3a5f",
@@ -1877,8 +1791,8 @@ const Events = () => {
     };
     return icons[region] || "";
   };
-  const toggleSelectItem = (itemId) => {
 
+  const toggleSelectItem = (itemId) => {
     if (!isLoggedIn) {
       alert(" Please sign in or register to select items for your trip!");
       navigate("/login?return=/events" + location.search);
@@ -1893,6 +1807,7 @@ const Events = () => {
       }
     });
   };
+
   const openItemModal = (item) => {
     if (!isLoggedIn) {
       alert(" Please sign in or register to view item details!");
@@ -1909,14 +1824,17 @@ const Events = () => {
     setSelectedItem(null);
     document.body.style.overflow = "unset";
   };
+
   const resetFilters = () => {
     setSearchTerm("");
     setSelectedCategory("all");
     setSelectedRegion("all");
   };
+
   const handleBack = () => {
     navigate(-1);
   };
+
   const handleContinue = () => {
     if (selectedItems.length > 0) {
       if (!isLoggedIn) {
@@ -1929,10 +1847,8 @@ const Events = () => {
     }
   };
 
-  // ... REST OF THE COMPONENT (Return JSX - unchanged)
   return (
     <div className="events-page">
-      {/* ===== HERO SECTION ===== */}
       <section className="events-hero">
         <div className="events-hero-content">
           <h1> Plan Your Trip</h1>
@@ -1943,8 +1859,6 @@ const Events = () => {
           </p>
         </div>
       </section>
-
-      {/* ===== BACK BUTTON ===== */}
       <div className="back-button-container">
         <div className="container">
           <button className="back-btn" onClick={handleBack}>
@@ -1952,6 +1866,7 @@ const Events = () => {
           </button>
         </div>
       </div>
+
       <section className="events-filters">
         <div className="container">
           <div className="filter-bar">
@@ -2021,7 +1936,7 @@ const Events = () => {
             )}
             {searchTerm && (
               <span className="active-filter">
-                 "{searchTerm}"
+                "{searchTerm}"
                 <button onClick={() => setSearchTerm("")}>✕</button>
               </span>
             )}
@@ -2030,7 +1945,7 @@ const Events = () => {
           {destinationName && (
             <div className="destination-banner">
               <span className="destination-badge">
-                 Showing items for: <strong>{destinationName}</strong>
+                Showing items for: <strong>{destinationName}</strong>
               </span>
             </div>
           )}
@@ -2051,12 +1966,13 @@ const Events = () => {
             )}
             {selectedItems.length > 0 && (
               <span className="selected-count">
-                 {selectedItems.length} selected
+                {selectedItems.length} selected
               </span>
             )}
           </div>
         </div>
       </section>
+
       <section className="section events-grid-section">
         <div className="container">
           {loading ? (
@@ -2079,25 +1995,6 @@ const Events = () => {
                 <div key={item.id} className="item-card">
                   <div className="item-image">
                     <img src={item.image} alt={item.title} />
-                    <div className="item-badges">
-                      <span
-                        className="item-type-badge"
-                        style={{
-                          background: getCategoryColor(
-                            item.type === "destination"
-                              ? "destination"
-                              : item.category,
-                          ),
-                        }}
-                      >
-                        {item.type === "destination"
-                          ? " Destination"
-                          : item.category}
-                      </span>
-                      <span className="item-region">
-                        {getRegionIcon(item.region)} {item.region}
-                      </span>
-                    </div>
                   </div>
                   <div className="item-content">
                     <div className="item-header">
@@ -2113,14 +2010,6 @@ const Events = () => {
                     <div className="item-details">
                       {item.type === "destination" ? (
                         <>
-                          <div className="item-rating">
-                            ⭐ {item.rating} ({item.reviews} reviews)
-                          </div>
-                          {item.price > 0 && (
-                            <div className="item-price">
-                              ${item.price} / person
-                            </div>
-                          )}
                           <div className="item-attractions">
                             {item.attractions.slice(0, 3).map((attr, index) => (
                               <span key={index} className="attraction-tag">
@@ -2140,7 +2029,7 @@ const Events = () => {
                               )}
                           </div>
                           <div className="item-location">
-                            <span className="item-icon">📍</span>
+                            <span className="item-icon"></span>
                             <span>{item.location}</span>
                           </div>
                           <div className="item-highlights">
@@ -2148,13 +2037,14 @@ const Events = () => {
                               .slice(0, 3)
                               .map((highlight, index) => (
                                 <span key={index} className="highlight-tag">
-                                   {highlight}
+                                  {highlight}
                                 </span>
                               ))}
                           </div>
                         </>
                       )}
                     </div>
+
                     <div className="item-actions">
                       <button
                         className={`select-btn ${selectedItems.includes(item.id) ? "selected" : ""}`}
@@ -2178,12 +2068,13 @@ const Events = () => {
           )}
         </div>
       </section>
+
       {selectedItems.length > 0 && (
         <div className="continue-section">
           <div className="continue-box">
             <div className="continue-info">
               <span className="selected-info">
-                 {selectedItems.length} item(s) selected
+                {selectedItems.length} item(s) selected
               </span>
             </div>
             <button className="continue-btn" onClick={handleContinue}>
@@ -2203,25 +2094,6 @@ const Events = () => {
 
             <div className="modal-image">
               <img src={selectedItem.image} alt={selectedItem.title} />
-              <div className="modal-badges">
-                <span
-                  className="modal-category"
-                  style={{
-                    background: getCategoryColor(
-                      selectedItem.type === "destination"
-                        ? "destination"
-                        : selectedItem.category,
-                    ),
-                  }}
-                >
-                  {selectedItem.type === "destination"
-                    ? " Destination"
-                    : selectedItem.category}
-                </span>
-                <span className="modal-region">
-                  {getRegionIcon(selectedItem.region)} {selectedItem.region}
-                </span>
-              </div>
             </div>
 
             <div className="modal-content">
@@ -2244,26 +2116,6 @@ const Events = () => {
                     <div className="modal-detail-item">
                       <span className="modal-detail-icon"></span>
                       <div>
-                        <span className="modal-detail-label">Rating</span>
-                        <span className="modal-detail-value">
-                          {selectedItem.rating} ({selectedItem.reviews} reviews)
-                        </span>
-                      </div>
-                    </div>
-                    <div className="modal-detail-item">
-                      <span className="modal-detail-icon"></span>
-                      <div>
-                        <span className="modal-detail-label">Price</span>
-                        <span className="modal-detail-value">
-                          {selectedItem.price > 0
-                            ? `$${selectedItem.price} / person`
-                            : "Free Exploration"}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="modal-detail-item">
-                      <span className="modal-detail-icon"></span>
-                      <div>
                         <span className="modal-detail-label">Best Time</span>
                         <span className="modal-detail-value">
                           {selectedItem.bestTime}
@@ -2275,7 +2127,7 @@ const Events = () => {
                       <div className="modal-highlights-list">
                         {selectedItem.attractions.map((item, index) => (
                           <span key={index} className="modal-highlight-tag">
-                             {item}
+                            {item}
                           </span>
                         ))}
                       </div>
@@ -2286,7 +2138,6 @@ const Events = () => {
                     <div className="modal-detail-item">
                       <span className="modal-detail-icon"></span>
                       <div>
-                        
                         <span className="modal-detail-value">
                           {selectedItem.startDate}
                         </span>
@@ -2317,7 +2168,7 @@ const Events = () => {
                       <div className="modal-highlights-list">
                         {selectedItem.highlights.map((item, index) => (
                           <span key={index} className="modal-highlight-tag">
-                             {item}
+                            {item}
                           </span>
                         ))}
                       </div>
@@ -2334,7 +2185,7 @@ const Events = () => {
                 }}
               >
                 {selectedItems.includes(selectedItem.id)
-                  ? "✅ Selected"
+                  ? " Selected"
                   : "Select This Item"}
               </button>
             </div>

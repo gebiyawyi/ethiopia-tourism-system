@@ -11,25 +11,19 @@
    HERO SECTION
    ============================================ */
 .events-hero {
-  background: linear-gradient(135deg, #1e3a5f, #b45309);
+  background: linear-gradient(135deg, #1e5c5f, #0995b4e2);
   padding: 4rem 2rem;
   text-align: center;
   color: #ffffff;
 }
-
 .events-hero h1 {
   font-size: 3rem;
   margin-bottom: 0.5rem;
 }
-
 .events-hero p {
   font-size: 1.2rem;
   opacity: 0.9;
 }
-
-/* ============================================
-   BACK BUTTON
-   ============================================ */
 .back-button-container {
   background: #ffffff;
   padding: 1rem 0;
@@ -257,13 +251,10 @@
   font-size: 0.95rem;
 }
 
-/* ============================================
-   EVENTS GRID
    ============================================ */
 .events-grid-section {
   padding: 2rem 0 4rem;
 }
-
 .events-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
@@ -329,11 +320,9 @@
   font-size: 0.75rem;
   font-weight: 500;
 }
-
 .event-content {
   padding: 1.5rem;
 }
-
 .event-header {
   display: flex;
   justify-content: space-between;
@@ -341,14 +330,12 @@
   gap: 0.5rem;
   margin-bottom: 0.5rem;
 }
-
 .event-title {
   font-size: 1.15rem;
   color: #1e3a5f;
   font-weight: 700;
   flex: 1;
 }
-
 .event-amharic {
   font-size: 1rem;
   color: #d97706;
@@ -358,7 +345,6 @@
   border-radius: 50px;
   white-space: nowrap;
 }
-
 .event-description {
   color: #6b7280;
   font-size: 0.95rem;
@@ -369,14 +355,12 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-
 .event-details {
   background: #f3f4f6;
   padding: 0.8rem 1rem;
   border-radius: 8px;
   margin-bottom: 1rem;
 }
-
 .event-date,
 .event-location {
   display: flex;
@@ -385,29 +369,24 @@
   padding: 0.2rem 0;
   font-size: 0.9rem;
 }
-
 .event-icon {
   font-size: 1rem;
   min-width: 20px;
 }
-
 .event-label {
   color: #6b7280;
   font-weight: 500;
 }
-
 .event-value {
   color: #111827;
   font-weight: 500;
 }
-
 .event-highlights {
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem;
   margin-bottom: 1.2rem;
 }
-
 .highlight-tag {
   background: #f3f4f6;
   padding: 0.2rem 0.7rem;
@@ -415,15 +394,10 @@
   font-size: 0.7rem;
   color: #6b7280;
 }
-
 .highlight-tag.more {
   background: #1e3a5f;
   color: #ffffff;
 }
-
-/* ============================================
-   ✅ EVENT ACTIONS - TWO BUTTONS
-   ============================================ */
 .event-actions {
   display: flex;
   gap: 0.8rem;
@@ -432,7 +406,7 @@
 .select-btn {
   flex: 1;
   padding: 0.7rem 1rem;
-  background: #d97706;
+  background: #061fd9;
   color: #ffffff;
   border: none;
   border-radius: 8px;
@@ -441,42 +415,33 @@
   cursor: pointer;
   transition: all 0.3s ease;
 }
-
 .select-btn:hover {
-  background: #b45309;
+  background: #0986b4;
   transform: translateY(-2px);
 }
-
 .select-btn.selected {
   background: #059669;
 }
-
 .select-btn.selected:hover {
   background: #047857;
 }
-
 .view-more-btn {
   flex: 1;
   padding: 0.7rem 1rem;
-  background: transparent;
-  color: #d97706;
-  border: 2px solid #d97706;
+  background: rgb(32, 237, 14);
+  color: #e9e8ef;
+  border: 2px solid #06d965;
   border-radius: 8px;
   font-weight: 600;
   font-size: 0.9rem;
   cursor: pointer;
   transition: all 0.3s ease;
 }
-
 .view-more-btn:hover {
-  background: #d97706;
-  color: #ffffff;
+  background: #caf51f;
+  color: #251f1f;
   transform: translateY(-2px);
 }
-
-/* ============================================
-   CONTINUE SECTION
-   ============================================ */
 .continue-section {
   position: fixed;
   bottom: 0;
@@ -814,7 +779,7 @@
 .modal-book-btn {
   width: 100%;
   padding: 0.8rem;
-  background: #d97706;
+  background: #06d969d2;
   color: #ffffff;
   border: none;
   border-radius: 8px;
@@ -825,7 +790,7 @@
 }
 
 .modal-book-btn:hover {
-  background: #b45309;
+  background: hsl(6, 90%, 37%);
   transform: translateY(-2px);
 }
 
@@ -836,10 +801,6 @@
 .modal-book-btn.selected:hover {
   background: #047857;
 }
-
-/* ============================================
-   RESPONSIVE
-   ============================================ */
 @media (max-width: 1024px) {
   .filter-bar {
     gap: 0.8rem;
@@ -1179,7 +1140,7 @@
 .select-btn {
   flex: 1;
   padding: 0.7rem 1rem;
-  background: #d97706;
+  background:#1D8E6C;
   color: #ffffff;
   border: none;
   border-radius: 8px;
@@ -1188,9 +1149,8 @@
   cursor: pointer;
   transition: all 0.3s ease;
 }
-
 .select-btn:hover {
-  background: #b45309;
+  background:#205EAE;
   transform: translateY(-2px);
 }
 
@@ -1205,9 +1165,9 @@
 .view-more-btn {
   flex: 1;
   padding: 0.7rem 1rem;
-  background: transparent;
-  color: #d97706;
-  border: 2px solid #d97706;
+  background: rgb(149, 0, 255);
+  color: white;
+  border: 2px solid #f9f8f7;
   border-radius: 8px;
   font-weight: 600;
   font-size: 0.9rem;
@@ -1216,7 +1176,7 @@
 }
 
 .view-more-btn:hover {
-  background: #d97706;
+  background: #2606d9;
   color: #ffffff;
   transform: translateY(-2px);
 }

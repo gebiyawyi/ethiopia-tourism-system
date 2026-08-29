@@ -32,10 +32,12 @@ import lwommo from "../../assets/images/lwommo.png";
 import lwaw from "../../assets/images/lwaw.png";
 import konso from "../../assets/images/konso.png";
 import heroVideo from "../../assets/vidoes/vid.mp4";
+
 const Home = () => {
   const [scrolled, setScrolled] = useState(false);
   const [verticalOffset, setVerticalOffset] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+
   const images = {
     heroBg:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4lsFdBk9hO-39o-KMI_LjYwUdD4EwqZiH463bJhsgRA&s",
@@ -56,23 +58,15 @@ const Home = () => {
     verticalRight6: debredamo,
     verticalRight7: national,
     verticalRight8: tana,
-
-    // ===== CENTER MAP =====
     ethiopiaMap: etmap,
-
-    // ===== FEATURED DESTINATION IMAGES =====
     featured1: lalibela,
     featured2: semien,
     featured3: gondar,
     featured4: tana,
-
-    // ===== UNESCO IMAGES =====
     unesco1: harari,
     unesco2: lwommo,
     unesco3: lwaw,
     unesco4: konso,
-
-    // ===== EVENTS IMAGES =====
     event1: timiket,
     event2: buhie,
     event3: ashenda,
@@ -81,9 +75,6 @@ const Home = () => {
     event6: fiche,
   };
 
-  // ============================================
-  // ✅ CAROUSEL SLIDES DATA - FULL DESCRIPTIONS
-  // ============================================
   const carouselItems = [
     {
       image: lalibela,
@@ -117,9 +108,6 @@ const Home = () => {
     },
   ];
 
-  // ============================================
-  // VERTICAL IMAGES DATA
-  // ============================================
   const leftVerticalImages = [
     {
       id: 1,
@@ -222,9 +210,6 @@ const Home = () => {
     },
   ];
 
-  // ============================================
-  // 📸 EVENTS & FESTIVALS DATA
-  // ============================================
   const eventsData = [
     {
       id: 1,
@@ -250,7 +235,7 @@ const Home = () => {
       amharicTitle: "ቡሄ",
       description:
         "Celebration of the Transfiguration of Jesus Christ, marked by traditional songs, bonfires, and festive meals.",
-      Date: "Aug 13",
+      startDate: "Aug 13",
       location: "Nationwide",
       category: "Religious",
       image: images.event2,
@@ -267,7 +252,8 @@ const Home = () => {
       amharicTitle: "አሸንዳ",
       description:
         "A colorful cultural festival celebrating young women with music, dance, and traditional attire across Tigray and Amhara regions.",
-      Date: "Aug 16---21",
+      startDate: "Aug 16",
+      endDate: "Aug 21",
       location: "Tigray & Amhara Regions",
       category: "Cultural",
       image: images.event3,
@@ -284,7 +270,7 @@ const Home = () => {
       amharicTitle: "እንቁጣጣሽ",
       description:
         "Celebrate the Ethiopian New Year with traditional feasts, coffee ceremonies, and the blooming of yellow daisies across the country.",
-      Date: "Sep 1",
+      startDate: "Sep 1",
       location: "Nationwide",
       category: "Festival",
       image: images.event4,
@@ -318,8 +304,8 @@ const Home = () => {
       amharicTitle: "ፊቼ-ቻምባላላ",
       description:
         "Traditional New Year celebration of the Sidama people, featuring cultural performances, traditional foods, and community gatherings.",
-      startDate: "Dec 12, 2026",
-      endDate: "Dec 13, 2026",
+      startDate: "Dec 12",
+      endDate: "Dec 13",
       location: "Sidama Region",
       category: "Cultural",
       image: images.event6,
@@ -332,9 +318,6 @@ const Home = () => {
     },
   ];
 
-  // ============================================
-  // FEATURED DESTINATIONS DATA
-  // ============================================
   const featuredDestinations = [
     {
       id: 1,
@@ -343,8 +326,6 @@ const Home = () => {
       location: "Amhara Region",
       description:
         "11 monolithic churches carved from rock in the 12th century",
-      price: "$1,200",
-      rating: "4.8",
     },
     {
       id: 2,
@@ -352,8 +333,6 @@ const Home = () => {
       title: "Simien Mountains",
       location: "Gondar",
       description: "Breathtaking landscapes and unique wildlife",
-      price: "$1,500",
-      rating: "4.9",
     },
     {
       id: 3,
@@ -361,8 +340,6 @@ const Home = () => {
       title: "Gondar Castles",
       location: "Amhara Region",
       description: "Capital of ethiopia during 17th and 18th centuries",
-      price: "$1,800",
-      rating: "5.0",
     },
     {
       id: 4,
@@ -370,14 +347,9 @@ const Home = () => {
       title: "Lake Tana Manasteries",
       location: "Amhara Region",
       description: "The source of blue nile",
-      price: "$1,100",
-      rating: "4.7",
     },
   ];
 
-  // ============================================
-  // UNESCO DATA
-  // ============================================
   const unescoSites = [
     {
       id: 1,
@@ -409,9 +381,6 @@ const Home = () => {
     },
   ];
 
-  // ============================================
-  // EFFECTS
-  // ============================================
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
@@ -463,10 +432,8 @@ const Home = () => {
             <source src={images.heroVideo} type="video/mp4" />
             <img src={images.heroBg} alt="Ethiopia" />
           </video>
-
           <div className="hero-overlay">
             <div className="hero-content">
-              {/* <div className="hero-badge">🇪🇹 Welcome to Ethiopia</div> */}
               <h1 className="hero-title">
                 <span className="hero-subtitle-top">
                   LET'S EXPLORE ETHIOPIA
@@ -480,13 +447,12 @@ const Home = () => {
               </p>
               <div className="hero-buttons">
                 <Link to="/destinations" className="btn-primary">
-                  Explore Destinations 
+                  Explore Destinations
                 </Link>
                 <Link to="/about" className="btn-secondary">
                   Learn More →
                 </Link>
               </div>
-
               <div className="hero-stats">
                 <div className="stat-item">
                   <span className="stat-number">15+</span>
@@ -504,12 +470,12 @@ const Home = () => {
             </div>
           </div>
         </div>
-
         <div className="scroll-indicator">
           <span>Scroll Down</span>
           <div className="mouse"></div>
         </div>
       </section>
+
       <section className="section carousel-section">
         <div className="container">
           <div className="section-header">
@@ -518,15 +484,10 @@ const Home = () => {
               Explore the most iconic destinations across the Land of Origins
             </p>
           </div>
-
-          {/* ✅ interval={3000} = Changes every 3 seconds */}
           <Carousel items={carouselItems} autoPlay={true} interval={3000} />
         </div>
       </section>
 
-      {/* ============================================ */}
-      {/* EVENTS SECTION */}
-      {/* ============================================ */}
       <section className="section events-section">
         <div className="container">
           <div className="section-header">
@@ -536,7 +497,6 @@ const Home = () => {
               cultural celebrations
             </p>
           </div>
-
           <div className="events-grid">
             {eventsData.map((event) => (
               <div key={event.id} className="event-card">
@@ -566,7 +526,6 @@ const Home = () => {
                     )}
                   </div>
                   <p className="event-description">{event.description}</p>
-
                   <div className="event-details">
                     <div className="event-date">
                       <span className="event-label">Start:</span>
@@ -583,53 +542,43 @@ const Home = () => {
                       <span className="event-value">{event.location}</span>
                     </div>
                   </div>
-
                   <div className="event-highlights">
                     {event.highlights.map((item, index) => (
                       <span key={index} className="highlight-tag">
-                        ✨ {item}
+                        {item}
                       </span>
                     ))}
                   </div>
-
                   <button className="event-btn">Learn More →</button>
                 </div>
               </div>
             ))}
           </div>
-
           <div className="events-footer">
             <Link to="/events" className="events-view-all">
-              View All Events 
+              View All Events
             </Link>
           </div>
         </div>
       </section>
 
-      {/* ============================================ */}
-      {/* FEATURED DESTINATIONS */}
-      {/* ============================================ */}
       <section className="section featured-section">
         <div className="container">
           <div className="section-header">
-            <span className="section-tag">📍 Featured</span>
             <h2>Featured Destinations</h2>
             <p>Discover the most iconic places in Ethiopia</p>
           </div>
-
           <div className="featured-grid">
             {featuredDestinations.map((dest) => (
               <div key={dest.id} className="featured-card">
                 <div className="featured-image">
                   <img src={dest.image} alt={dest.title} />
-                  <div className="featured-badge">⭐ {dest.rating}</div>
                 </div>
                 <div className="featured-content">
                   <h3>{dest.title}</h3>
-                  <p className="featured-location"> {dest.location}</p>
+                  <p className="featured-location">{dest.location}</p>
                   <p className="featured-description">{dest.description}</p>
                   <div className="featured-footer">
-                    <span className="featured-price">From {dest.price}</span>
                     <Link
                       to={`/destinations/${dest.id}`}
                       className="featured-btn"
@@ -644,144 +593,136 @@ const Home = () => {
         </div>
       </section>
 
-      {/* ============================================ */}
-      {/* VERTICAL SECTION */}
-      {/* ============================================ */}
       <section className="section vertical-section">
-        <div className="vertical-container desktop-only">
-          <div className="vertical-left">
-            <div
-              className="vertical-track-left"
-              style={{ transform: `translateY(-${verticalOffset}px)` }}
-            >
-              {[...leftVerticalImages, ...leftVerticalImages].map(
-                (item, index) => (
-                  <div key={`left-${index}`} className="vertical-item">
-                    <img src={item.image} alt={item.title} />
-                    <div className="vertical-item-overlay">
-                      <h4>{item.title}</h4>
-                      <p>{item.desc}</p>
+        <div className="container">
+          <div className="vertical-container desktop-only">
+            <div className="vertical-left">
+              <div
+                className="vertical-track-left"
+                style={{ transform: `translateY(-${verticalOffset}px)` }}
+              >
+                {[...leftVerticalImages, ...leftVerticalImages].map(
+                  (item, index) => (
+                    <div key={`left-${index}`} className="vertical-item">
+                      <img src={item.image} alt={item.title} />
+                      <div className="vertical-item-overlay">
+                        <h4>{item.title}</h4>
+                        <p>{item.desc}</p>
+                      </div>
                     </div>
-                  </div>
-                ),
-              )}
+                  ),
+                )}
+              </div>
+              <div className="vertical-gradient top"></div>
+              <div className="vertical-gradient bottom"></div>
             </div>
-            <div className="vertical-gradient top"></div>
-            <div className="vertical-gradient bottom"></div>
-          </div>
-
-          <div className="vertical-center">
-            <div className="map-container">
-              <img
-                src={images.ethiopiaMap}
-                alt="Ethiopia Map"
-                className="map-image"
-              />
-              <div className="map-overlay">
-                <h3>Explore Ethiopia</h3>
-                <p>Discover the Land of Origins</p>
-                <div className="map-stats">
-                  <span>  15+ Regions</span>
-                  <span>  9 UNESCO Sites</span>
-                  <span>  50+ Attractions</span>
+            <div className="vertical-center">
+              <div className="map-container">
+                <img
+                  src={images.ethiopiaMap}
+                  alt="Ethiopia Map"
+                  className="map-image"
+                />
+                <div className="map-overlay">
+                  <h3>Explore Ethiopia</h3>
+                  <p>Discover the Land of Origins</p>
+                  <div className="map-stats">
+                    <span>15+ Regions</span>
+                    <span>9 UNESCO Sites</span>
+                    <span>50+ Attractions</span>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-
-          <div className="vertical-right">
-            <div
-              className="vertical-track-right"
-              style={{ transform: `translateY(${verticalOffset}px)` }}
-            >
-              {[...rightVerticalImages, ...rightVerticalImages].map(
-                (item, index) => (
-                  <div key={`right-${index}`} className="vertical-item">
-                    <img src={item.image} alt={item.title} />
-                    <div className="vertical-item-overlay">
-                      <h4>{item.title}</h4>
-                      <p>{item.desc}</p>
+            <div className="vertical-right">
+              <div
+                className="vertical-track-right"
+                style={{ transform: `translateY(${verticalOffset}px)` }}
+              >
+                {[...rightVerticalImages, ...rightVerticalImages].map(
+                  (item, index) => (
+                    <div key={`right-${index}`} className="vertical-item">
+                      <img src={item.image} alt={item.title} />
+                      <div className="vertical-item-overlay">
+                        <h4>{item.title}</h4>
+                        <p>{item.desc}</p>
+                      </div>
                     </div>
-                  </div>
-                ),
-              )}
+                  ),
+                )}
+              </div>
+              <div className="vertical-gradient top"></div>
+              <div className="vertical-gradient bottom"></div>
             </div>
-            <div className="vertical-gradient top"></div>
-            <div className="vertical-gradient bottom"></div>
           </div>
-        </div>
 
-        <div className="mobile-only">
-          <div className="mobile-horizontal-top">
-            <div
-              className="horizontal-track-left"
-              style={{ transform: `translateX(-${verticalOffset}px)` }}
-            >
-              {[...leftVerticalImages, ...leftVerticalImages].map(
-                (item, index) => (
-                  <div key={`h-left-${index}`} className="horizontal-item">
-                    <img src={item.image} alt={item.title} />
-                    <div className="horizontal-item-overlay">
-                      <h4>{item.title}</h4>
-                      <p>{item.desc}</p>
+          <div className="mobile-only">
+            <div className="mobile-horizontal-top">
+              <div
+                className="horizontal-track-left"
+                style={{ transform: `translateX(-${verticalOffset}px)` }}
+              >
+                {[...leftVerticalImages, ...leftVerticalImages].map(
+                  (item, index) => (
+                    <div key={`h-left-${index}`} className="horizontal-item">
+                      <img src={item.image} alt={item.title} />
+                      <div className="horizontal-item-overlay">
+                        <h4>{item.title}</h4>
+                        <p>{item.desc}</p>
+                      </div>
                     </div>
-                  </div>
-                ),
-              )}
+                  ),
+                )}
+              </div>
+              <div className="horizontal-gradient left"></div>
+              <div className="horizontal-gradient right"></div>
             </div>
-            <div className="horizontal-gradient left"></div>
-            <div className="horizontal-gradient right"></div>
-          </div>
-
-          <div className="mobile-map-container">
-            <div className="map-container">
-              <img
-                src={images.ethiopiaMap}
-                alt="Ethiopia Map"
-                className="map-image"
-              />
-              <div className="map-overlay">
-                <h3>Explore Ethiopia</h3>
-                <p>Discover the Land of Origins</p>
-                <div className="map-stats">
-                  <span> 15+ Regions</span>
-                  <span> 9 UNESCO Sites</span>
-                  <span> 50+ Attractions</span>
+            <div className="mobile-map-container">
+              <div className="map-container">
+                <img
+                  src={images.ethiopiaMap}
+                  alt="Ethiopia Map"
+                  className="map-image"
+                />
+                <div className="map-overlay">
+                  <h3>Explore Ethiopia</h3>
+                  <p>Discover the Land of Origins</p>
+                  <div className="map-stats">
+                    <span>15+ Regions</span>
+                    <span>9 UNESCO Sites</span>
+                    <span>50+ Attractions</span>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-
-          <div className="mobile-horizontal-bottom">
-            <div
-              className="horizontal-track-right"
-              style={{ transform: `translateX(${verticalOffset}px)` }}
-            >
-              {[...rightVerticalImages, ...rightVerticalImages].map(
-                (item, index) => (
-                  <div key={`h-right-${index}`} className="horizontal-item">
-                    <img src={item.image} alt={item.title} />
-                    <div className="horizontal-item-overlay">
-                      <h4>{item.title}</h4>
-                      <p>{item.desc}</p>
+            <div className="mobile-horizontal-bottom">
+              <div
+                className="horizontal-track-right"
+                style={{ transform: `translateX(${verticalOffset}px)` }}
+              >
+                {[...rightVerticalImages, ...rightVerticalImages].map(
+                  (item, index) => (
+                    <div key={`h-right-${index}`} className="horizontal-item">
+                      <img src={item.image} alt={item.title} />
+                      <div className="horizontal-item-overlay">
+                        <h4>{item.title}</h4>
+                        <p>{item.desc}</p>
+                      </div>
                     </div>
-                  </div>
-                ),
-              )}
+                  ),
+                )}
+              </div>
+              <div className="horizontal-gradient left"></div>
+              <div className="horizontal-gradient right"></div>
             </div>
-            <div className="horizontal-gradient left"></div>
-            <div className="horizontal-gradient right"></div>
           </div>
         </div>
       </section>
 
-      {/* ============================================ */}
-      {/* UNESCO SECTION */}
-      {/* ============================================ */}
       <section className="section unesco-section">
         <div className="container">
           <div className="section-header">
-            <span className="section-tag"> UNESCO</span>
+            <span className="section-tag">UNESCO</span>
             <h2>UNESCO World Heritage Sites</h2>
             <p>
               Ethiopia is home to several UNESCO World Heritage Sites each
@@ -789,13 +730,11 @@ const Home = () => {
               culture
             </p>
           </div>
-
           <div className="unesco-grid">
             {unescoSites.map((site) => (
               <div key={site.id} className="unesco-item">
                 <img src={site.image} alt={site.title} />
                 <div className="unesco-overlay">
-                  <span className="unesco-badge"> UNESCO</span>
                   <h4>{site.title}</h4>
                   <p>{site.description}</p>
                 </div>
@@ -805,9 +744,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* ============================================ */}
-      {/* CAgLL TO ACTION */}
-      {/* ============================================ */}
       <section className="cta-section">
         <div className="container">
           <div className="cta-content">
@@ -818,7 +754,7 @@ const Home = () => {
             </p>
             <div className="cta-buttons">
               <Link to="/destinations" className="btn-primary">
-                Plan Your Trip Now 
+                Plan Your Trip Now
               </Link>
               <Link to="/about" className="btn-secondary">
                 Learn More →
