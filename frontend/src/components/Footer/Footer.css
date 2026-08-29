@@ -3,8 +3,8 @@
    ============================================ */
 
 .footer {
-  background: #1e3a5f;
-  color: #ffffff;
+  background:#0D1117;
+  color: hsl(74, 78%, 44%);
   margin-top: auto;
 }
 
@@ -16,10 +16,6 @@
   grid-template-columns: 2fr 1fr 1fr 1.5fr;
   gap: 3rem;
 }
-
-/* ============================================
-   COLUMN HEADERS
-   ============================================ */
 .footer-column h3 {
   font-size: 1.5rem;
   margin-bottom: 0.5rem;
@@ -28,7 +24,7 @@
 .footer-column h4 {
   font-size: 1.1rem;
   margin-bottom: 1.2rem;
-  color: #fbbf24;
+  color:rgb(5, 177, 5);
   position: relative;
 }
 
@@ -39,14 +35,10 @@
   left: 0;
   width: 40px;
   height: 2px;
-  background: #d97706;
+  background:rgb(204, 204, 26);
 }
-
-/* ============================================
-   BRAND
-   ============================================ */
 .footer-brand p {
-  color: #fbbf24;
+  color: #36fb24;
   font-size: 0.95rem;
   margin-top: -0.2rem;
   margin-bottom: 1rem;
@@ -59,9 +51,6 @@
   margin-bottom: 1.5rem;
 }
 
-/* ============================================
-   SOCIAL ICONS
-   ============================================ */
 .footer-social {
   display: flex;
   gap: 0.8rem;
@@ -82,13 +71,9 @@
 }
 
 .social-icon:hover {
-  background: #d97706;
+  background: hsl(0, 95%, 44%);
   transform: translateY(-3px);
 }
-
-/* ============================================
-   LINKS
-   ============================================ */
 .footer-links {
   list-style: none;
   padding: 0;
@@ -106,13 +91,9 @@
 }
 
 .footer-links a:hover {
-  color: #fbbf24;
+  color: #fb24cc;
   padding-left: 5px;
 }
-
-/* ============================================
-   CONTACT
-   ============================================ */
 .footer-contact {
   list-style: none;
   padding: 0;
@@ -123,10 +104,6 @@
   margin-bottom: 0.7rem;
   font-size: 0.95rem;
 }
-
-/* ============================================
-   NEWSLETTER
-   ============================================ */
 .footer-newsletter {
   margin-top: 1.5rem;
 }
@@ -163,12 +140,12 @@
 }
 
 .newsletter-form input:focus {
-  border-color: #d97706;
+  border-color: #f3ede6;
 }
 
 .newsletter-form button {
   padding: 0.6rem 1.5rem;
-  background: #d97706;
+  background: #49d9067a;
   color: #ffffff;
   border: none;
   border-radius: 8px;
@@ -179,13 +156,10 @@
 }
 
 .newsletter-form button:hover {
-  background: #b45309;
+  background: #b4ae09;
   transform: translateY(-2px);
 }
 
-/* ============================================
-   FOOTER BOTTOM
-   ============================================ */
 .footer-bottom {
   border-top: 1px solid rgba(255,255,255,0.1);
   padding: 1.5rem 0;
@@ -206,8 +180,6 @@
   color: rgba(255,255,255,0.5);
   font-size: 0.9rem;
 }
-
-/* ✅ Developer Credit */
 .developer-credit {
   color: rgba(255,255,255,0.6) !important;
   font-size: 0.9rem;
@@ -216,15 +188,13 @@
 .developer-credit strong {
   color: #fbbf24;
   font-weight: 700;
-  background: linear-gradient(135deg, #d97706, #fbbf24);
+  background: linear-gradient(135deg, #06d985, #0ebc22);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* ============================================
-   FOOTER BOTTOM LINKS
-   ============================================ */
+
 .footer-bottom-links {
   display: flex;
   gap: 1.5rem;
@@ -241,9 +211,6 @@
   color: #fbbf24;
 }
 
-/* ============================================
-   RESPONSIVE
-   ============================================ */
 
 /* Tablet */
 @media (max-width: 1024px) {
