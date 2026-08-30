@@ -3,10 +3,6 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import "./DestinationDetail.css";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
-
-// ============================================
-// 📸 IMPORT YOUR IMAGES HERE (Same as Destinations)
-// ============================================
 import lalibela from "../../assets/images/lalibela.png";
 import semien1 from "../../assets/images/semien1.png";
 import gondar from "../../assets/images/gondar.png";
@@ -40,9 +36,6 @@ const DestinationDetail = () => {
   const [destination, setDestination] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // ============================================
-  // 📸 COMPLETE DESTINATION DATA
-  // ============================================
   const destinationData = {
     0: {
       id: 0,
@@ -91,7 +84,7 @@ const DestinationDetail = () => {
         "UNESCO Site",
         "Tunnels & Passages",
       ],
-      bestTime: "October to March",
+      bestTime: "dec 28-29",
       howToGet:
         "Fly from Addis Ababa to Lalibela (1 hour) or take a bus (8-10 hours).",
       whatToBring:
@@ -117,7 +110,7 @@ const DestinationDetail = () => {
         "UNESCO Site",
         "Gelada Baboons",
       ],
-      bestTime: "September to November",
+      bestTime: "Year Around",
       howToGet: "Fly to Gondar then drive 2-3 hours to the park entrance.",
       whatToBring: "Trekking gear, warm clothes, camera, snacks, water",
     },
@@ -141,7 +134,7 @@ const DestinationDetail = () => {
         "UNESCO Site",
         "Murals",
       ],
-      bestTime: "October to April",
+      bestTime: "Year Around",
       howToGet: "Fly from Addis Ababa to Gondar or take a bus.",
       whatToBring: "Comfortable shoes, camera, sun protection",
     },
@@ -165,7 +158,7 @@ const DestinationDetail = () => {
         "Boat Cruises",
         "Frescoes",
       ],
-      bestTime: "November to April",
+      bestTime: "Year Around",
       howToGet: "Fly to Bahir Dar or drive from Addis Ababa.",
       whatToBring: "Camera, hat, water, comfortable shoes",
     },
@@ -189,7 +182,7 @@ const DestinationDetail = () => {
         "Nature",
         "Boat Trips",
       ],
-      bestTime: "June to September",
+      bestTime: "Year Around",
       howToGet: "Drive from Bahir Dar (1 hour) then hike to the falls.",
       whatToBring: "Hiking shoes, camera, rain jacket, water",
     },
@@ -213,7 +206,7 @@ const DestinationDetail = () => {
         "UNESCO Site",
         "Ark of the Covenant",
       ],
-      bestTime: "October to April",
+      bestTime: "Year Around",
       howToGet: "Fly from Addis Ababa to Axum or drive.",
       whatToBring: "Comfortable shoes, camera, sun protection",
     },
@@ -237,7 +230,7 @@ const DestinationDetail = () => {
         "UNESCO Site",
         "Views",
       ],
-      bestTime: "October to March",
+      bestTime: "Year Around",
       howToGet: "Drive from Mekele or fly to nearby airports.",
       whatToBring: "Hiking shoes, rope, camera, water",
     },
@@ -261,7 +254,7 @@ const DestinationDetail = () => {
         "Scenic Views",
         "Manuscripts",
       ],
-      bestTime: "October to April",
+      bestTime: "Year Around",
       howToGet:
         "Drive from Axum or Adwa, then walk to the base of the plateau.",
       whatToBring: "Hiking shoes, water, camera",
@@ -286,7 +279,7 @@ const DestinationDetail = () => {
         "Sulfur Springs",
         "Unique Landscape",
       ],
-      bestTime: "November to March",
+      bestTime: "Year Around",
       howToGet: "Drive from Mekele with a 4x4 vehicle and guide.",
       whatToBring: "Sunscreen, water, camera, hat, sunglasses",
     },
@@ -310,7 +303,7 @@ const DestinationDetail = () => {
         "Adventure",
         "Stargazing",
       ],
-      bestTime: "November to March",
+      bestTime: "Year Around",
       howToGet: "Drive from Mekele, then trek to the summit.",
       whatToBring: "Warm clothes for night, water, camera, headlamp",
     },
@@ -334,7 +327,7 @@ const DestinationDetail = () => {
         "Unique Landscape",
         "Colorful Minerals",
       ],
-      bestTime: "November to March",
+      bestTime: "Year Around",
       howToGet: "Drive from Mekele with a 4x4 vehicle and guide.",
       whatToBring: "Camera, sunscreen, water, hat",
     },
@@ -358,7 +351,7 @@ const DestinationDetail = () => {
         "Photography",
         "Bull Jumping",
       ],
-      bestTime: "November to March",
+      bestTime: "Year Around",
       howToGet: "Fly to Jinka or drive from Addis Ababa (3-4 days).",
       whatToBring: "Camera, respect for local culture, gifts for tribes",
     },
@@ -382,7 +375,7 @@ const DestinationDetail = () => {
         "Nature",
         "Savannah Views",
       ],
-      bestTime: "November to March",
+      bestTime: "Year Around",
       howToGet: "Drive from Jinka to the park entrance.",
       whatToBring: "Camera, binoculars, water, sun protection",
     },
@@ -406,7 +399,7 @@ const DestinationDetail = () => {
         "Traditional Crafts",
         "Tribal Gatherings",
       ],
-      bestTime: "November to March",
+      bestTime: "Year Around",
       howToGet: "Drive from Jinka or Arba Minch.",
       whatToBring: "Camera, cash for purchases, respect for locals",
     },
@@ -430,7 +423,7 @@ const DestinationDetail = () => {
         "UNESCO Site",
         "Traditional Houses",
       ],
-      bestTime: "October to April",
+      bestTime: "Year Around",
       howToGet: "Fly from Addis Ababa to Harar or drive.",
       whatToBring: "Camera, comfortable shoes, curiosity",
     },
@@ -454,7 +447,7 @@ const DestinationDetail = () => {
         "Culture",
         "Local Market",
       ],
-      bestTime: "October to April",
+      bestTime: "Year Around",
       howToGet: "Fly from Addis Ababa to Harar or drive.",
       whatToBring: "Camera, comfortable shoes, respect for religious sites",
     },
@@ -478,7 +471,7 @@ const DestinationDetail = () => {
         "Bird Watching",
         "Scenic Views",
       ],
-      bestTime: "October to April",
+      bestTime: "Year Around",
       howToGet: "Drive from Addis Ababa or fly to Goba.",
       whatToBring: "Trekking gear, warm clothes, camera, binoculars",
     },
@@ -502,7 +495,7 @@ const DestinationDetail = () => {
         "Adventure",
         "Sacred Site",
       ],
-      bestTime: "October to April",
+      bestTime: "Year Around",
       howToGet: "Drive from Addis Ababa or Goba.",
       whatToBring: "Headlamp, water, comfortable shoes, camera",
     },
@@ -526,7 +519,7 @@ const DestinationDetail = () => {
         "Relaxation",
         "Nature Walks",
       ],
-      bestTime: "November to April",
+      bestTime: "Year Around",
       howToGet: "Drive from Addis Ababa (3 hours) or from nearby towns.",
       whatToBring: "Swimsuit, towel, camera, sun protection",
     },
@@ -569,7 +562,7 @@ const DestinationDetail = () => {
         "Nature",
         "Panoramic Scenery",
       ],
-      bestTime: "October to March",
+      bestTime: "Year Around",
       howToGet: "Drive from Addis Ababa (30 minutes) or hike from the city.",
       whatToBring: "Hiking shoes, camera, water, warm clothes",
     },
@@ -609,26 +602,21 @@ const DestinationDetail = () => {
     }, 500);
   }, [id]);
 
-  // ============================================
-  // GET REGION ICON
-  // ============================================
   const getRegionIcon = (region) => {
     const icons = {
-      Nationwide: "🌍",
+      Nationwide: "",
       Amhara: "",
       Tigray: "",
       Afar: "",
       Southern: "",
       Harari: "",
       Oromia: "",
-      "Addis Ababa": "🏙️",
+      "Addis Ababa": "",
     };
     return icons[region] || "";
   };
 
-  // ============================================
-  // HANDLE BACK
-  // ============================================
+  // ✅ FIXED: handleBack function properly defined
   const handleBack = () => {
     navigate(-1);
   };
@@ -664,10 +652,6 @@ const DestinationDetail = () => {
   return (
     <div className="detail-page">
       <Navbar />
-
-      {/* ============================================
-          HERO SECTION
-          ============================================ */}
       <section
         className="detail-hero"
         style={{ backgroundImage: `url(${destination.image})` }}
@@ -679,20 +663,15 @@ const DestinationDetail = () => {
               <span className="detail-region">
                 {getRegionIcon(destination.region)} {destination.region}
               </span>
-              <span className="detail-subregion">
-                📍 {destination.subRegion}
-              </span>
+              <span className="detail-subregion">{destination.subRegion}</span>
             </div>
             <div className="detail-rating">
-              ⭐ {destination.rating} ({destination.reviews} reviews)
+              {destination.rating} ({destination.reviews} reviews)
             </div>
           </div>
         </div>
       </section>
 
-      {/* ============================================
-          BACK BUTTON - Placed below hero for better UX
-          ============================================ */}
       <div className="back-button-container">
         <div className="container">
           <button className="back-btn" onClick={handleBack}>
@@ -701,13 +680,9 @@ const DestinationDetail = () => {
         </div>
       </div>
 
-      {/* ============================================
-          CONTENT SECTION
-          ============================================ */}
       <section className="detail-content section">
         <div className="container">
           <div className="detail-layout">
-            {/* Main Content */}
             <div className="detail-main">
               <div className="detail-description">
                 <p>{destination.description}</p>
@@ -721,11 +696,11 @@ const DestinationDetail = () => {
               </div>
 
               <div className="detail-section">
-                <h3>🏛️ Attractions</h3>
+                <h3>Attractions</h3>
                 <div className="attraction-list">
                   {destination.attractions.map((item, index) => (
                     <span key={index} className="attraction-item">
-                      ✅ {item}
+                      {item}
                     </span>
                   ))}
                 </div>
@@ -733,24 +708,20 @@ const DestinationDetail = () => {
 
               <div className="detail-grid">
                 <div className="detail-info-box">
-                  <h4>📅 Best Time to Visit</h4>
+                  <h4>Best Time to Visit</h4>
                   <p>{destination.bestTime}</p>
                 </div>
                 <div className="detail-info-box">
-                  <h4>🗺️ How to Get There</h4>
+                  <h4>How to Get There</h4>
                   <p>{destination.howToGet}</p>
                 </div>
                 <div className="detail-info-box">
-                  <h4>🎒 What to Bring</h4>
+                  <h4>What to Bring</h4>
                   <p>{destination.whatToBring}</p>
                 </div>
               </div>
             </div>
 
-            {/* ============================================
-                SIDEBAR - REMOVED Plan Your Visit Section
-                Now shows only "Browse All Destinations"
-                ============================================ */}
             <div className="detail-sidebar">
               <div className="sidebar-card">
                 <Link to="/destinations" className="browse-link">

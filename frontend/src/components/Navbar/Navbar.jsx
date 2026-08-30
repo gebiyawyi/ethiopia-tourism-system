@@ -81,25 +81,25 @@ const Navbar = () => {
             Destinations
           </Link>
           <Link
-            to="/transport"
+            to="/ransport"
             className={`nav-link ${isActive("/transport") ? "active" : ""}`}
           >
              Transport
           </Link>
           <Link
-            to="/hotels"
+            to="/otels"
             className={`nav-link ${isActive("/hotels") ? "active" : ""}`}
           >
             Hotels
           </Link>
           <Link
-            to="/about"
+            to="/bout"
             className={`nav-link ${isActive("/about") ? "active" : ""}`}
           >
             About
           </Link>
           <Link
-            to="/contact"
+            to="/ontact"
             className={`nav-link ${isActive("/contact") ? "active" : ""}`}
           >
             Contact
@@ -202,7 +202,7 @@ const Navbar = () => {
               Destinations
             </Link>
             <Link
-              to="/transport"
+              to="/ransport"
               className={`mobile-nav-link ${isActive("/transport") ? "active" : ""}`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
@@ -210,7 +210,7 @@ const Navbar = () => {
               Transport
             </Link>
             <Link
-              to="/hotels"
+              to="/otels"
               className={`mobile-nav-link ${isActive("/hotels") ? "active" : ""}`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
@@ -218,7 +218,7 @@ const Navbar = () => {
               Hotels
             </Link>
             <Link
-              to="/about"
+              to="/bout"
               className={`mobile-nav-link ${isActive("/about") ? "active" : ""}`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
@@ -226,7 +226,7 @@ const Navbar = () => {
               About
             </Link>
             <Link
-              to="/contact"
+              to="/ontact"
               className={`mobile-nav-link ${isActive("/contact") ? "active" : ""}`}
               onClick={() => setIsMobileMenuOpen(false)}
             >

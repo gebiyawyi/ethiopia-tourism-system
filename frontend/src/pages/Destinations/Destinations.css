@@ -11,7 +11,7 @@
    HERO SECTION
    ============================================ */
 .destinations-hero {
-  background: linear-gradient(135deg, #1e3a5f, #b45309);
+  background:#1F666C;
   padding: 4rem 2rem;
   text-align: center;
   color: #ffffff;
@@ -315,7 +315,7 @@
   flex: 1;
   display: inline-block;
   padding: 0.6rem 1rem;
-  background: #d97706;
+  background: #218766;
   color: #ffffff;
   border: none;
   border-radius: 50px;
@@ -328,7 +328,7 @@
 }
 
 .visit-btn-card:hover {
-  background: #b45309;
+  background: hsl(229, 89%, 52%);
   transform: translateY(-2px);
   box-shadow: 0 4px 20px rgba(217, 119, 6, 0.4);
 }
@@ -338,9 +338,9 @@
   flex: 1;
   display: inline-block;
   padding: 0.6rem 1rem;
-  background: transparent;
-  color: #d97706;
-  border: 2px solid #d97706;
+  background: rgb(18, 61, 129);
+  color:white;
+  border: 2px solid white ;
   border-radius: 50px;
   font-weight: 600;
   font-size: 0.9rem;

@@ -624,8 +624,8 @@ img {
 .event-btn {
   width: 100%;
   padding: 0.8rem;
-  background: var(--primary-color);
-  color: var(--white);
+  background:green;
+  color: white;
   border: none;
   border-radius: 8px;
   font-weight: 600;
@@ -634,7 +634,7 @@ img {
 }
 
 .event-btn:hover {
-  background: var(--primary-dark);
+  background:rgb(32, 165, 218);
   transform: translateY(-2px);
 }
 
@@ -646,7 +646,7 @@ img {
 .events-view-all {
   display: inline-block;
   padding: 0.8rem 2.5rem;
-  background: var(--secondary-color);
+  background:rgb(72, 33, 201);
   color: var(--white);
   border-radius: 50px;
   font-weight: 600;
@@ -655,14 +655,11 @@ img {
 }
 
 .events-view-all:hover {
-  background: var(--secondary-dark);
+  background:green;
   transform: translateY(-3px);
   box-shadow: 0 4px 20px rgba(30, 58, 95, 0.3);
 }
 
-/* ============================================
-   FEATURED DESTINATIONS
-   ============================================ */
 .featured-section {
   background: var(--light-bg);
 }
@@ -754,7 +751,7 @@ img {
 }
 
 .featured-btn {
-  color: var(--primary-color);
+  color:blue;
   text-decoration: none;
   font-weight: 600;
   transition: var(--transition);

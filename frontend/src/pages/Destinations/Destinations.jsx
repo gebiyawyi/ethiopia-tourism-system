@@ -3,9 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import "./Destinations.css";
 import { useAuth } from "../../context/AuthContext";
 
-// ============================================
-// 📸 IMPORT YOUR IMAGES HERE
-// ============================================
 import lalibela from "../../assets/images/lalibela.png";
 import semien1 from "../../assets/images/semien1.png";
 import gondar from "../../assets/images/gondar.png";
@@ -30,28 +27,20 @@ import MountEntoto from "../../assets/images/MountEntoto.png";
 import Merkato from "../../assets/images/Merkato.png";
 import ethiopiaMap from "../../assets/images/flag.png";
 
-// ============================================
-// 📸 FALLBACK IMAGES (if imports fail)
-// ============================================
 const FALLBACK_IMAGE =
   "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=600&h=400&fit=crop";
 
 const Destinations = () => {
   const { isLoggedIn } = useAuth();
   const navigate = useNavigate();
+
   const [destinations, setDestinations] = useState([]);
   const [filteredDestinations, setFilteredDestinations] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedRegion, setSelectedRegion] = useState("all");
   const [loading, setLoading] = useState(true);
 
-  // ============================================
-  // 📸 COMPLETE DESTINATION DATA
-  // ============================================
   const destinationData = [
-    // ============================================
-    // 🌍 ETHIOPIA - THE LAND OF ORIGINS
-    // ============================================
     {
       id: 0,
       name: "Ethiopia - The Land of Origins",
@@ -71,10 +60,6 @@ const Destinations = () => {
       ],
       bestTime: "Year-round",
     },
-
-    // ============================================
-    // 📍 AMHARA REGION
-    // ============================================
     {
       id: 1,
       name: "Lalibela Rock Churches",
@@ -145,10 +130,6 @@ const Destinations = () => {
       attractions: ["Waterfalls", "Hiking", "Photography"],
       bestTime: "June to September",
     },
-
-    // ============================================
-    // 📍 TIGRAY REGION
-    // ============================================
     {
       id: 6,
       name: "Axum Obelisks",
@@ -191,10 +172,6 @@ const Destinations = () => {
       attractions: ["Monastery", "Climbing", "Religious History"],
       bestTime: "October to April",
     },
-
-    // ============================================
-    // 📍 AFAR REGION
-    // ============================================
     {
       id: 9,
       name: "Danakil Depression",
@@ -237,10 +214,6 @@ const Destinations = () => {
       attractions: ["Sulfur Springs", "Photography", "Geothermal"],
       bestTime: "November to March",
     },
-
-    // ============================================
-    // 📍 SOUTHERN REGION
-    // ============================================
     {
       id: 12,
       name: "Omo Valley Tribes",
@@ -287,10 +260,6 @@ const Destinations = () => {
       attractions: ["Local Market", "Culture", "Traditional Crafts"],
       bestTime: "November to March",
     },
-
-    // ============================================
-    // 📍 HARARI REGION
-    // ============================================
     {
       id: 15,
       name: "Harar Jugol",
@@ -319,10 +288,6 @@ const Destinations = () => {
       attractions: ["Old City", "Mosques", "Traditional Houses"],
       bestTime: "October to April",
     },
-
-    // ============================================
-    // 📍 OROMIA REGION
-    // ============================================
     {
       id: 17,
       name: "Bale Mountains National Park",
@@ -369,10 +334,6 @@ const Destinations = () => {
       attractions: ["Swimming", "Bird Watching", "Relaxation"],
       bestTime: "November to April",
     },
-
-    // ============================================
-    // 📍 ADDIS ABABA REGION
-    // ============================================
     {
       id: 20,
       name: "National Museum of Ethiopia",
@@ -417,76 +378,62 @@ const Destinations = () => {
     },
   ];
 
-  // ============================================
-  // REGIONS (with ETHIOPIA added)
-  // ============================================
   const regions = [
-    { value: "all", label: "All Regions", count: destinationData.length },
+    {
+      value: "all",
+      label: "All Regions",
+      count: destinationData.length,
+    },
     {
       value: "Nationwide",
-      label: "🌍 Ethiopia",
+      label: "Ethiopia",
       count: destinationData.filter((d) => d.region === "Nationwide").length,
     },
     {
       value: "Amhara",
-      label: " Amhara",
+      label: "Amhara",
       count: destinationData.filter((d) => d.region === "Amhara").length,
     },
     {
       value: "Tigray",
-      label: " Tigray",
+      label: "Tigray",
       count: destinationData.filter((d) => d.region === "Tigray").length,
     },
     {
       value: "Afar",
-      label: " Afar",
+      label: "Afar",
       count: destinationData.filter((d) => d.region === "Afar").length,
     },
     {
       value: "Southern",
-      label: " Southern",
+      label: "Southern",
       count: destinationData.filter((d) => d.region === "Southern").length,
     },
     {
       value: "Harari",
-      label: " Harari",
+      label: "Harari",
       count: destinationData.filter((d) => d.region === "Harari").length,
     },
     {
       value: "Oromia",
-      label: " Oromia",
+      label: "Oromia",
       count: destinationData.filter((d) => d.region === "Oromia").length,
     },
     {
       value: "Addis Ababa",
-      label: "🏙️ Addis Ababa",
+      label: "Addis Ababa",
       count: destinationData.filter((d) => d.region === "Addis Ababa").length,
     },
   ];
 
-  // ============================================
-  // GET REGION ICON
-  // ============================================
-  const getRegionIcon = (region) => {
-    const icons = {
-      Nationwide: "🌍",
-      Amhara: "",
-      Tigray: "",
-      Afar: "",
-      Southern: "",
-      Harari: "",
-      Oromia: "",
-      "Addis Ababa": "🏙️",
-    };
-    return icons[region] || "";
-  };
-
   useEffect(() => {
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       setDestinations(destinationData);
       setFilteredDestinations(destinationData);
       setLoading(false);
     }, 500);
+
+    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
@@ -508,34 +455,27 @@ const Destinations = () => {
     setFilteredDestinations(result);
   }, [searchTerm, selectedRegion, destinations]);
 
-  // ============================================
-  // ✅ HANDLE VISIT BUTTON WITH AUTH CHECK
-  // ============================================
   const handleVisit = (destinationName) => {
-    // ✅ Check if user is logged in
     if (!isLoggedIn) {
-      alert("🔐 Please sign in or register to plan your trip!");
+      alert("Please sign in or register to plan your trip!");
       navigate("/login?return=/destinations");
       return;
     }
 
-    // ✅ If logged in, navigate to events
     navigate(`/events?destination=${encodeURIComponent(destinationName)}`);
   };
 
   return (
     <div className="destinations-page">
-      {/* ===== HERO SECTION ===== */}
       <section className="destinations-hero">
         <div className="destinations-hero-content">
-          <h1>📍 Explore Destinations</h1>
+          <h1>Explore Destinations</h1>
           <p>
             Discover {destinationData.length} amazing places across Ethiopia
           </p>
         </div>
       </section>
 
-      {/* ===== FILTERS ===== */}
       <section className="destinations-filters">
         <div className="container">
           <div className="filter-bar">
@@ -546,7 +486,9 @@ const Destinations = () => {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
-              <span className="search-icon">🔍</span>
+
+              <span className="search-icon"></span>
+
               {searchTerm && (
                 <button
                   className="clear-search"
@@ -564,10 +506,7 @@ const Destinations = () => {
               >
                 {regions.map((region) => (
                   <option key={region.value} value={region.value}>
-                    {region.value === "all"
-                      ? "🌍 All Regions"
-                      : `${getRegionIcon(region.value)} ${region.label}`}{" "}
-                    ({region.count})
+                    {region.label} ({region.count})
                   </option>
                 ))}
               </select>
@@ -577,7 +516,7 @@ const Destinations = () => {
           {selectedRegion !== "all" && (
             <div className="active-filters">
               <span className="active-filter">
-                {getRegionIcon(selectedRegion)} {selectedRegion} Region
+                {selectedRegion} Region
                 <button onClick={() => setSelectedRegion("all")}>✕</button>
               </span>
             </div>
@@ -585,7 +524,6 @@ const Destinations = () => {
         </div>
       </section>
 
-      {/* ===== RESULTS COUNT ===== */}
       <section className="results-section">
         <div className="container">
           <div className="results-header">
@@ -594,6 +532,7 @@ const Destinations = () => {
                 ? "Loading..."
                 : `${filteredDestinations.length} destinations found`}
             </h3>
+
             {!loading && filteredDestinations.length > 0 && (
               <span className="results-subtitle">
                 Showing {filteredDestinations.length} of {destinations.length}{" "}
@@ -604,7 +543,6 @@ const Destinations = () => {
         </div>
       </section>
 
-      {/* ===== DESTINATIONS GRID ===== */}
       <section className="section destinations-grid-section">
         <div className="container">
           {loading ? (
@@ -614,9 +552,10 @@ const Destinations = () => {
             </div>
           ) : filteredDestinations.length === 0 ? (
             <div className="no-results">
-              <div className="no-results-icon">🔍</div>
+              <div className="no-results-icon"></div>
               <h3>No destinations found</h3>
               <p>Try adjusting your search or filters</p>
+
               <button
                 className="reset-filters-btn"
                 onClick={() => {
@@ -639,26 +578,31 @@ const Destinations = () => {
                         e.target.src = FALLBACK_IMAGE;
                       }}
                     />
+
                     <div className="destination-badges">
-                      <span className="destination-rating">
-                        ⭐ {dest.rating}
-                      </span>
+                      <span className="destination-rating">{dest.rating}</span>
+
                       <span className="destination-reviews">
                         {dest.reviews} reviews
                       </span>
                     </div>
                   </div>
+
                   <div className="destination-info">
                     <div className="destination-header">
                       <h3>{dest.name}</h3>
+
                       <span className="destination-region-tag">
-                        {getRegionIcon(dest.region)} {dest.region}
+                        {dest.region}
                       </span>
                     </div>
-                    <p className="destination-subregion">📍 {dest.subRegion}</p>
+
+                    <p className="destination-subregion">{dest.subRegion}</p>
+
                     <p className="destination-description">
                       {dest.description}
                     </p>
+
                     <div className="destination-attractions">
                       {dest.attractions.map((item, index) => (
                         <span key={index} className="attraction-tag">
@@ -666,17 +610,15 @@ const Destinations = () => {
                         </span>
                       ))}
                     </div>
-                    {/* ============================================
-                        ✅ UPDATED: Visit Button with Auth Check
-                        ============================================ */}
+
                     <div className="destination-actions">
-                      {/* ✅ "Visit" button now checks auth before navigating */}
                       <button
                         onClick={() => handleVisit(dest.name)}
                         className="visit-btn-card"
                       >
                         Visit
                       </button>
+
                       <Link
                         to={`/destinations/${dest.id}`}
                         className="view-details-btn"
