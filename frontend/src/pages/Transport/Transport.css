@@ -1,21 +1,10 @@
-/* ============================================
-   TRANSPORT PAGE - COMPLETE STYLES
-   Full Responsive - Mobile First
-   ============================================ */
 
-/* ============================================
-   PAGE CONTAINER
-   ============================================ */
 .transport-page {
   min-height: 100vh;
   background: var(--light-bg);
   display: flex;
   flex-direction: column;
 }
-
-/* ============================================
-   LOADING
-   ============================================ */
 .loading-container {
   display: flex;
   flex-direction: column;
@@ -37,12 +26,8 @@
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
-
-/* ============================================
-   HERO SECTION
-   ============================================ */
 .transport-hero {
-  background: linear-gradient(135deg, var(--secondary-color), var(--primary-dark));
+  background:hwb(178 2% 78% / 0.829);
   padding: 4rem 2rem 3rem;
   text-align: center;
   color: var(--white);
@@ -75,12 +60,13 @@
   display: block;
   font-size: 2rem;
   font-weight: 800;
-  color: var(--primary-light);
+  color: red;
 }
 
 .hero-stat .stat-label {
   font-size: 0.9rem;
   opacity: 0.8;
+  color:white;
 }
 
 /* ============================================
@@ -544,13 +530,9 @@
 }
 
 .select-hint {
-  color: var(--text-muted);
+  color:red;
   font-size: 0.85rem;
 }
-
-/* ============================================
-   CONTINUE SECTION
-   ============================================ */
 .continue-section {
   position: fixed;
   bottom: 0;

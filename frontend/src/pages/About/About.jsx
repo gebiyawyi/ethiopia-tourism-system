@@ -47,10 +47,7 @@ const About = () => {
               </div>
             </div>
             <div className="mission-image">
-              <img
-                src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=600&h=400&fit=crop"
-                alt="Ethiopia Landscape"
-              />
+              <img src="https://i.ytimg.com/vi/ivu4wk0-fQ8/maxresdefault.jpg" />
             </div>
           </div>
         </div>

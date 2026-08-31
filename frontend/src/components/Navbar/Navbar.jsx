@@ -3,7 +3,6 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 import { useAuth } from "../../context/AuthContext";
 import ThemeToggle from "../ThemeToggle/ThemeToggle";
-
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -81,7 +80,7 @@ const Navbar = () => {
             Destinations
           </Link>
           <Link
-            to="/ransport"
+            to="/transport"
             className={`nav-link ${isActive("/transport") ? "active" : ""}`}
           >
              Transport
@@ -93,13 +92,13 @@ const Navbar = () => {
             Hotels
           </Link>
           <Link
-            to="/bout"
+            to="/about"
             className={`nav-link ${isActive("/about") ? "active" : ""}`}
           >
             About
           </Link>
           <Link
-            to="/ontact"
+            to="/contact"
             className={`nav-link ${isActive("/contact") ? "active" : ""}`}
           >
             Contact
@@ -202,7 +201,7 @@ const Navbar = () => {
               Destinations
             </Link>
             <Link
-              to="/ransport"
+              to="/transport"
               className={`mobile-nav-link ${isActive("/transport") ? "active" : ""}`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
@@ -218,7 +217,7 @@ const Navbar = () => {
               Hotels
             </Link>
             <Link
-              to="/bout"
+              to="/about"
               className={`mobile-nav-link ${isActive("/about") ? "active" : ""}`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
@@ -226,7 +225,7 @@ const Navbar = () => {
               About
             </Link>
             <Link
-              to="/ontact"
+              to="/contact"
               className={`mobile-nav-link ${isActive("/contact") ? "active" : ""}`}
               onClick={() => setIsMobileMenuOpen(false)}
             >

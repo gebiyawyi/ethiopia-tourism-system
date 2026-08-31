@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./Transport.css";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
-import api from "../../services/api";
+
 import yegna from "../../assets/images/yegna.png";
 import yegna1 from "../../assets/images/yegna1.png";
 import yegna2 from "../../assets/images/yegna2.png";
@@ -14,11 +14,12 @@ import yegna6 from "../../assets/images/yegna6.png";
 import yegna7 from "../../assets/images/yegna7.png";
 import yegna8 from "../../assets/images/yegna8.png";
 import yegna9 from "../../assets/images/yegna9.png";
+
 import zemen from "../../assets/images/zemen.png";
 import zemen1 from "../../assets/images/zemen1.png";
 import zemen2 from "../../assets/images/zemen2.png";
 import zemen3 from "../../assets/images/zemen3.png";
-import zemen4 from "../../assets/images/zemen4.png";
+
 import bair from "../../assets/images/bair.png";
 import bahir from "../../assets/images/bahir.png";
 import axumair from "../../assets/images/axumair.png";
@@ -28,25 +29,31 @@ import bole from "../../assets/images/bole.png";
 import semeraair from "../../assets/images/semeraair.png";
 import jinka from "../../assets/images/jinka.png";
 import diredawaair from "../../assets/images/diredawaair.png";
+
 const Transport = () => {
   const navigate = useNavigate();
+
   const [transportOptions, setTransportOptions] = useState([]);
   const [filteredTransport, setFilteredTransport] = useState([]);
   const [loading, setLoading] = useState(true);
+
   const [selectedTransport, setSelectedTransport] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedType, setSelectedType] = useState("all");
   const [selectedDestination, setSelectedDestination] = useState("all");
+
   const [destinations, setDestinations] = useState([]);
-  const [priceRange, setPriceRange] = useState({ min: 0, max: 1000 });
+
+  const [priceRange, setPriceRange] = useState({
+    min: 0,
+    max: 1000,
+  });
+
   const [sortBy, setSortBy] = useState("price");
   const [sortOrder, setSortOrder] = useState("asc");
   const [showFilters, setShowFilters] = useState(false);
   const [totalSelected, setTotalSelected] = useState(0);
 
-  // ============================================
-  // 📸 TRANSPORT DATA - CORRECT AIRPORT & BUS NAMES
-  // ============================================
   const sampleTransport = [
     {
       id: 1,
@@ -71,6 +78,7 @@ const Transport = () => {
       amenities: ["WiFi", "Meal Included", "TV"],
       is_available: true,
     },
+
     {
       id: 2,
       name: "Axum Airport",
@@ -94,6 +102,7 @@ const Transport = () => {
       amenities: ["WiFi", "Meal", "TV"],
       is_available: true,
     },
+
     {
       id: 3,
       name: "Gondar Airport",
@@ -117,6 +126,7 @@ const Transport = () => {
       amenities: ["WiFi", "Meal", "TV"],
       is_available: true,
     },
+
     {
       id: 4,
       name: "Bahir Dar Airport",
@@ -140,6 +150,7 @@ const Transport = () => {
       amenities: ["WiFi", "Meal", "TV"],
       is_available: true,
     },
+
     {
       id: 5,
       name: "Jinka Airport",
@@ -159,11 +170,11 @@ const Transport = () => {
       days_available: ["Tue", "Thu", "Sat"],
       rating: 4.6,
       reviews: 112,
-      image:
-       jinka,
+      image: jinka,
       amenities: ["WiFi", "Meal", "TV"],
       is_available: true,
     },
+
     {
       id: 6,
       name: "Bale Robe Airport",
@@ -183,11 +194,11 @@ const Transport = () => {
       days_available: ["Mon", "Wed", "Fri", "Sun"],
       rating: 4.4,
       reviews: 98,
-      image:
-bair,
+      image: bair,
       amenities: ["WiFi", "Meal", "TV"],
       is_available: true,
     },
+
     {
       id: 7,
       name: "Semera Airport",
@@ -207,11 +218,11 @@ bair,
       days_available: ["Mon", "Thu", "Sat"],
       rating: 4.8,
       reviews: 87,
-      image:
-       semeraair,
+      image: semeraair,
       amenities: ["WiFi", "Meal", "TV"],
       is_available: true,
     },
+
     {
       id: 8,
       name: "Dire Dawa Airport",
@@ -231,11 +242,11 @@ bair,
       days_available: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
       rating: 4.5,
       reviews: 134,
-      image:
-        diredawaair,
+      image: diredawaair,
       amenities: ["WiFi", "Meal", "TV"],
       is_available: true,
     },
+
     {
       id: 9,
       name: "Addis Ababa Bole International Airport",
@@ -255,15 +266,11 @@ bair,
       days_available: ["Daily"],
       rating: 4.9,
       reviews: 5000,
-      image:
-        bole,
+      image: bole,
       amenities: ["WiFi", "Lounge", "Shopping", "Restaurants"],
       is_available: true,
     },
 
-    // ============================================
-    // 🚌 BUS TRANSPORT - TRUE NAMES
-    // ============================================
     {
       id: 10,
       name: "Addis Ababa - Lalibela Bus",
@@ -273,7 +280,7 @@ bair,
       destination_id: 1,
       destination_name: "Lalibela Rock Churches",
       description:
-        "Comfortable bus service from Addis Ababa to Lalibela.npm  km | Travel time: 8 hours",
+        "Comfortable bus service from Addis Ababa to Lalibela. Distance: 560 km | Travel time: 8 hours",
       price: 30,
       capacity: 40,
       available_seats: 12,
@@ -287,6 +294,7 @@ bair,
       amenities: ["AC", "Refreshments", "Rest Stops"],
       is_available: true,
     },
+
     {
       id: 11,
       name: "Addis Ababa - Axum Bus",
@@ -310,6 +318,7 @@ bair,
       amenities: ["AC", "Refreshments", "Rest Stops"],
       is_available: true,
     },
+
     {
       id: 12,
       name: "Addis Ababa - Gondar Bus",
@@ -333,6 +342,7 @@ bair,
       amenities: ["AC", "Refreshments", "Rest Stops"],
       is_available: true,
     },
+
     {
       id: 13,
       name: "Addis Ababa - Bahir Dar Bus",
@@ -356,6 +366,7 @@ bair,
       amenities: ["AC", "Refreshments", "Rest Stops"],
       is_available: true,
     },
+
     {
       id: 14,
       name: "Addis Ababa - Jinka Bus",
@@ -379,6 +390,7 @@ bair,
       amenities: ["AC", "Guide", "Refreshments"],
       is_available: true,
     },
+
     {
       id: 15,
       name: "Addis Ababa - Bale Robe Bus",
@@ -388,7 +400,7 @@ bair,
       destination_id: 17,
       destination_name: "Bale Mountains National Park",
       description:
-        "Bus from Addis Ababa to Bale Robe (gateway to Bale Mountains). Distance: 430 km | Travel time: 5 hours",
+        "Bus from Addis Ababa to Bale Robe. Distance: 430 km | Travel time: 5 hours",
       price: 22,
       capacity: 40,
       available_seats: 25,
@@ -402,6 +414,7 @@ bair,
       amenities: ["AC", "Refreshments", "Rest Stops"],
       is_available: true,
     },
+
     {
       id: 16,
       name: "Mekele - Semera Bus",
@@ -411,7 +424,7 @@ bair,
       destination_id: 9,
       destination_name: "Danakil Depression",
       description:
-        "Bus from Mekele to Semera (gateway to Danakil Depression). Distance: 180 km | Travel time: 3 hours",
+        "Bus from Mekele to Semera. Distance: 180 km | Travel time: 3 hours",
       price: 35,
       capacity: 20,
       available_seats: 8,
@@ -425,6 +438,7 @@ bair,
       amenities: ["Guide", "Refreshments"],
       is_available: true,
     },
+
     {
       id: 17,
       name: "Addis Ababa - Dire Dawa Bus",
@@ -434,7 +448,7 @@ bair,
       destination_id: 15,
       destination_name: "Harar Jugol",
       description:
-        "Bus from Addis Ababa to Dire Dawa (gateway to Harar). Distance: 510 km | Travel time: 7 hours",
+        "Bus from Addis Ababa to Dire Dawa. Distance: 510 km | Travel time: 7 hours",
       price: 27,
       capacity: 40,
       available_seats: 20,
@@ -448,6 +462,7 @@ bair,
       amenities: ["AC", "Refreshments", "Rest Stops"],
       is_available: true,
     },
+
     {
       id: 18,
       name: "Gondar - Debark Bus",
@@ -457,7 +472,7 @@ bair,
       destination_id: 2,
       destination_name: "Simien Mountains National Park",
       description:
-        "Bus from Gondar to Debark (gateway to Simien Mountains). Distance: 120 km | Travel time: 2.5 hours",
+        "Bus from Gondar to Debark. Distance: 120 km | Travel time: 2.5 hours",
       price: 15,
       capacity: 20,
       available_seats: 10,
@@ -471,6 +486,7 @@ bair,
       amenities: ["Refreshments", "Scenic Views"],
       is_available: true,
     },
+
     {
       id: 19,
       name: "Bahir Dar - Blue Nile Falls Bus",
@@ -480,7 +496,7 @@ bair,
       destination_id: 5,
       destination_name: "Blue Nile Falls",
       description:
-        "Local bus from Bahir Dar to the Blue Nile Falls (Tis Abay). Distance: 45 km | Travel time: 1 hour",
+        "Local bus from Bahir Dar to the Blue Nile Falls. Distance: 45 km | Travel time: 1 hour",
       price: 8,
       capacity: 20,
       available_seats: 15,
@@ -494,6 +510,7 @@ bair,
       amenities: ["Scenic Route"],
       is_available: true,
     },
+
     {
       id: 20,
       name: "Bahir Dar - Lake Tana Boat Transfer",
@@ -517,9 +534,7 @@ bair,
       amenities: ["Guide", "Life Jackets"],
       is_available: true,
     },
-    // ============================================
-    // 🚌 ADDITIONAL BUS ROUTES
-    // ============================================
+
     {
       id: 21,
       name: "Addis Ababa - Harar Bus",
@@ -529,7 +544,7 @@ bair,
       destination_id: 15,
       destination_name: "Harar Jugol",
       description:
-        "Bus from Addis Ababa to Harar (via Dire Dawa). Distance: 530 km | Travel time: 8 hours",
+        "Bus from Addis Ababa to Harar via Dire Dawa. Distance: 530 km | Travel time: 8 hours",
       price: 30,
       capacity: 40,
       available_seats: 25,
@@ -543,6 +558,7 @@ bair,
       amenities: ["AC", "Refreshments", "Rest Stops"],
       is_available: true,
     },
+
     {
       id: 22,
       name: "Addis Ababa - Assosa Bus",
@@ -566,6 +582,7 @@ bair,
       amenities: ["AC", "Refreshments", "Rest Stops"],
       is_available: true,
     },
+
     {
       id: 23,
       name: "Addis Ababa - Gambela Bus",
@@ -591,72 +608,81 @@ bair,
     },
   ];
 
-  // ============================================
-  // LOAD DATA
-  // ============================================
   useEffect(() => {
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       setTransportOptions(sampleTransport);
       setFilteredTransport(sampleTransport);
 
       const uniqueDests = [
-        ...new Set(sampleTransport.map((t) => t.destination_name)),
+        ...new Set(
+          sampleTransport.map((transport) => transport.destination_name),
+        ),
       ];
-      setDestinations(uniqueDests);
 
+      setDestinations(uniqueDests);
       setLoading(false);
     }, 500);
+
+    return () => clearTimeout(timer);
   }, []);
 
-  // ============================================
-  // FILTER & SORT LOGIC
-  // ============================================
   useEffect(() => {
     let result = [...transportOptions];
 
-    if (searchTerm) {
+    if (searchTerm.trim()) {
+      const search = searchTerm.toLowerCase();
+
       result = result.filter(
-        (t) =>
-          t.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          t.from_location.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          t.to_location.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          t.destination_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          t.description.toLowerCase().includes(searchTerm.toLowerCase()),
+        (transport) =>
+          transport.name.toLowerCase().includes(search) ||
+          transport.from_location.toLowerCase().includes(search) ||
+          transport.to_location.toLowerCase().includes(search) ||
+          transport.destination_name?.toLowerCase().includes(search) ||
+          transport.description.toLowerCase().includes(search),
       );
     }
 
     if (selectedType !== "all") {
-      result = result.filter((t) => t.type === selectedType);
+      result = result.filter((transport) => transport.type === selectedType);
     }
 
     if (selectedDestination !== "all") {
-      result = result.filter((t) => t.destination_name === selectedDestination);
+      result = result.filter(
+        (transport) => transport.destination_name === selectedDestination,
+      );
     }
 
     result = result.filter(
-      (t) => t.price >= priceRange.min && t.price <= priceRange.max,
+      (transport) =>
+        transport.price >= priceRange.min && transport.price <= priceRange.max,
     );
 
-    result = result.filter((t) => t.is_available);
+    result = result.filter((transport) => transport.is_available);
 
     result.sort((a, b) => {
       let comparison = 0;
+
       switch (sortBy) {
         case "price":
           comparison = a.price - b.price;
           break;
+
         case "duration":
           comparison = a.duration.localeCompare(b.duration);
           break;
+
         case "rating":
           comparison = a.rating - b.rating;
           break;
+
         case "capacity":
           comparison = a.capacity - b.capacity;
           break;
+
         default:
           comparison = a.id - b.id;
       }
+
       return sortOrder === "asc" ? comparison : -comparison;
     });
 
@@ -671,37 +697,18 @@ bair,
     transportOptions,
   ]);
 
-  // ============================================
-  // TOGGLE TRANSPORT SELECTION
-  // ============================================
   const toggleSelection = (id) => {
-    setSelectedTransport((prev) => {
-      const newSelection = prev.includes(id)
-        ? prev.filter((item) => item !== id)
-        : [...prev, id];
+    setSelectedTransport((previous) => {
+      const newSelection = previous.includes(id)
+        ? previous.filter((item) => item !== id)
+        : [...previous, id];
 
       setTotalSelected(newSelection.length);
+
       return newSelection;
     });
   };
 
-  // ============================================
-  // GET ICON FOR TRANSPORT TYPE
-  // ============================================
-  const getTypeIcon = (type) => {
-    const icons = {
-      flight: "",
-      bus: "",
-      train: "🚂",
-      "4x4": "🚙",
-      minivan: "🚐",
-    };
-    return icons[type] || "🚗";
-  };
-
-  // ============================================
-  // GET TYPE COLOR
-  // ============================================
   const getTypeColor = (type) => {
     const colors = {
       flight: "#2563eb",
@@ -710,12 +717,10 @@ bair,
       "4x4": "#d97706",
       minivan: "#dc2626",
     };
+
     return colors[type] || "#6b7280";
   };
 
-  // ============================================
-  // GET TYPE LABEL
-  // ============================================
   const getTypeLabel = (type) => {
     const labels = {
       flight: "Flight",
@@ -724,62 +729,65 @@ bair,
       "4x4": "4x4 Off-Road",
       minivan: "Minivan",
     };
+
     return labels[type] || type;
   };
 
-  // ============================================
-  // RENDER STAR RATING
-  // ============================================
   const renderStars = (rating) => {
     const fullStars = Math.floor(rating);
-    const halfStar = rating % 1 >= 0.5 ? 1 : 0;
-    const emptyStars = 5 - fullStars - halfStar;
+    const emptyStars = 5 - fullStars;
 
     return (
-      <span className="stars">
-        {"⭐".repeat(fullStars)}
-        {halfStar ? "⭐" : ""}
+      <span className="stars" aria-label={`${rating} out of 5`}>
+        {"★".repeat(fullStars)}
         {"☆".repeat(emptyStars)}
       </span>
     );
   };
 
-  // ============================================
-  // HANDLE BOOKING NAVIGATION
-  // ============================================
-  const handleContinue = () => {
-    if (selectedTransport.length > 0) {
-      localStorage.setItem(
-        "selectedTransport",
-        JSON.stringify(selectedTransport),
-      );
-      navigate("/hotels");
-    }
-  };
+  // const handleContinue = () => {
+  //   if (selectedTransport.length > 0) {
+  //     localStorage.setItem(
+  //       "selectedTransport",
+  //       JSON.stringify(selectedTransport),
+  //     );
 
-  // ============================================
-  // RESET FILTERS
-  // ============================================
+  //     navigate("/hotels");
+  //   }
+  // };
+const handleContinue = () => {
+  if (selectedTransport.length > 0) {
+    alert(
+      "Hotels page is coming soon! Your transport selections have been saved.",
+    );
+    localStorage.setItem(
+      "selectedTransport",
+      JSON.stringify(selectedTransport),
+    );
+  }
+};
   const resetFilters = () => {
     setSearchTerm("");
     setSelectedType("all");
     setSelectedDestination("all");
-    setPriceRange({ min: 0, max: 1000 });
+    setPriceRange({
+      min: 0,
+      max: 1000,
+    });
     setSortBy("price");
     setSortOrder("asc");
   };
 
-  // ============================================
-  // RENDER LOADING
-  // ============================================
   if (loading) {
     return (
       <div className="transport-page">
         <Navbar />
+
         <div className="loading-container">
           <div className="spinner"></div>
           <p>Loading transport options...</p>
         </div>
+
         <Footer />
       </div>
     );
@@ -789,25 +797,29 @@ bair,
     <div className="transport-page">
       <Navbar />
 
-      {/* ============================================ */}
-      {/* HERO SECTION */}
-      {/* ============================================ */}
       <section className="transport-hero">
         <div className="container">
           <div className="transport-hero-content">
-            <h1> Transport Options</h1>
-            <p>Find the best way to explore Ethiopia's wonders</p>
+            <h1>Transport Options</h1>
+
+            <p>Find the best way to explore Ethiopia&apos;s wonders</p>
+
             <div className="hero-stats">
               <div className="hero-stat">
                 <span className="stat-number">{transportOptions.length}</span>
+
                 <span className="stat-label">Routes Available</span>
               </div>
+
               <div className="hero-stat">
                 <span className="stat-number">{destinations.length}</span>
+
                 <span className="stat-label">Destinations</span>
               </div>
+
               <div className="hero-stat">
                 <span className="stat-number">{totalSelected}</span>
+
                 <span className="stat-label">Selected</span>
               </div>
             </div>
@@ -815,26 +827,26 @@ bair,
         </div>
       </section>
 
-      {/* ============================================ */}
-      {/* FILTERS SECTION */}
-      {/* ============================================ */}
       <section className="filters-section">
         <div className="container">
           <div className="filter-bar">
             <div className="search-box">
-              <span className="search-icon">🔍</span>
+              <span className="search-icon">⌕</span>
+
               <input
                 type="text"
                 placeholder="Search by name, route, or destination..."
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                onChange={(event) => setSearchTerm(event.target.value)}
               />
+
               {searchTerm && (
                 <button
                   className="clear-search"
                   onClick={() => setSearchTerm("")}
+                  aria-label="Clear search"
                 >
-                  ✕
+                  ×
                 </button>
               )}
             </div>
@@ -843,83 +855,90 @@ bair,
               className="filter-toggle"
               onClick={() => setShowFilters(!showFilters)}
             >
-              {showFilters ? "▲ Hide Filters" : "▼ Show Filters"}
+              {showFilters ? "Hide Filters" : "Show Filters"}
             </button>
           </div>
 
           {showFilters && (
             <div className="filters-grid">
-              {/* Type Filter */}
               <div className="filter-group">
                 <label>Transport Type</label>
+
                 <select
                   value={selectedType}
-                  onChange={(e) => setSelectedType(e.target.value)}
+                  onChange={(event) => setSelectedType(event.target.value)}
                 >
                   <option value="all">All Types</option>
-                  <option value="flight"> Flight</option>
-                  <option value="bus"> Bus</option>
-                  <option value="train"> Train</option>
-                  <option value="4x4"> 4x4</option>
-                  <option value="minivan"> Minivan</option>
+                  <option value="flight">Flight</option>
+                  <option value="bus">Bus</option>
+                  <option value="train">Train</option>
+                  <option value="4x4">4x4</option>
+                  <option value="minivan">Minivan</option>
                 </select>
               </div>
 
-              {/* Destination Filter */}
               <div className="filter-group">
                 <label>Destination</label>
+
                 <select
                   value={selectedDestination}
-                  onChange={(e) => setSelectedDestination(e.target.value)}
+                  onChange={(event) =>
+                    setSelectedDestination(event.target.value)
+                  }
                 >
                   <option value="all">All Destinations</option>
-                  {destinations.map((dest) => (
-                    <option key={dest} value={dest}>
-                      {dest}
+
+                  {destinations.map((destination) => (
+                    <option key={destination} value={destination}>
+                      {destination}
                     </option>
                   ))}
                 </select>
               </div>
 
-              {/* Price Range */}
               <div className="filter-group">
                 <label>
                   Price Range: ${priceRange.min} - ${priceRange.max}
                 </label>
+
                 <div className="price-slider">
                   <input
                     type="range"
                     min="0"
                     max="500"
-                    value={priceRange.max}
-                    onChange={(e) =>
+                    value={Math.min(priceRange.max, 500)}
+                    onChange={(event) =>
                       setPriceRange({
                         ...priceRange,
-                        max: parseInt(e.target.value),
+                        max: parseInt(event.target.value, 10),
                       })
                     }
                   />
                 </div>
               </div>
 
-              {/* Sort */}
               <div className="filter-group">
                 <label>Sort By</label>
+
                 <div className="sort-group">
                   <select
                     value={sortBy}
-                    onChange={(e) => setSortBy(e.target.value)}
+                    onChange={(event) => setSortBy(event.target.value)}
                   >
                     <option value="price">Price</option>
                     <option value="duration">Duration</option>
                     <option value="rating">Rating</option>
                     <option value="capacity">Capacity</option>
                   </select>
+
                   <button
-                    className={`sort-order ${sortOrder === "asc" ? "active" : ""}`}
+                    className={`sort-order ${
+                      sortOrder === "asc" ? "active" : ""
+                    }`}
                     onClick={() =>
                       setSortOrder(sortOrder === "asc" ? "desc" : "asc")
                     }
+                    aria-label="Change sort order"
                   >
                     {sortOrder === "asc" ? "↑" : "↓"}
                   </button>
@@ -934,27 +953,28 @@ bair,
         </div>
       </section>
 
-      {/* ============================================ */}
-      {/* RESULTS SECTION */}
-      {/* ============================================ */}
       <section className="results-section">
         <div className="container">
           <div className="results-header">
             <span className="results-count">
               {filteredTransport.length} transport options found
             </span>
+
             {selectedTransport.length > 0 && (
               <span className="selected-count">
-                ✅ {selectedTransport.length} selected
+                {selectedTransport.length} selected
               </span>
             )}
           </div>
 
           {filteredTransport.length === 0 ? (
             <div className="no-results">
-              <div className="no-results-icon">🚫</div>
+              <div className="no-results-icon">×</div>
+
               <h3>No Transport Options Found</h3>
+
               <p>Try adjusting your filters or search terms</p>
+
               <button className="reset-filters-btn" onClick={resetFilters}>
                 Reset Filters
               </button>
@@ -964,41 +984,24 @@ bair,
               {filteredTransport.map((transport) => (
                 <div
                   key={transport.id}
-                  className={`transport-card ${selectedTransport.includes(transport.id) ? "selected" : ""}`}
+                  className={`transport-card ${
+                    selectedTransport.includes(transport.id) ? "selected" : ""
+                  }`}
                   onClick={() => toggleSelection(transport.id)}
                 >
-                  {/* Image */}
                   <div className="card-image">
                     <img src={transport.image} alt={transport.name} />
-                    <div
-                      className="card-type-badge"
-                      style={{ background: getTypeColor(transport.type) }}
-                    >
-                      {getTypeIcon(transport.type)}{" "}
-                      {getTypeLabel(transport.type)}
-                    </div>
-                    {transport.available_seats > 10 ? (
-                      <div className="availability-badge available">
-                        Available
-                      </div>
-                    ) : transport.available_seats > 0 ? (
-                      <div className="availability-badge limited">
-                        Limited Seats
-                      </div>
-                    ) : (
-                      <div className="availability-badge full">
-                        Fully Booked
-                      </div>
-                    )}
                   </div>
 
-                  {/* Content */}
                   <div className="card-content">
                     <div className="card-header">
                       <h3>{transport.name}</h3>
+
                       <div className="rating">
                         {renderStars(transport.rating)}
+
                         <span className="rating-value">{transport.rating}</span>
+
                         <span className="review-count">
                           ({transport.reviews})
                         </span>
@@ -1006,67 +1009,25 @@ bair,
                     </div>
 
                     <div className="route-info">
-                      <span className="from">📍 {transport.from_location}</span>
+                      <span className="from">{transport.from_location}</span>
+
                       <span className="arrow">→</span>
-                      <span className="to">📍 {transport.to_location}</span>
+
+                      <span className="to">{transport.to_location}</span>
                     </div>
 
                     {transport.destination_name && (
                       <div className="destination-tag">
-                        🏷️ {transport.destination_name}
+                        {transport.destination_name}
                       </div>
                     )}
 
                     <p className="description">{transport.description}</p>
 
-                    <div className="card-details">
-                      <div className="detail-item">
-                        <span className="detail-icon">⏱️</span>
-                        <span>{transport.duration}</span>
-                      </div>
-                      <div className="detail-item">
-                        <span className="detail-icon">🕐</span>
-                        <span>
-                          {transport.departure_time} - {transport.arrival_time}
-                        </span>
-                      </div>
-                      <div className="detail-item">
-                        <span className="detail-icon">👥</span>
-                        <span>
-                          {transport.available_seats}/{transport.capacity} seats
-                        </span>
-                      </div>
-                      <div className="detail-item">
-                        <span className="detail-icon">📅</span>
-                        <span>{transport.days_available.join(", ")}</span>
-                      </div>
-                    </div>
-
-                    {/* Amenities */}
-                    {transport.amenities && transport.amenities.length > 0 && (
-                      <div className="amenities">
-                        {transport.amenities.map((amenity, index) => (
-                          <span key={index} className="amenity-tag">
-                            ✅ {amenity}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-
                     <div className="card-footer">
-                      <div className="price-section">
-                        {transport.price > 0 ? (
-                          <>
-                            <span className="price">${transport.price}</span>
-                            <span className="per-person">/ person</span>
-                          </>
-                        ) : (
-                          <span className="price-free">🌍 Hub</span>
-                        )}
-                      </div>
                       <div className="selection-indicator">
                         {selectedTransport.includes(transport.id) ? (
-                          <span className="selected-badge">✅ Selected</span>
+                          <span className="selected-badge">Selected</span>
                         ) : (
                           <span className="select-hint">Click to select</span>
                         )}
@@ -1078,24 +1039,15 @@ bair,
             </div>
           )}
 
-          {/* ============================================ */}
-          {/* CONTINUE BUTTON */}
-          {/* ============================================ */}
           {selectedTransport.length > 0 && (
             <div className="continue-section">
               <div className="continue-box">
                 <div className="continue-info">
                   <span className="selected-info">
-                    ✅ {selectedTransport.length} transport option(s) selected
-                  </span>
-                  <span className="total-price">
-                    Total: $
-                    {selectedTransport.reduce((sum, id) => {
-                      const item = transportOptions.find((t) => t.id === id);
-                      return sum + (item ? item.price : 0);
-                    }, 0)}
+                    {selectedTransport.length} transport option(s) selected
                   </span>
                 </div>
+
                 <button className="continue-btn" onClick={handleContinue}>
                   Continue to Hotels →
                 </button>
