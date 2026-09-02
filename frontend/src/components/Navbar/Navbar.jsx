@@ -86,7 +86,7 @@ const Navbar = () => {
              Transport
           </Link>
           <Link
-            to="/otels"
+            to="/hotels"
             className={`nav-link ${isActive("/hotels") ? "active" : ""}`}
           >
             Hotels
@@ -209,7 +209,7 @@ const Navbar = () => {
               Transport
             </Link>
             <Link
-              to="/otels"
+              to="/hotels"
               className={`mobile-nav-link ${isActive("/hotels") ? "active" : ""}`}
               onClick={() => setIsMobileMenuOpen(false)}
             >

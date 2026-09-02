@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Transport.css";
@@ -615,7 +616,7 @@ const Transport = () => {
 
       const uniqueDests = [
         ...new Set(
-          sampleTransport.map((transport) => transport.destination_name),
+          sampleTransport.map((transport) => transport.destination_name)
         ),
       ];
 
@@ -638,23 +639,27 @@ const Transport = () => {
           transport.from_location.toLowerCase().includes(search) ||
           transport.to_location.toLowerCase().includes(search) ||
           transport.destination_name?.toLowerCase().includes(search) ||
-          transport.description.toLowerCase().includes(search),
+          transport.description.toLowerCase().includes(search)
       );
     }
 
     if (selectedType !== "all") {
-      result = result.filter((transport) => transport.type === selectedType);
+      result = result.filter(
+        (transport) => transport.type === selectedType
+      );
     }
 
     if (selectedDestination !== "all") {
       result = result.filter(
-        (transport) => transport.destination_name === selectedDestination,
+        (transport) =>
+          transport.destination_name === selectedDestination
       );
     }
 
     result = result.filter(
       (transport) =>
-        transport.price >= priceRange.min && transport.price <= priceRange.max,
+        transport.price >= priceRange.min &&
+        transport.price <= priceRange.max
     );
 
     result = result.filter((transport) => transport.is_available);
@@ -697,6 +702,34 @@ const Transport = () => {
     transportOptions,
   ]);
 
+  /*
+   * PRIVATE TRANSPORT HANDLER
+   *
+   * When the visitor chooses "Private Transport",
+   * no transport card is selected.
+   *
+   * The choice is saved in localStorage and the
+   * visitor is immediately taken to the Hotels page.
+   */
+  const handleTransportTypeChange = (event) => {
+    const type = event.target.value;
+
+    if (type === "private") {
+      localStorage.setItem("transportMode", "private");
+      localStorage.setItem("selectedTransport", JSON.stringify([]));
+
+      setSelectedTransport([]);
+      setTotalSelected(0);
+
+      navigate("/hotels");
+
+      return;
+    }
+
+    localStorage.removeItem("transportMode");
+    setSelectedType(type);
+  };
+
   const toggleSelection = (id) => {
     setSelectedTransport((previous) => {
       const newSelection = previous.includes(id)
@@ -738,44 +771,50 @@ const Transport = () => {
     const emptyStars = 5 - fullStars;
 
     return (
-      <span className="stars" aria-label={`${rating} out of 5`}>
+      <span
+        className="stars"
+        aria-label={`${rating} out of 5`}
+      >
         {"★".repeat(fullStars)}
         {"☆".repeat(emptyStars)}
       </span>
     );
   };
 
-  // const handleContinue = () => {
-  //   if (selectedTransport.length > 0) {
-  //     localStorage.setItem(
-  //       "selectedTransport",
-  //       JSON.stringify(selectedTransport),
-  //     );
+  const handleContinue = () => {
+    if (selectedTransport.length > 0) {
+      localStorage.setItem(
+        "transportMode",
+        "selected"
+      );
 
-  //     navigate("/hotels");
-  //   }
-  // };
-const handleContinue = () => {
-  if (selectedTransport.length > 0) {
-    alert(
-      "Hotels page is coming soon! Your transport selections have been saved.",
-    );
-    localStorage.setItem(
-      "selectedTransport",
-      JSON.stringify(selectedTransport),
-    );
-  }
-};
+      localStorage.setItem(
+        "selectedTransport",
+        JSON.stringify(selectedTransport)
+      );
+
+      navigate("/hotels");
+    }
+  };
+
   const resetFilters = () => {
     setSearchTerm("");
     setSelectedType("all");
     setSelectedDestination("all");
+
     setPriceRange({
       min: 0,
       max: 1000,
     });
+
     setSortBy("price");
     setSortOrder("asc");
+
+    setSelectedTransport([]);
+    setTotalSelected(0);
+
+    localStorage.removeItem("transportMode");
+    localStorage.removeItem("selectedTransport");
   };
 
   if (loading) {
@@ -785,6 +824,7 @@ const handleContinue = () => {
 
         <div className="loading-container">
           <div className="spinner"></div>
+
           <p>Loading transport options...</p>
         </div>
 
@@ -802,25 +842,39 @@ const handleContinue = () => {
           <div className="transport-hero-content">
             <h1>Transport Options</h1>
 
-            <p>Find the best way to explore Ethiopia&apos;s wonders</p>
+            <p>
+              Find the best way to explore Ethiopia&apos;s wonders
+            </p>
 
             <div className="hero-stats">
               <div className="hero-stat">
-                <span className="stat-number">{transportOptions.length}</span>
+                <span className="stat-number">
+                  {transportOptions.length}
+                </span>
 
-                <span className="stat-label">Routes Available</span>
+                <span className="stat-label">
+                  Routes Available
+                </span>
               </div>
 
               <div className="hero-stat">
-                <span className="stat-number">{destinations.length}</span>
+                <span className="stat-number">
+                  {destinations.length}
+                </span>
 
-                <span className="stat-label">Destinations</span>
+                <span className="stat-label">
+                  Destinations
+                </span>
               </div>
 
               <div className="hero-stat">
-                <span className="stat-number">{totalSelected}</span>
+                <span className="stat-number">
+                  {totalSelected}
+                </span>
 
-                <span className="stat-label">Selected</span>
+                <span className="stat-label">
+                  Selected
+                </span>
               </div>
             </div>
           </div>
@@ -837,11 +891,14 @@ const handleContinue = () => {
                 type="text"
                 placeholder="Search by name, route, or destination..."
                 value={searchTerm}
-                onChange={(event) => setSearchTerm(event.target.value)}
+                onChange={(event) =>
+                  setSearchTerm(event.target.value)
+                }
               />
 
               {searchTerm && (
                 <button
+                  type="button"
                   className="clear-search"
                   onClick={() => setSearchTerm("")}
                   aria-label="Clear search"
@@ -852,44 +909,83 @@ const handleContinue = () => {
             </div>
 
             <button
+              type="button"
               className="filter-toggle"
-              onClick={() => setShowFilters(!showFilters)}
+              onClick={() =>
+                setShowFilters(!showFilters)
+              }
             >
-              {showFilters ? "Hide Filters" : "Show Filters"}
+              {showFilters
+                ? "Hide Filters"
+                : "Show Filters"}
             </button>
           </div>
 
           {showFilters && (
             <div className="filters-grid">
               <div className="filter-group">
-                <label>Transport Type</label>
+                <label htmlFor="transport-type">
+                  Transport Type
+                </label>
 
                 <select
+                  id="transport-type"
                   value={selectedType}
-                  onChange={(event) => setSelectedType(event.target.value)}
+                  onChange={handleTransportTypeChange}
                 >
-                  <option value="all">All Types</option>
-                  <option value="flight">Flight</option>
-                  <option value="bus">Bus</option>
-                  <option value="train">Train</option>
-                  <option value="4x4">4x4</option>
-                  <option value="minivan">Minivan</option>
+                  <option value="all">
+                    All Types
+                  </option>
+
+                  <option value="flight">
+                    Flight
+                  </option>
+
+                  <option value="bus">
+                    Bus
+                  </option>
+
+                  <option value="train">
+                    Train
+                  </option>
+
+                  <option value="4x4">
+                    4x4
+                  </option>
+
+                  <option value="minivan">
+                    Minivan
+                  </option>
+
+                  <option value="private">
+                    Private Transport (My Own Vehicle)
+                  </option>
                 </select>
               </div>
 
               <div className="filter-group">
-                <label>Destination</label>
+                <label htmlFor="destination">
+                  Destination
+                </label>
 
                 <select
+                  id="destination"
                   value={selectedDestination}
                   onChange={(event) =>
-                    setSelectedDestination(event.target.value)
+                    setSelectedDestination(
+                      event.target.value
+                    )
                   }
                 >
-                  <option value="all">All Destinations</option>
+                  <option value="all">
+                    All Destinations
+                  </option>
 
                   {destinations.map((destination) => (
-                    <option key={destination} value={destination}>
+                    <option
+                      key={destination}
+                      value={destination}
+                    >
                       {destination}
                     </option>
                   ))}
@@ -898,7 +994,8 @@ const handleContinue = () => {
 
               <div className="filter-group">
                 <label>
-                  Price Range: ${priceRange.min} - ${priceRange.max}
+                  Price Range: ${priceRange.min} - $
+                  {priceRange.max}
                 </label>
 
                 <div className="price-slider">
@@ -906,11 +1003,17 @@ const handleContinue = () => {
                     type="range"
                     min="0"
                     max="500"
-                    value={Math.min(priceRange.max, 500)}
+                    value={Math.min(
+                      priceRange.max,
+                      500
+                    )}
                     onChange={(event) =>
                       setPriceRange({
                         ...priceRange,
-                        max: parseInt(event.target.value, 10),
+                        max: parseInt(
+                          event.target.value,
+                          10
+                        ),
                       })
                     }
                   />
@@ -918,34 +1021,63 @@ const handleContinue = () => {
               </div>
 
               <div className="filter-group">
-                <label>Sort By</label>
+                <label htmlFor="sort-by">
+                  Sort By
+                </label>
 
                 <div className="sort-group">
                   <select
+                    id="sort-by"
                     value={sortBy}
-                    onChange={(event) => setSortBy(event.target.value)}
+                    onChange={(event) =>
+                      setSortBy(event.target.value)
+                    }
                   >
-                    <option value="price">Price</option>
-                    <option value="duration">Duration</option>
-                    <option value="rating">Rating</option>
-                    <option value="capacity">Capacity</option>
+                    <option value="price">
+                      Price
+                    </option>
+
+                    <option value="duration">
+                      Duration
+                    </option>
+
+                    <option value="rating">
+                      Rating
+                    </option>
+
+                    <option value="capacity">
+                      Capacity
+                    </option>
                   </select>
 
                   <button
+                    type="button"
                     className={`sort-order ${
-                      sortOrder === "asc" ? "active" : ""
+                      sortOrder === "asc"
+                        ? "active"
+                        : ""
                     }`}
                     onClick={() =>
-                      setSortOrder(sortOrder === "asc" ? "desc" : "asc")
+                      setSortOrder(
+                        sortOrder === "asc"
+                          ? "desc"
+                          : "asc"
+                      )
                     }
                     aria-label="Change sort order"
                   >
-                    {sortOrder === "asc" ? "↑" : "↓"}
+                    {sortOrder === "asc"
+                      ? "↑"
+                      : "↓"}
                   </button>
                 </div>
               </div>
 
-              <button className="reset-filters" onClick={resetFilters}>
+              <button
+                type="button"
+                className="reset-filters"
+                onClick={resetFilters}
+              >
                 Reset All Filters
               </button>
             </div>
@@ -957,7 +1089,8 @@ const handleContinue = () => {
         <div className="container">
           <div className="results-header">
             <span className="results-count">
-              {filteredTransport.length} transport options found
+              {filteredTransport.length} transport
+              options found
             </span>
 
             {selectedTransport.length > 0 && (
@@ -969,13 +1102,24 @@ const handleContinue = () => {
 
           {filteredTransport.length === 0 ? (
             <div className="no-results">
-              <div className="no-results-icon">×</div>
+              <div className="no-results-icon">
+                ×
+              </div>
 
-              <h3>No Transport Options Found</h3>
+              <h3>
+                No Transport Options Found
+              </h3>
 
-              <p>Try adjusting your filters or search terms</p>
+              <p>
+                Try adjusting your filters or
+                search terms
+              </p>
 
-              <button className="reset-filters-btn" onClick={resetFilters}>
+              <button
+                type="button"
+                className="reset-filters-btn"
+                onClick={resetFilters}
+              >
                 Reset Filters
               </button>
             </div>
@@ -985,12 +1129,21 @@ const handleContinue = () => {
                 <div
                   key={transport.id}
                   className={`transport-card ${
-                    selectedTransport.includes(transport.id) ? "selected" : ""
+                    selectedTransport.includes(
+                      transport.id
+                    )
+                      ? "selected"
+                      : ""
                   }`}
-                  onClick={() => toggleSelection(transport.id)}
+                  onClick={() =>
+                    toggleSelection(transport.id)
+                  }
                 >
                   <div className="card-image">
-                    <img src={transport.image} alt={transport.name} />
+                    <img
+                      src={transport.image}
+                      alt={transport.name}
+                    />
                   </div>
 
                   <div className="card-content">
@@ -998,9 +1151,13 @@ const handleContinue = () => {
                       <h3>{transport.name}</h3>
 
                       <div className="rating">
-                        {renderStars(transport.rating)}
+                        {renderStars(
+                          transport.rating
+                        )}
 
-                        <span className="rating-value">{transport.rating}</span>
+                        <span className="rating-value">
+                          {transport.rating}
+                        </span>
 
                         <span className="review-count">
                           ({transport.reviews})
@@ -1009,11 +1166,17 @@ const handleContinue = () => {
                     </div>
 
                     <div className="route-info">
-                      <span className="from">{transport.from_location}</span>
+                      <span className="from">
+                        {transport.from_location}
+                      </span>
 
-                      <span className="arrow">→</span>
+                      <span className="arrow">
+                        →
+                      </span>
 
-                      <span className="to">{transport.to_location}</span>
+                      <span className="to">
+                        {transport.to_location}
+                      </span>
                     </div>
 
                     {transport.destination_name && (
@@ -1022,14 +1185,22 @@ const handleContinue = () => {
                       </div>
                     )}
 
-                    <p className="description">{transport.description}</p>
+                    <p className="description">
+                      {transport.description}
+                    </p>
 
                     <div className="card-footer">
                       <div className="selection-indicator">
-                        {selectedTransport.includes(transport.id) ? (
-                          <span className="selected-badge">Selected</span>
+                        {selectedTransport.includes(
+                          transport.id
+                        ) ? (
+                          <span className="selected-badge">
+                            Selected
+                          </span>
                         ) : (
-                          <span className="select-hint">Click to select</span>
+                          <span className="select-hint">
+                            Click to select
+                          </span>
                         )}
                       </div>
                     </div>
@@ -1044,11 +1215,16 @@ const handleContinue = () => {
               <div className="continue-box">
                 <div className="continue-info">
                   <span className="selected-info">
-                    {selectedTransport.length} transport option(s) selected
+                    {selectedTransport.length}{" "}
+                    transport option(s) selected
                   </span>
                 </div>
 
-                <button className="continue-btn" onClick={handleContinue}>
+                <button
+                  type="button"
+                  className="continue-btn"
+                  onClick={handleContinue}
+                >
                   Continue to Hotels →
                 </button>
               </div>
@@ -1063,3 +1239,4 @@ const handleContinue = () => {
 };
 
 export default Transport;
+
