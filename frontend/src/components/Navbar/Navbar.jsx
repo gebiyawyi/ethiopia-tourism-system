@@ -226,7 +226,7 @@ const Navbar = () => {
               className={`mobile-nav-link ${isActive("/about") ? "active" : ""}`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              <span className="mobile-nav-icon">ℹ</span>
+              <span className="mobile-nav-icon"></span>
               About
             </Link>
             <Link
